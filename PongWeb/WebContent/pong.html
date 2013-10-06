@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ping Pong HTML5</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Juego Ping-Pong HTML5">
+	<meta name="author" content="Manuel Navarro Pérez">
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet">
+	
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="js/kinetic-v4.7.2.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/pong.js"></script>
+	
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<h1>Ping-Pong HTML5</h1>
+		<div class="row-fluid">
+			<div class="span5">
+				<!--Sidebar content-->
+				<ul class="thumbnails">
+					<li>
+						<div class="thumbnail">
+							<h3>Thumbnail de configuración</h3>
+							<p>Color de fondo</p><input type="color" value="#ffffff">
+							<p>Color de líneas</p><input type="color">
+							<p>Color de raquetas</p><input type="color">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="span7" id="container" style="border:1px solid #000000"></div>
+		</div>
+	</div>
+</body>
+</html>
