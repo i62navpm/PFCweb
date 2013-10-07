@@ -31,7 +31,7 @@ $(document).ready(function(){
 		});
 		
 		var middleLine = new Kinetic.Group();
-		for (var y = 0; y <= H; y += 40) {
+		for (var y = 0; y <= H; y += H/8) {
 		    var linePart = new Kinetic.Rect({
 		        x : parseInt(W/2),
 		        y : y,
@@ -55,46 +55,68 @@ $(document).ready(function(){
         var player = new Player();
         foregroundLayer.add(player);
         
-		stage.add(backgroundLayer);
+        // ball
+        var ball = new Ball();
+        foregroundLayer.add(ball);
+        
+        // opponent
+        var opponent = new Opponent();
+        foregroundLayer.add(opponent);
+        
+        // game obj
+        var game = new Game(stage, foregroundLayer, player, opponent, ball);
+		
+        stage.add(backgroundLayer);
 		stage.add(foregroundLayer);
 		
+		game.start();
+		
+	    
+		/*var move = new Kinetic.Animation(function(frame) {
+        ball.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
+		}, foregroundLayer);*/
 		document.onkeydown = function(event) {
 			 event = event || window.event;
 
 			 var e = event.keyCode;
-
+			 ball.move(foregroundLayer, player, opponent);
+			 opponent.move(game, ball);
+			 
 			 if (e == 83 || e == 40) {
 				 player.moveDown();
 				 
              } else if (e == 87 || e == 38 ) {
                  player.moveUp();
+			}else if (e == 13 ) {
+				ball.start();
+				opponent.start();
 			};
-			player.draw();
-			
+	
 			foregroundLayer.draw();
-			stage.draw();
-			
 		};
 	};
 	
+	/*
+	 * Clase Jugador
+	 */
 	function Player(){
 		var config = {
-                fill: 'white',
-                x : W/10,
-                y : H/2-(H/5)/2,
-                width: W/50,
-                height: H/5,
-                draggable: true,
-                dragBoundFunc: function(pos) {
-                  return {
-                    x: this.getAbsolutePosition().x,
-                    y: pos.y
-                  };
-                }
-            };
-            Kinetic.Rect.call(this, config);
-            this.speed = 10;
-            this.name = 'Player';
+            fill: 'white',
+            x : W/10,
+            y : H/2-(H/5)/2,
+            width: W/50,
+            height: H/5,
+            draggable: true,
+            dragBoundFunc: function(pos) {
+              return {
+                x: this.getAbsolutePosition().x,
+                y: pos.y
+              };
+            }
+        };
+        Kinetic.Rect.call(this, config);
+        this.speed = 10;
+        this.name = 'Player';
 	};
 	Player.prototype = new Kinetic.Rect({});
     Player.prototype.constructor = Player;
@@ -105,7 +127,6 @@ $(document).ready(function(){
     Player.prototype.moveDown = function() {
     	if (this.attrs.y < H-(this.attrs.height/2)) 
             this.setY(this.getY()+this.speed);
-        
     };
     
     /*
@@ -115,6 +136,157 @@ $(document).ready(function(){
         if (this.attrs.y > -(this.attrs.height/2))
         	this.setY(this.getY()-this.speed);
     };
+    
+    /* 
+     * Clase pelota
+    */
+    function Ball() {
+        var config = {
+            radius : W/60,
+            fill : 'white',
+            x : (W/10+W/50)+W/60,
+            y : H/2
+        };
+        Kinetic.Circle.call(this, config);
+        this.speed = 4;
+        this.regularSpeed = 4;
+        this.direction = { x: +1, y: -1 };
+    };
+    Ball.prototype = new Kinetic.Circle({});
+    Ball.prototype.constructor = Ball;
+    
+    
+    
+    Ball.prototype.move = function(layer, player, opponent){
+        var ball = this;
+    	this.anim = new Kinetic.Animation(function(frame) {
+    		if (ball.attrs.x <= 0) {
+                this.stop();
+                opponent.anim.stop();
+            }
+            
+            else if (ball.attrs.x >= W ) {
+                this.stop();
+                opponent.anim.stop();
+            }
+    		//ball.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
+    		if (ball.speed > 0 && ball.attrs.y <= 0 || ball.speed > 0 && ball.attrs.y >= W/2) {
+                ball.direction.y = ball.direction.y * (-1);
+            }
+            
+            else if (ball.speed > 0 && player.intersects(ball.getPosition()) ||
+            		ball.speed > 0 && opponent.intersects(ball.getPosition())) {
+                
+            	ball.direction.x = ball.direction.x * (-1);
+                
+                if (player.intersects(ball.getPosition())) {
+                	ball.attrs.x += 15;
+                } else {
+                	ball.attrs.x -= 15;
+                
+                };
+                
+            } else if (ball.speed == 0 && game.turn == 1){
+            	ball.setOnPlayerPosition(player);
+            };
+            ball.attrs.x += ball.speed * ball.direction.x;
+            ball.attrs.y += ball.speed * ball.direction.y;
+            ball.setX(ball.attrs.x);
+            ball.setY(ball.attrs.y);
+    	}, layer);
+	};
+
+    Ball.prototype.start = function(){
+        this.anim.start();
+    };
+    
+    Ball.prototype.stop = function(){
+        this.speed = 0;
+    };
+    
+    Ball.prototype.setOnPlayerPosition = function(side) {
+        var _x = null;
+    	if (side.name == 'Player') {
+            _x = (W/10+W/50)+W/60;
+        } else {
+            _x = W-((W/10+W/50)+W/60);
+        };
+        var x = side.getPosition().x + _x;
+        var y = side.getPosition().y + 30;
+        this.setPosition({x : x, y : y});
+    };
+
+    
+    
+    /* opponent class */
+    function Opponent() {
+        var config = {
+            fill: 'white',
+            x : W-W/10,
+            y : H/2-(H/5)/2,
+            width: W/50,
+            height: H/5
+        };
+        Kinetic.Rect.call(this, config);
+        this.speed = 4;
+        this.moveTo = undefined;
+        this.name = 'Opponent';
+    };
+    Opponent.prototype = new Kinetic.Rect({});
+    Opponent.prototype.constructor = Opponent;
+    
+    Opponent.prototype.move = function(game, ball) {
+        var new_y = undefined;
+        var opponent = this;
+        this.anim = new Kinetic.Animation(function(frame) {
+	        // moving ball
+	        if (ball.speed > 0) {
+	            if (ball.attrs.x >= W/2) {
+	               new_y = ball.attrs.y;
+	               
+	            } else { new_y = H/2-(H/5)/2; };
+	            
+	            new_y = Math.round(new_y);
+	            opponent.attrs.y = Math.round(opponent.attrs.y);
+	            
+	            if (opponent.attrs.y < new_y) {
+	            	opponent.attrs.y += opponent.speed;
+	            	opponent.setY(opponent.attrs.y);
+	            } else if (opponent.attrs.y > new_y) {
+	            	opponent.attrs.y -= opponent.speed;
+	            	opponent.setY(opponent.attrs.y);
+	            }
+	        }
+        }, game.foregroundLayer);
+            
+    };
+    
+    Opponent.prototype.start = function(){
+        this.anim.start();
+    };
+    
+    /* game class */
+    function Game(stage, foregroundLayer, player, opponent, ball) {
+        this.stage = stage;
+        this.foregroundLayer = foregroundLayer;
+        this.level = 1;
+        this.player = player;
+        this.opponent = opponent,
+        this.ball = ball;
+        this.scoreMessages = new Array();
+        this.running = false;
+        this.turn = 1; // 1: player, 0: opponent
+        this.over = false;
+    };
+    
+    Game.prototype.stop = function() {
+        this.running = false;
+    };
+    
+    Game.prototype.start = function() {
+        this.running = true;
+    };
+    
     
 	$(function(){
 	    initStage();
