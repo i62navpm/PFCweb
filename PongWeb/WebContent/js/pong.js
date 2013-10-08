@@ -7,6 +7,7 @@ $(document).ready(function(){
 	var W = parseFloat($("#container").css("width"));
 	var H = parseFloat($("#container").css("height"));
 	
+	
 	function initStage(){
 		/*
 		 * Creamos nuestro escenario con las dimensiones del contenedor div
@@ -23,21 +24,23 @@ $(document).ready(function(){
 		 */
 		var backgroundLayer = new Kinetic.Layer();
 		var background = new Kinetic.Rect({
-		    fill: 'black',
+		    fill: 'white',
 		    x : 0,
 		    y : 0,
+		    stroke: 'black',
+	        strokeWidth: 20,
 		    width : W,
 		    height : H
 		});
 		
 		var middleLine = new Kinetic.Group();
-		for (var y = 0; y <= H; y += H/8) {
+		for (var y = 0; y <= H; y += H/10) {
 		    var linePart = new Kinetic.Rect({
 		        x : parseInt(W/2),
 		        y : y,
 		        width : W/140,
 		        height : H/15,
-		        fill : 'white'
+		        fill : 'black'
 		    });
 		    middleLine.add(linePart);
 		};
@@ -69,7 +72,62 @@ $(document).ready(function(){
         stage.add(backgroundLayer);
 		stage.add(foregroundLayer);
 		
-		game.start();
+		$("#backgroundColor" ).change(function() {
+			background.setFill(this.value);
+			stage.draw();
+		});
+		
+		$("#lineColor" ).change(function() {
+			var nodes = middleLine.get('Rect');
+			for (var i = 0; i <nodes.length; i++) 
+				nodes[i].setFill(this.value);
+			stage.draw();
+			
+		});
+		$("#raquetColor" ).change(function() {
+			player.setFill(this.value);
+			opponent.setFill(this.value);
+			stage.draw();
+		});
+		
+		$("#selectColorLeft").ColorPickerSliders({
+	        flat: true,
+	        swatches: false,
+	        color: '#000000',
+	        order: {
+	            rgb: 1,
+	            preview: 2
+	        },
+	        labels: {
+	            rgbred: 'Rojo',
+	            rgbgreen: 'Verde',
+	            rgbblue: 'Azul'
+	        },
+	        onchange: function(container, color) {
+	        	ball.setFill(color.tiny.toRgbString());
+	        	ball.colorLeft = color.tiny.toRgbString();
+				stage.draw();
+	        }
+	    });
+		
+		$("#selectColorRight").ColorPickerSliders({
+	        flat: true,
+	        swatches: false,
+	        color: '#000000',
+	        order: {
+	            rgb: 1,
+	            preview: 2
+	        },
+	        labels: {
+	            rgbred: 'Rojo',
+	            rgbgreen: 'Verde',
+	            rgbblue: 'Azul'
+	        },
+	        onchange: function(container, color) {
+	        	ball.colorRight = color.tiny.toRgbString();
+	        }
+	    });
+		
 		
 	    
 		/*var move = new Kinetic.Animation(function(frame) {
@@ -88,20 +146,20 @@ $(document).ready(function(){
              } else if (e == 87 || e == 38 ) {
                  player.moveUp();
 			}else if (e == 13 ) {
-				ball.start();
-				opponent.start();
+				game.start();
 			};
 	
-			foregroundLayer.draw();
+			foregroundLayer.batchDraw();
 		};
 	};
+	
 	
 	/*
 	 * Clase Jugador
 	 */
 	function Player(){
 		var config = {
-            fill: 'white',
+            fill: 'black',
             x : W/10,
             y : H/2-(H/5)/2,
             width: W/50,
@@ -143,13 +201,14 @@ $(document).ready(function(){
     function Ball() {
         var config = {
             radius : W/60,
-            fill : 'white',
+            fill : 'black',
             x : (W/10+W/50)+W/60,
             y : H/2
         };
         Kinetic.Circle.call(this, config);
-        this.speed = 4;
-        this.regularSpeed = 4;
+        this.speed = 10;
+        this.colorLeft = "black";
+        this.colorRight = "black";
         this.direction = { x: +1, y: -1 };
     };
     Ball.prototype = new Kinetic.Circle({});
@@ -169,8 +228,14 @@ $(document).ready(function(){
                 this.stop();
                 opponent.anim.stop();
             }
-    		//ball.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
-    		if (ball.speed > 0 && ball.attrs.y <= 0 || ball.speed > 0 && ball.attrs.y >= W/2) {
+    		
+    		if (ball.attrs.x <= W/2 ) {
+    			ball.setFill(ball.colorLeft);
+    		}else{
+    			ball.setFill(ball.colorRight);
+    		}
+
+    		if (ball.speed > 0 && ball.attrs.y <= W/30 || ball.speed > 0 && ball.attrs.y >= H-(W/30)) {
                 ball.direction.y = ball.direction.y * (-1);
             }
             
@@ -221,14 +286,14 @@ $(document).ready(function(){
     /* opponent class */
     function Opponent() {
         var config = {
-            fill: 'white',
+            fill: 'black',
             x : W-W/10,
             y : H/2-(H/5)/2,
             width: W/50,
             height: H/5
         };
         Kinetic.Rect.call(this, config);
-        this.speed = 4;
+        this.speed = 10;
         this.moveTo = undefined;
         this.name = 'Opponent';
     };
@@ -285,8 +350,9 @@ $(document).ready(function(){
     
     Game.prototype.start = function() {
         this.running = true;
+        this.ball.start();
+		this.opponent.start();
     };
-    
     
 	$(function(){
 	    initStage();

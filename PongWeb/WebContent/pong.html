@@ -9,10 +9,17 @@
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="jquery-colorpickersliders/jquery.colorpickersliders.css" rel="stylesheet">
+
 	
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/kinetic-v4.7.2.js"></script>
+	
+	<script type="text/javascript" src="jquery-colorpickersliders/tinycolor.js"></script>
+	<script type="text/javascript" src="jquery-colorpickersliders/jquery.colorpickersliders.js"></script>
+	
+	
 	<script type="text/javascript" src="js/pong.js"></script>
 	
 	
@@ -20,22 +27,49 @@
 <body>
 	<div class="container-fluid">
 		<h1>Ping-Pong HTML5</h1>
+		
 		<div class="row-fluid">
-			<div class="span5">
-				<!--Sidebar content-->
+			<div class="span10 offset1" id="container"></div>
+		</div>
+		
+		<div class="row-fluid" style="padding-top:3%">
+			<div class="span12">
 				<ul class="thumbnails">
-					<li>
+					<li class="span4">
 						<div class="thumbnail">
-							<h3>Thumbnail de configuración</h3>
-							<p>Color de fondo</p><input type="color" value="#ffffff">
-							<p>Color de líneas</p><input type="color">
-							<p>Color de raquetas</p><input type="color">
+							<h3>Configuración de Tablero</h3>
+							<p>Color de fondo</p><input id="backgroundColor" type="color" value="#ffffff">
+							<p>Color de líneas</p><input id="lineColor" type="color">
+							<p>Color de raquetas</p><input id="raquetColor" type="color">
+						</div>
+					</li>
+					<li class="span8">
+						<div class="thumbnail">
+							<h3>Configuración de pelota</h3>
+							<div class="row-fluid">
+								<ul class="thumbnails">
+									<li class="span6">
+										<div class="thumbnail">
+											<h5>Lado izquierdo</h5>
+											<span id="selectColorLeft"></span>
+										</div>
+									</li>
+									<li class="span6">
+										<div class="thumbnail">
+											<h5>Lado derecho</h5>
+											<span id="selectColorRight"></span>
+										</div>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</li>
 				</ul>
 			</div>
-			<div class="span7" id="container" style="border:1px solid #000000"></div>
 		</div>
+		
+	
+
 	</div>
 </body>
 </html>
