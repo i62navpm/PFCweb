@@ -137,7 +137,7 @@ $(document).ready(function(){
 			 event = event || window.event;
 
 			 var e = event.keyCode;
-			 ball.move(foregroundLayer, player, opponent);
+			 ball.move(foregroundLayer, game, player, opponent);
 			 opponent.move(game, ball);
 			 
 			 if (e == 83 || e == 40) {
@@ -214,19 +214,17 @@ $(document).ready(function(){
     Ball.prototype = new Kinetic.Circle({});
     Ball.prototype.constructor = Ball;
     
-    
-    
-    Ball.prototype.move = function(layer, player, opponent){
+    Ball.prototype.move = function(layer, game, player, opponent){
         var ball = this;
     	this.anim = new Kinetic.Animation(function(frame) {
     		if (ball.attrs.x <= 0) {
-                this.stop();
-                opponent.anim.stop();
+    			game.stop();
+    			ball.setOnPlayerPosition(player);
             }
             
             else if (ball.attrs.x >= W ) {
-                this.stop();
-                opponent.anim.stop();
+            	game.stop();
+            	ball.setOnPlayerPosition(opponent);
             }
     		
     		if (ball.attrs.x <= W/2 ) {
@@ -240,20 +238,21 @@ $(document).ready(function(){
             }
             
             else if (ball.speed > 0 && player.intersects(ball.getPosition()) ||
-            		ball.speed > 0 && opponent.intersects(ball.getPosition())) {
+            		ball.speed > 0 && opponent.intersects(ball.getPosition().x+ball.getRadius(),ball.getPosition().y)) {
                 
             	ball.direction.x = ball.direction.x * (-1);
                 
                 if (player.intersects(ball.getPosition())) {
-                	ball.attrs.x += 15;
+                	ball.attrs.x += player.getWidth();
                 } else {
-                	ball.attrs.x -= 15;
+                	ball.attrs.x -= opponent.getWidth();
                 
                 };
                 
             } else if (ball.speed == 0 && game.turn == 1){
             	ball.setOnPlayerPosition(player);
             };
+            
             ball.attrs.x += ball.speed * ball.direction.x;
             ball.attrs.y += ball.speed * ball.direction.y;
             ball.setX(ball.attrs.x);
@@ -270,14 +269,14 @@ $(document).ready(function(){
     };
     
     Ball.prototype.setOnPlayerPosition = function(side) {
-        var _x = null;
+        var x = null;
     	if (side.name == 'Player') {
-            _x = (W/10+W/50)+W/60;
+    		x = side.getWidth()+ side.getPosition().x + this.getRadius() + this.speed;
         } else {
-            _x = W-((W/10+W/50)+W/60);
+        	x = side.getPosition().x - this.getRadius() - this.speed;
         };
-        var x = side.getPosition().x + _x;
-        var y = side.getPosition().y + 30;
+
+        var y = side.getPosition().y + side.getHeight()/2+this.speed;
         this.setPosition({x : x, y : y});
     };
 
@@ -345,7 +344,10 @@ $(document).ready(function(){
     };
     
     Game.prototype.stop = function() {
-        this.running = false;
+    	this.running = false;
+        this.ball.anim.stop();
+        this.opponent.anim.stop();
+        
     };
     
     Game.prototype.start = function() {
