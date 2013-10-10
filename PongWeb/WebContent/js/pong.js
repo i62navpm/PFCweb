@@ -171,8 +171,8 @@ $(document).ready(function(){
 	function Player(){
 		var config = {
             fill: 'black',
-            x : W/10,
-            y : H/2-50,
+            x : 10+W/10,
+            y : H/2,
             width: 20,
             height: 100,
             draggable: true,
@@ -181,7 +181,11 @@ $(document).ready(function(){
                 x: this.getAbsolutePosition().x,
                 y: pos.y
               };
-            }
+            },
+            offset: {
+	          x: 10,
+	          y: 50
+	        }
         };
         Kinetic.Rect.call(this, config);
         this.speed = 10;
@@ -234,6 +238,22 @@ $(document).ready(function(){
     
     Ball.prototype.move = function(layer, game, player, opponent, texto){
         var ball = this;
+        var tweenLeft = new Kinetic.Tween({
+            node: player, 
+            duration: 0.3,
+            scaleX: 0.5,
+            scaleY: 0.5,
+            easing: Kinetic.Easings.EaseIn
+          });
+        
+        var tweenRight = new Kinetic.Tween({
+            node: opponent, 
+            duration: 0.3,
+            scaleX: 0.5,
+            scaleY: 0.5,
+            easing: Kinetic.Easings.EaseIn
+          });
+        
     	this.anim = new Kinetic.Animation(function(frame) {
     		texto.setText("BolaX: "+ball.getX()+" BolaY:"+ball.getY()+
     				"\nPlayerX:"+player.getX()+" PlayerY:"+player.getY());
@@ -263,6 +283,10 @@ $(document).ready(function(){
 	    				player.intersects(ball.getX()-ball.getRadius()-player.getWidth()/2,ball.getY()+ball.getRadius())){
 	    			ball.direction.x = ball.direction.x * (-1);
 	    			turno = "derecha";
+	    			tweenLeft.play();
+	    			setTimeout(function() {
+	    				tweenLeft.reverse();
+	    			}, 300);
 	    		}
     		}
     		
@@ -272,6 +296,10 @@ $(document).ready(function(){
 	    				opponent.intersects(ball.getX()+ball.getRadius(),ball.getY()+ball.getRadius())){
 	    			ball.direction.x = ball.direction.x * (-1);
 	    			turno = "izquierda";
+	    			tweenRight.play();
+	    			setTimeout(function() {
+	    				tweenRight.reverse();
+	    			}, 300);
 	    		}
     		}
     		
@@ -349,10 +377,14 @@ $(document).ready(function(){
     function Opponent() {
         var config = {
             fill: 'black',
-            x : W-W/10,
-            y : H/2-50,
+            x : W-10-(W/10),
+            y : H/2,
             width: 20,
-            height: 100
+            height: 100,
+            offset: {
+                x: 10,
+                y: 50
+              }
         };
         Kinetic.Rect.call(this, config);
         this.speed = 10;
