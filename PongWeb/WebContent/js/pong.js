@@ -3,7 +3,8 @@ $(document).ready(function(){
 	 * Se ajusta el tamaño del div que contiene el canvas
 	 * para que la altura sea la mitad de la altura
 	*/
-	$("#container").css("height",parseFloat($("#container").css("width"))/2);
+	$("#container").css("height",Math.round(parseFloat($("#container").css("width"))/2/100)*100);
+	$("#container").css("width",Math.round(parseFloat($("#container").css("width"))/100)*100);
 	var W = parseFloat($("#container").css("width"));
 	var H = parseFloat($("#container").css("height"));
 	
@@ -58,20 +59,31 @@ $(document).ready(function(){
         var player = new Player();
         foregroundLayer.add(player);
         
-        // ball
-        var ball = new Ball();
-        foregroundLayer.add(ball);
-        
         // opponent
         var opponent = new Opponent();
         foregroundLayer.add(opponent);
         
+        // ball
+        var ball = new Ball();
+        foregroundLayer.add(ball);
+        
         // game obj
         var game = new Game(stage, foregroundLayer, player, opponent, ball);
 		
+        var texto = new Kinetic.Text({
+	        x: stage.getWidth() / 2,
+	        y: 15,
+	        text: ball.getX()+" "+player.getX(),
+	        fontSize: 30,
+	        fontFamily: 'Calibri',
+	        fill: 'green'
+	      });
+        
+        foregroundLayer.add(texto);
+        
         stage.add(backgroundLayer);
 		stage.add(foregroundLayer);
-		
+	
 		$("#backgroundColor" ).change(function() {
 			background.setFill(this.value);
 			stage.draw();
@@ -137,19 +149,18 @@ $(document).ready(function(){
 			 event = event || window.event;
 
 			 var e = event.keyCode;
-			 ball.move(foregroundLayer, game, player, opponent);
+			 ball.move(foregroundLayer, game, player, opponent, texto);
 			 opponent.move(game, ball);
 			 
 			 if (e == 83 || e == 40) {
-				 player.moveDown();
-				 
-             } else if (e == 87 || e == 38 ) {
-                 player.moveUp();
-			}else if (e == 13 ) {
+				player.moveDown();
+			 } else if (e == 87 || e == 38 ) {
+            	player.moveUp();
+			 } else if (e == 13 ) {
 				game.start();
-			};
+			 };
 	
-			foregroundLayer.batchDraw();
+			 foregroundLayer.batchDraw();
 		};
 	};
 	
@@ -161,9 +172,9 @@ $(document).ready(function(){
 		var config = {
             fill: 'black',
             x : W/10,
-            y : H/2-(H/5)/2,
-            width: W/50,
-            height: H/5,
+            y : H/2-50,
+            width: 20,
+            height: 100,
             draggable: true,
             dragBoundFunc: function(pos) {
               return {
@@ -200,9 +211,15 @@ $(document).ready(function(){
     */
     function Ball() {
         var config = {
-            radius : W/60,
+            /*
+        	radius : W/60,
             fill : 'black',
             x : (W/10+W/50)+W/60,
+            y : H/2
+            */
+    		radius : 10,
+            fill : 'black',
+            x : W/10+30,
             y : H/2
         };
         Kinetic.Circle.call(this, config);
@@ -213,10 +230,56 @@ $(document).ready(function(){
     };
     Ball.prototype = new Kinetic.Circle({});
     Ball.prototype.constructor = Ball;
+    var turno = "derecha";
     
-    Ball.prototype.move = function(layer, game, player, opponent){
+    Ball.prototype.move = function(layer, game, player, opponent, texto){
         var ball = this;
     	this.anim = new Kinetic.Animation(function(frame) {
+    		texto.setText("BolaX: "+ball.getX()+" BolaY:"+ball.getY()+
+    				"\nPlayerX:"+player.getX()+" PlayerY:"+player.getY());
+    		var distX=ball.getX();
+    		var distY=ball.getY();
+    		
+    		//Cambio de color cuando pasa medio campo
+    		if (ball.attrs.x <= W/2 ) {
+    			ball.setFill(ball.colorLeft);
+    		}else{
+    			ball.setFill(ball.colorRight);
+    		}
+    		
+    		//Rebote en las paredes horizontales
+    		if (ball.getY()-ball.getRadius() <= 10 || ball.getY()+ball.getRadius() >= H-10) {
+                ball.direction.y = ball.direction.y * (-1);
+            }
+    		
+    		//Rebote en las paredes verticales
+    		if (ball.getX()-ball.getRadius() <= 10 || ball.getX()+ball.getRadius() >= W-10) {
+                ball.direction.x = ball.direction.x * (-1);
+            }
+    		
+    		//Rebote en la raqueta izquierda    		
+    		if (turno=="izquierda"){
+	    		if (player.intersects(ball.getX()-ball.getRadius()-player.getWidth()/2,ball.getY()-ball.getRadius()) ||
+	    				player.intersects(ball.getX()-ball.getRadius()-player.getWidth()/2,ball.getY()+ball.getRadius())){
+	    			ball.direction.x = ball.direction.x * (-1);
+	    			turno = "derecha";
+	    		}
+    		}
+    		
+    		//Rebote en la raqueta derecha
+    		if (turno=="derecha"){
+	    		if (opponent.intersects(ball.getX()-ball.getRadius(),ball.getY()-ball.getRadius()) ||
+	    				opponent.intersects(ball.getX()+ball.getRadius(),ball.getY()+ball.getRadius())){
+	    			ball.direction.x = ball.direction.x * (-1);
+	    			turno = "izquierda";
+	    		}
+    		}
+    		
+    		distX += (ball.speed * ball.direction.x);
+    		distY += (ball.speed * ball.direction.y);
+    		ball.setX(distX);
+    		ball.setY(distY);
+    		/*
     		if (ball.attrs.x <= 0) {
     			game.stop();
     			ball.setOnPlayerPosition(player);
@@ -227,11 +290,10 @@ $(document).ready(function(){
             	ball.setOnPlayerPosition(opponent);
             }
     		
-    		if (ball.attrs.x <= W/2 ) {
-    			ball.setFill(ball.colorLeft);
-    		}else{
-    			ball.setFill(ball.colorRight);
-    		}
+    		
+    		
+
+    		
 
     		if (ball.speed > 0 && ball.attrs.y <= W/30 || ball.speed > 0 && ball.attrs.y >= H-(W/30)) {
                 ball.direction.y = ball.direction.y * (-1);
@@ -257,6 +319,7 @@ $(document).ready(function(){
             ball.attrs.y += ball.speed * ball.direction.y;
             ball.setX(ball.attrs.x);
             ball.setY(ball.attrs.y);
+            */
     	}, layer);
 	};
 
@@ -271,7 +334,7 @@ $(document).ready(function(){
     Ball.prototype.setOnPlayerPosition = function(side) {
         var x = null;
     	if (side.name == 'Player') {
-    		x = side.getWidth()+ side.getPosition().x + this.getRadius() + this.speed;
+    		x = side.getWidth() + this.getRadius()+ this.speed+ side.getPosition().x;
         } else {
         	x = side.getPosition().x - this.getRadius() - this.speed;
         };
@@ -287,9 +350,9 @@ $(document).ready(function(){
         var config = {
             fill: 'black',
             x : W-W/10,
-            y : H/2-(H/5)/2,
-            width: W/50,
-            height: H/5
+            y : H/2-50,
+            width: 20,
+            height: 100
         };
         Kinetic.Rect.call(this, config);
         this.speed = 10;
