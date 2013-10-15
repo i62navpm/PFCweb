@@ -23,7 +23,7 @@ $(document).ready(function(){
 	function initStage(){
 		stage = new Kinetic.Stage({
 		    container : "container",
-		    width: 800,
+		    width: parseFloat($("#container").css("width")),
 		    height: 300
 		});
 		
