@@ -1,14 +1,14 @@
 $(document).ready(function(){
-	window.requestAnimationFrame = (window.webkitRequestAnimationFrame || 
-	  window.mozRequestAnimationFrame || 
-	  window.msRequestAnimationFrame  || 
-	  window.oRequestAnimationFrame );
-	
-	window.requestAnimFrame  = (window.webkitCancelRequestAnimationFrame    ||
-	        window.mozCancelRequestAnimationFrame   ||
-	        window.oCancelRequestAnimationFrame 	||
-	        window.msCancelRequestAnimationFrame        
-	);
+	window.requestAnimationFrame = (function(){
+		return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function( callback ){
+			window.setTimeout(callback, 1000 / 60);
+        };
+	})();
 	
 	var stage = null;
 	var background = null;
@@ -53,16 +53,16 @@ $(document).ready(function(){
 		backgroundLayer.add(background);
 		backgroundLayer.add(middleLine);
 		
+		var ballLayer = new Kinetic.Layer();
+		ball = new Ball(stage, ballLayer);
+		ballLayer.add(ball);
+		
 		var playerLayer = new Kinetic.Layer();
 		player = new Player(stage, playerLayer);
 		playerLayer.add(player);
 		
 		opponent = new Opponent(stage, playerLayer);
 		playerLayer.add(opponent);
-		
-		var ballLayer = new Kinetic.Layer();
-		ball = new Ball(stage, ballLayer);
-		ballLayer.add(ball);
 		
 		stage.add(backgroundLayer);
 		stage.add(ballLayer);
@@ -74,13 +74,16 @@ $(document).ready(function(){
 			 event = event || window.event;
 
 			 var e = event.keyCode;
-			 //event.preventDefault();
-			 if (e == 83 || e == 40) {
-				//player.moveDown();
-			 } else if (e == 87 || e == 38 ) {
-				 //player.moveUp();
-			 } else if (e == 13 ) {
-				
+			 if (mode == "1"){
+				 if (e == 83 || e == 40) {
+					 event.preventDefault();
+					 player.moveDown();
+				 } else if (e == 87 || e == 38 ) {
+					 event.preventDefault();
+					 player.moveUp();
+				 }
+			 }
+			 if (e == 13 ) {
 				if (running == false){
 					game.start();
 				}
@@ -116,7 +119,24 @@ $(document).ready(function(){
 	};
 	Player.prototype = new Kinetic.Rect({});
     Player.prototype.constructor = Player;
-	
+    
+    /*
+     * Función para mover abajo la raqueta
+     */
+    Player.prototype.moveDown = function() {
+    	if (this.getY() < stage.getHeight()) 
+            this.setY(this.getY()+this.speed);
+    };
+    
+    /*
+     * Función para mover arriba la raqueta
+     */
+    Player.prototype.moveUp = function(playerSpeed) {
+        if (this.getY() > 0 )
+        	this.setY(this.getY()-this.speed);
+    };
+    
+    
     function Opponent(stage,layer){
 		var config = {
             fill: 'black',
@@ -175,91 +195,106 @@ $(document).ready(function(){
         function animBall () {
         	ballLayer = ball.getLayer();
         	
-	    	setTimeout(function() {
-	    		if (running == true){
-		    		requestAnimationFrame(animBall);
-	
-		    		//Cambio de color cuando por las franjas
-		    		if (zones==1){
-		    			ball.setFill(ball.colorLeft);
-		    		}
-		    		else{
-			    		if (Math.round(ball.getX()/(stage.getWidth()/zones))%2 == 0 ) {
-			    			ball.setFill(ball.colorLeft);
-			    		}else{
-			    			ball.setFill(ball.colorRight);
-			    		}
-		    		}
-		    		if (ball.getX()-ball.getRadius() <= background.getStrokeWidth()/2 ||
-		    				ball.getX()+ball.getRadius() >= stage.getWidth()-(background.getStrokeWidth()/2)) {
-		    			ball.direction.x *= -1;
-		    		}
-		    		if (ball.getY()-ball.getRadius() <= background.getStrokeWidth()/2 ||
-		    				ball.getY()+ball.getRadius() >= stage.getHeight()-(background.getStrokeWidth()/2)) {
-		    			ball.direction.y *= -1;
-		    		}
-		    		ball.setX(ball.getX()+(ball.speed*ball.direction.x));
-		    		ball.setY(ball.getY()+(ball.speed*ball.direction.y));
-		    		ballLayer.draw();
+    		if (running == true){
+	    		requestAnimationFrame(animBall);
+
+	    		//Cambio de color cuando por las franjas
+	    		if (zones==1){
+	    			ball.setFill(ball.colorLeft);
 	    		}
-	    	}, 1000 / 60);
+	    		else{
+		    		if (Math.round(ball.getX()/(stage.getWidth()/(zones-1)))%2 == 0 ) {
+		    			
+		    			ball.setFill(ball.colorLeft);
+		    		}else{
+		    			ball.setFill(ball.colorRight);
+		    		}
+	    		}
+	    		if (ball.getX()-ball.getRadius() <= background.getStrokeWidth()/2 ||
+	    				ball.getX()+ball.getRadius() >= stage.getWidth()-(background.getStrokeWidth()/2)) {
+	    			ball.direction.x *= -1;
+	    		}
+	    		if (ball.getY()-ball.getRadius() <= background.getStrokeWidth()/2 ||
+	    				ball.getY()+ball.getRadius() >= stage.getHeight()-(background.getStrokeWidth()/2)) {
+	    			ball.direction.y *= -1;
+	    		}
+	    		ball.setX(ball.getX()+(ball.speed*ball.direction.x));
+	    		ball.setY(ball.getY()+(ball.speed*ball.direction.y));
+	    		ballLayer.draw();
+    		}
+	    	
 	    }; 
 	    
 	    function animRaquets () {
 	    	playerLayer = player.getLayer();
-	    	setTimeout(function() {
-	    		if (running == true){
-					anim2 = requestAnimationFrame(animRaquets);
-					// Drawing code goes here
-					if(ball.getX()<stage.getWidth()/2){
+	    	
+    		if (running == true){
+    			requestAnimationFrame(animRaquets);
+				// Drawing code goes here
+				if(ball.getX()<stage.getWidth()/2){
+					if(mode == "CPU"){
 						if(player.getY()<ball.getY())
 							player.setY(player.getY()+player.speed);
 						else
 							player.setY(player.getY()-player.speed);
 					}
-					else{
-						if(opponent.getY()<ball.getY())
-							opponent.setY(opponent.getY()+player.speed);
-						else
-							opponent.setY(opponent.getY()-player.speed);
-					}
-					playerLayer.draw();
-	    		}
-			}, 1000 / 60);
+				}
+				else{
+					if(opponent.getY()<ball.getY())
+						opponent.setY(opponent.getY()+player.speed);
+					else
+						opponent.setY(opponent.getY()-player.speed);
+				}
+				playerLayer.draw();
+				
+    		}
+			
 		}; 
 		
 		var turno = "derecha";
 		function controlCollision () {
-			ballLayer = ball.getLayer();
-			setTimeout(function() {
-	    		if (running == true){
-					anim3 = requestAnimationFrame(controlCollision);
-					// Drawing code goes here
-					if(ballLayer.getIntersection(player.getPosition()) && turno == "izquierda"){
-						ball.direction.x = ball.direction.x * (-1);
-		    			turno = "derecha";
-		    			
-		    			/*tweenLeft.play();
-		    			setTimeout(function() {
-		    				tweenLeft.reverse();
-		    			}, 200);*/
-					}
-						
-					else if(ballLayer.getIntersection(opponent.getPosition()) && turno == "derecha"){
-						ball.direction.x = ball.direction.x * (-1);
-						turno = "izquierda";
-						/*tweenRight.play();
-		    			setTimeout(function() {
-		    				tweenRight.reverse();
-		    			}, 200);*/
-					}
-	    		}
+			playerLayer = player.getLayer();
+			
+    		if (running == true){
+				requestAnimationFrame(controlCollision);
+				
+				if(ball.getX()< 100 || ball.getX()> 700){
+					
+					//Rebote en la raqueta izquierda    		
+		    		if (turno=="izquierda"){
+			    		if (player.intersects(ball.getPosition())){
+			    			ball.direction.x = ball.direction.x * (-1);
+			    			turno = "derecha";
+			    			/*
+			    			tweenLeft.play();
+			    			setTimeout(function() {
+			    				tweenLeft.reverse();
+			    			}, 300);
+			    			*/
+			    		}
+		    		}
+		    		
+		    		//Rebote en la raqueta derecha
+		    		if (turno=="derecha"){
+			    		if (opponent.intersects(ball.getPosition())){
+			    			ball.direction.x = ball.direction.x * (-1);
+			    			turno = "izquierda";
+			    			/*
+			    			tweenRight.play();
+			    			setTimeout(function() {
+			    				tweenRight.reverse();
+			    			}, 300);
+			    			*/
+			    		}
+				}
+		    		}
+				
+			}
 
-			}, 1000 / 60);
 		}; 
 	    Game.prototype.start = function() {
 	    	running = true;
-
+	    	
 	    	animBall();
 	    	animRaquets();
 	    	controlCollision();
