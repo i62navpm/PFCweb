@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	
+	var fps = 60;
 	window.requestAnimationFrame = (function(){
 		return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
@@ -6,7 +8,7 @@ $(document).ready(function(){
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
         function( callback ){
-			window.setTimeout(callback, 1000 / 60);
+			window.setTimeout(callback, 1000 / fps);
         };
 	})();
 	
@@ -17,7 +19,7 @@ $(document).ready(function(){
 	var opponent = null;
 	var ball = null;
 	var running = false;
-	var zones = 1;
+	var zones = $("#numberZone").val();
 	var mode = "CPU";
 	
 	function initStage(){
@@ -70,28 +72,16 @@ $(document).ready(function(){
 		
 		game = new Game();
 		
-		document.onkeydown = function(event) {
-			 event = event || window.event;
+		KeyboardController({
+		    83: function() { player.moveDown(); },
+		    40: function() { player.moveDown(); },
+		    87: function() { player.moveUp(); },
+		    38: function() { player.moveUp(); },
+		    13: function() { game; }
+		}, 10);
+			 
+			 
 
-			 var e = event.keyCode;
-			 if (mode == "1"){
-				 if (e == 83 || e == 40) {
-					 event.preventDefault();
-					 player.moveDown();
-				 } else if (e == 87 || e == 38 ) {
-					 event.preventDefault();
-					 player.moveUp();
-				 }
-			 }
-			 if (e == 13 ) {
-				if (running == false){
-					game.start();
-				}
-				else{
-					game.stop();
-				}
-			 };
-		};
 	}
 	
 	function Player(stage,layer){
@@ -114,7 +104,7 @@ $(document).ready(function(){
 	        }
         };
         Kinetic.Rect.call(this, config);
-        this.speed = 10;
+        this.speed = parseInt($("#leftSpeed").val());;
         this.name = 'Player';
 	};
 	Player.prototype = new Kinetic.Rect({});
@@ -150,7 +140,7 @@ $(document).ready(function(){
 	        }
         };
         Kinetic.Rect.call(this, config);
-        this.speed = 10;
+        this.speed = parseInt($("#rightSpeed").val());
         this.name = 'Opponent';
 	};
 	Opponent.prototype = new Kinetic.Rect({});
@@ -164,7 +154,7 @@ $(document).ready(function(){
             y : stage.getHeight()/2
         };
         Kinetic.Circle.call(this, config);
-        this.speed = 10;
+        this.speed = parseInt($("#ballSpeed").val());
         this.colorLeft = "black";
         this.colorRight = "black";
         this.direction = { x: +1, y: -1 };
@@ -241,9 +231,9 @@ $(document).ready(function(){
 				}
 				else{
 					if(opponent.getY()<ball.getY())
-						opponent.setY(opponent.getY()+player.speed);
+						opponent.setY(opponent.getY()+opponent.speed);
 					else
-						opponent.setY(opponent.getY()-player.speed);
+						opponent.setY(opponent.getY()-opponent.speed);
 				}
 				playerLayer.draw();
 				
@@ -258,36 +248,34 @@ $(document).ready(function(){
     		if (running == true){
 				requestAnimationFrame(controlCollision);
 				
-				if(ball.getX()< 100 || ball.getX()> 700){
-					
-					//Rebote en la raqueta izquierda    		
-		    		if (turno=="izquierda"){
-			    		if (player.intersects(ball.getPosition())){
-			    			ball.direction.x = ball.direction.x * (-1);
-			    			turno = "derecha";
-			    			/*
-			    			tweenLeft.play();
-			    			setTimeout(function() {
-			    				tweenLeft.reverse();
-			    			}, 300);
-			    			*/
-			    		}
+									
+				//Rebote en la raqueta izquierda    		
+	    		if (turno=="izquierda"){
+		    		if (player.intersects(ball.getPosition())){
+		    			ball.direction.x = ball.direction.x * (-1);
+		    			turno = "derecha";
+		    			/*
+		    			tweenLeft.play();
+		    			setTimeout(function() {
+		    				tweenLeft.reverse();
+		    			}, 300);
+		    			*/
 		    		}
-		    		
-		    		//Rebote en la raqueta derecha
-		    		if (turno=="derecha"){
-			    		if (opponent.intersects(ball.getPosition())){
-			    			ball.direction.x = ball.direction.x * (-1);
-			    			turno = "izquierda";
-			    			/*
-			    			tweenRight.play();
-			    			setTimeout(function() {
-			    				tweenRight.reverse();
-			    			}, 300);
-			    			*/
-			    		}
-				}
+	    		}
+	    		
+	    		//Rebote en la raqueta derecha
+	    		else{
+		    		if (opponent.intersects(ball.getPosition())){
+		    			ball.direction.x = ball.direction.x * (-1);
+		    			turno = "izquierda";
+		    			/*
+		    			tweenRight.play();
+		    			setTimeout(function() {
+		    				tweenRight.reverse();
+		    			}, 300);
+		    			*/
 		    		}
+	    		}
 				
 			}
 
@@ -305,6 +293,49 @@ $(document).ready(function(){
 	    };
 		
     };
+    
+    function KeyboardController(keys, repeat) {
+        // Lookup of key codes to timer ID, or null for no repeat
+        //
+        var timers= {};
+
+        // When key is pressed and we don't already think it's pressed, call the
+        // key action callback and set a timer to generate another one after a delay
+        //
+        document.onkeydown= function(event) {
+            var key= (event || window.event).keyCode;
+            if (!(key in keys))
+                return true;
+            
+            
+            if (key == 13 && !running)
+            	game.start();
+            else if(key == 13 && running)
+            	game.stop();
+            
+            if (mode=="1"){
+	            if (!(key in timers)) {
+	                timers[key]= null;
+	                keys[key]();
+	                if (repeat!==0)
+	                    timers[key]= setInterval(keys[key], repeat);
+	            }
+            }
+            return false;
+        };
+
+        // Cancel timeout and mark key as released on keyup
+        //
+        document.onkeyup= function(event) {
+            var key= (event || window.event).keyCode;
+            if (key in timers) {
+                if (timers[key]!==null)
+                    clearInterval(timers[key]);
+                delete timers[key];
+            }
+        };
+    };
+    
 	$(function(){
 	    initStage();
 	    $("#backgroundColor" ).change(function() {
@@ -326,8 +357,34 @@ $(document).ready(function(){
 		});
 		
 		$("#numberZone" ).change(function() {
-			zones = this.value;
+			zones = parseInt(this.value);
 		});
+		
+		$("#ballSpeed" ).change(function() {
+			ball.speed = parseInt(this.value);
+		});
+		
+		$("#leftSpeed" ).change(function() {
+			player.speed = parseInt(this.value);
+
+		});
+		
+		$("#rightSpeed" ).change(function() {
+			opponent.speed = parseInt(this.value);
+		});
+		
+		$( window ).resize(function() {
+			stage.setWidth(parseFloat($("#container").css("width")));
+			background.setWidth(stage.getWidth());
+			opponent.setX(stage.getWidth()-80);
+			lines = middleLine.get("Rect");
+			for (var i=0; i<lines.length; i ++)
+				lines[i].setX((stage.getWidth()/2)-2);
+			ball.setX(stage.getWidth()/2);
+			
+			stage.draw();
+		});
+		
 		
 		$(".btn-group > button.btn").on("click", function(){
 		    mode = this.value;
@@ -336,7 +393,7 @@ $(document).ready(function(){
 		$("#selectColorLeft").ColorPickerSliders({
 	        flat: true,
 	        swatches: false,
-	        color: '#000000',
+	        color: '#FF0000',
 	        order: {
 	            rgb: 1,
 	            preview: 2
@@ -356,7 +413,7 @@ $(document).ready(function(){
 		$("#selectColorRight").ColorPickerSliders({
 	        flat: true,
 	        swatches: false,
-	        color: '#000000',
+	        color: '#00FF00',
 	        order: {
 	            rgb: 1,
 	            preview: 2
