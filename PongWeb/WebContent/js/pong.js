@@ -79,16 +79,13 @@ $(document).ready(function(){
 		    38: function() { player.moveUp(); },
 		    13: function() { game; }
 		}, 10);
-			 
-			 
-
 	}
 	
 	function Player(stage,layer){
 		var config = {
             fill: 'black',
             x : 80,
-            y : stage.getHeight()/2,
+            y : stage.getHeight()/2-40,
             width: 10,
             height: 80,
             draggable: true,
@@ -98,10 +95,7 @@ $(document).ready(function(){
                 y: pos.y
               };
             },
-            offset: {
-	          x: 5,
-	          y: 40
-	        }
+
         };
         Kinetic.Rect.call(this, config);
         this.speed = parseInt($("#leftSpeed").val());;
@@ -114,7 +108,7 @@ $(document).ready(function(){
      * Función para mover abajo la raqueta
      */
     Player.prototype.moveDown = function() {
-    	if (this.getY() < stage.getHeight()) 
+    	if (this.getY()+40 < stage.getHeight()) 
             this.setY(this.getY()+this.speed);
     };
     
@@ -122,22 +116,17 @@ $(document).ready(function(){
      * Función para mover arriba la raqueta
      */
     Player.prototype.moveUp = function(playerSpeed) {
-        if (this.getY() > 0 )
+        if (this.getY() > -40 )
         	this.setY(this.getY()-this.speed);
     };
-    
     
     function Opponent(stage,layer){
 		var config = {
             fill: 'black',
             x : stage.getWidth()-80,
-            y : stage.getHeight()/2,
+            y : stage.getHeight()/2-40,
             width: 10,
             height: 80,
-            offset: {
-	          x: 5,
-	          y: 40
-	        }
         };
         Kinetic.Rect.call(this, config);
         this.speed = parseInt($("#rightSpeed").val());
@@ -162,26 +151,7 @@ $(document).ready(function(){
     Ball.prototype = new Kinetic.Circle({});
     Ball.prototype.constructor = Ball;
 
-    /* game class */
     function Game() {
-    	/*
-    	var tweenLeft = new Kinetic.Tween({
-            node: player, 
-            duration: 0.1,
-            scaleX: 0.5,
-            
-            easing: Kinetic.Easings.EaseIn
-          });
-        
-        var tweenRight = new Kinetic.Tween({
-            node: opponent, 
-            duration: 0.1,
-            scaleX: 0.5,
-            
-            easing: Kinetic.Easings.EaseIn
-          });
-        */
-        
         function animBall () {
         	ballLayer = ball.getLayer();
         	
@@ -200,19 +170,11 @@ $(document).ready(function(){
 		    			ball.setFill(ball.colorRight);
 		    		}
 	    		}
-	    		if (ball.getX()-ball.getRadius() <= background.getStrokeWidth()/2 ||
-	    				ball.getX()+ball.getRadius() >= stage.getWidth()-(background.getStrokeWidth()/2)) {
-	    			ball.direction.x *= -1;
-	    		}
-	    		if (ball.getY()-ball.getRadius() <= background.getStrokeWidth()/2 ||
-	    				ball.getY()+ball.getRadius() >= stage.getHeight()-(background.getStrokeWidth()/2)) {
-	    			ball.direction.y *= -1;
-	    		}
+	    		
 	    		ball.setX(ball.getX()+(ball.speed*ball.direction.x));
 	    		ball.setY(ball.getY()+(ball.speed*ball.direction.y));
 	    		ballLayer.draw();
     		}
-	    	
 	    }; 
 	    
 	    function animRaquets () {
@@ -223,14 +185,14 @@ $(document).ready(function(){
 				// Drawing code goes here
 				if(ball.getX()<stage.getWidth()/2){
 					if(mode == "CPU"){
-						if(player.getY()<ball.getY())
+						if(player.getY()+40<ball.getY())
 							player.setY(player.getY()+player.speed);
 						else
 							player.setY(player.getY()-player.speed);
 					}
 				}
 				else{
-					if(opponent.getY()<ball.getY())
+					if(opponent.getY()+40<ball.getY())
 						opponent.setY(opponent.getY()+opponent.speed);
 					else
 						opponent.setY(opponent.getY()-opponent.speed);
@@ -245,40 +207,35 @@ $(document).ready(function(){
 		function controlCollision () {
 			playerLayer = player.getLayer();
 			
+			var top_x = ball.getX()- ball.getRadius();
+			var top_y = ball.getY()- ball.getRadius();
+			var bottom_x = ball.getX()+ ball.getRadius();
+			var bottom_y = ball.getY()+ ball.getRadius();
+
     		if (running == true){
 				requestAnimationFrame(controlCollision);
-				
+				//Rebote en las paredes verticales
+				if (top_x < background.getStrokeWidth()/2 ||
+	    				bottom_x > stage.getWidth()-(background.getStrokeWidth()/2)) 
+	    			ball.direction.x *= -1;
+	    		
+				//Rebote en las paredes horizontales
+				if (top_y < background.getStrokeWidth()/2 ||
+	    				bottom_y > stage.getHeight()-(background.getStrokeWidth()/2)) 
+	    			ball.direction.y *= -1;
 									
 				//Rebote en la raqueta izquierda    		
-	    		if (turno=="izquierda"){
-		    		if (player.intersects(ball.getPosition())){
-		    			ball.direction.x = ball.direction.x * (-1);
-		    			turno = "derecha";
-		    			/*
-		    			tweenLeft.play();
-		    			setTimeout(function() {
-		    				tweenLeft.reverse();
-		    			}, 300);
-		    			*/
-		    		}
-	    		}
+				if(turno=="izquierda" && top_y < (player.getY() + player.getHeight()) && bottom_y > player.getY() && top_x < (player.getX() + player.getWidth()) && bottom_x > player.getX()){
+	    			turno = "derecha";
+					ball.direction.x = ball.direction.x * (-1);
+				}
 	    		
-	    		//Rebote en la raqueta derecha
-	    		else{
-		    		if (opponent.intersects(ball.getPosition())){
-		    			ball.direction.x = ball.direction.x * (-1);
-		    			turno = "izquierda";
-		    			/*
-		    			tweenRight.play();
-		    			setTimeout(function() {
-		    				tweenRight.reverse();
-		    			}, 300);
-		    			*/
-		    		}
-	    		}
-				
+    			//Rebote en la raqueta izquierda
+    			else if(turno=="derecha" && top_y < (opponent.getY() + opponent.getHeight()) && bottom_y > opponent.getY() && top_x < (opponent.getX() + opponent.getWidth()) && bottom_x > opponent.getX()){ 
+	    			turno = "izquierda";
+    				ball.direction.x = ball.direction.x * (-1);
+    			}
 			}
-
 		}; 
 	    Game.prototype.start = function() {
 	    	running = true;
@@ -348,7 +305,6 @@ $(document).ready(function(){
 			for (var i = 0; i <nodes.length; i++) 
 				nodes[i].setFill(this.value);
 			stage.draw();
-			
 		});
 		$("#raquetColor" ).change(function() {
 			player.setFill(this.value);
