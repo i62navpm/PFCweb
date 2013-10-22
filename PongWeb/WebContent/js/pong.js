@@ -71,6 +71,21 @@ $(document).ready(function(){
 		stage.add(playerLayer);
 		
 		game = new Game();
+
+		stage.on('dbltap dblclick', function() {
+    		if (!running)
+    			game.start();
+    		else
+    			game.stop();
+    	});
+		
+		stage.on('touchmove', function(event) {
+			event.returnValue = false;
+			if(event.preventDefault) event.preventDefault();
+			//var touchPos = stage.getTouchPosition();
+			var touchPos = stage.getTouchPosition();
+	        player.setY(touchPos.y);
+	      });
 		
 		KeyboardController({
 		    83: function() { player.moveDown(); },
@@ -230,7 +245,7 @@ $(document).ready(function(){
 					ball.direction.x = ball.direction.x * (-1);
 				}
 	    		
-    			//Rebote en la raqueta izquierda
+    			//Rebote en la raqueta derecha
     			else if(turno=="derecha" && top_y < (opponent.getY() + opponent.getHeight()) && bottom_y > opponent.getY() && top_x < (opponent.getX() + opponent.getWidth()) && bottom_x > opponent.getX()){ 
 	    			turno = "izquierda";
     				ball.direction.x = ball.direction.x * (-1);
