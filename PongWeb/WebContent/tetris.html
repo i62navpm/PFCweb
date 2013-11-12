@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ping Pong HTML5</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Juego Ping-Pong HTML5">
+	<meta name="author" content="Manuel Navarro Pérez">
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet">
+	
+	
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/kinetic-v4.7.2.js"></script>
+	
+	<script type="text/javascript" src="js/tetris.js"></script>
+	
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<h1>Tetris HTML5</h1>
+		<div class="row-fluid">
+			<div class="span4 offset4" id="container"></div>
+		</div>
+		<div class="row-fluid" style="margin-top:15px">
+			<div class="span2 btn-group" data-toggle="buttons-radio" >
+				  <button id = "CPU" type="button" class="btn btn-primary active" value="CPU">CPU</button>
+				  <button id = "1" type="button" class="btn btn-primary" value="1">1 Jugador</button>
+			</div>
+			<div class="span10 alert alert-success">
+			  <h4>Instrucciones</h4>
+			  <div class="row-fluid">
+				<div class="span6">  
+				  <h5>Para PC:</h5>
+				  <ul>
+					  <li>Empezar / pausar el juego: pulsa Intro</li>
+					  <li>Mover raqueta: <i class="icon-arrow-up"></i><i class="icon-arrow-down"></i> o W/S o arrastrar con el ratón</li> 
+				  </ul>
+			  	</div>
+			  	<div class="span6">
+				  <h5>Para Móvil/Tablet:</h5>
+				  <ul>
+					  <li>Empezar / pausar el juego: hacer doble tap</li>
+					  <li>Mover raqueta: Mover el dedo por la pantalla</li> 
+				  </ul>
+			  	</div>
+			  </div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
