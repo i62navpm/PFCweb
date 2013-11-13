@@ -12,14 +12,19 @@ $(document).ready(function(){
         };
 	})();
 	
+	
+	
 	var foregroundLayer = null;
 	var rows = 16;
 	var cols = 10;
-	var blockWidth = 25;
+	var W = Math.floor(parseFloat($("#container").css("width"))/100)*100;
+	var blockWidth = W/cols;
 	var matrix = [];
 	var nSquares = 4;
 	var nTypes = 7;
-
+	var skyline=rows-1;
+	var running = false;
+	
 	var dx = new Array(0,0,0,0);
 	var dy = new Array(0,0,0,0);
 	var dx_ = new Array(0,0,0,0);
@@ -66,7 +71,7 @@ $(document).ready(function(){
 		    x : 0,
 		    y : 0,
 		    stroke: 'black',
-	        strokeWidth: 20,
+	        strokeWidth: 10,
 		    width : stage.getWidth(),
 		    height : stage.getHeight()
 		});
@@ -84,8 +89,8 @@ $(document).ready(function(){
 		    		y: i * blockWidth,
 					width: blockWidth,
 					height: blockWidth,
-					stroke: 'black',
-			        strokeWidth: 2,
+					stroke: '#BDBDBD',
+			        strokeWidth: 1,
 		        });
 		        
 		        matrix[i][j] = square;
@@ -97,6 +102,37 @@ $(document).ready(function(){
 		getPiece();
 		drawPiece();
 		
+		game = new Game();
+
+		stage.on('dbltap dblclick', function() {
+    		if (!running)
+    			game.start();
+    		else
+    			game.stop();
+    	});
+		
+		stage.on('mousemove', function(event) {
+			event.returnValue = false;
+			if(event.preventDefault) event.preventDefault();
+			//var touchPos = stage.getTouchPosition();
+			var touchPos = stage.getMousePosition();
+			
+				//console.log(matrix[0][i].getX());
+				//console.log(curX);
+			
+			console.log(parseInt(Math.floor(touchPos.x/blockWidth)));
+			console.log("actual "+curX);
+			if (curX > parseInt(Math.floor(touchPos.x/blockWidth)))
+				moveLeft();
+			else
+				moveRight();
+			
+			//console.log(touchPos.y);
+			
+			//console.log(curX);
+			//moveLeft();
+	      });
+		
 		KeyboardController({
 		    83: function() { moveDown(); },
 		    40: function() { moveDown(); },
@@ -104,15 +140,48 @@ $(document).ready(function(){
 		    38: function() { rotate(); },
 		    37: function() { moveLeft(); },
 		    39: function() { moveRight(); },
-
+		    13: function() { game; },
 		}, 10);
-		fall();
 		
+	    
 	};
+	
+	function Game() {
+		function fall() {
+			setTimeout(function() {
+				if (running == true){
+					requestAnimationFrame(fall);
+					for (var k=0;k<nSquares;k++){
+						dx_[k]=dx[k];
+						dy_[k]=dy[k];
+						}
+					if (pieceFits(curX,curY+1)){
+						erasePiece();
+						curY++;
+						drawPiece();
+						}
+					else{
+						affirmPiece();
+						getPiece();
+					}
+				}
+			}, 600);
+		}
+		Game.prototype.start = function() {
+	    	running = true;
+	    	fall();
+	    };
+	    
+	    Game.prototype.stop = function() {
+	    	running = false;
+	    };
+	}
+    
+	
 	
 	function getPiece() {
 		curPiece = 1+Math.floor(nTypes*Math.random());
-		curX=cols/2;
+		curX=Math.floor(cols/2);
 		curY=0;
 		for (var k=0;k<nSquares;k++){
 			dx[k]=xPiece[curPiece][k]; 
@@ -166,7 +235,48 @@ $(document).ready(function(){
 				}
 			foregroundLayer.draw();
 		 }
+		if (Y<skyline)
+			skyline=Y;
+		else if(skyline <= 0){
+			running = false;
+			console.log("terminado");
+		}
+		removeLines();
 	}
+	
+	function removeLines() {
+		for (var i=0;i<rows;i++) {
+			gapFound=0;
+			for (var j=0;j<cols;j++) {
+				if (matrix[i][j].getFill()==null) {
+					gapFound=1;
+					break;}
+			}
+			if (gapFound) 
+				continue;
+			for (var k=i;k>=skyline-1;k--) {
+				for (var j=0;j<cols;j++) {
+					matrix[k][j].setFill(matrix[k-1][j].getFill());
+				}
+			}
+
+
+			
+			skyline++;
+			foregroundLayer.draw();
+			
+			/*
+			nLines++;
+			self.f1.document.form1.Lines.value=nLines;
+			if (nLines%5==0) {
+				Level++; if(Level>10) Level=10;
+			}
+			speed=speed0-speedK*Level;
+			self.f1.document.form1.s1.selectedIndex=Level-1;
+			*/
+		}
+	}
+
 	
 	function moveLeft() {
 		 for (var k=0;k<nSquares;k++){
@@ -234,38 +344,16 @@ $(document).ready(function(){
 	}
 
 	function erasePiece() {
-		  for (var k=0;k<nSquares;k++) {
-		   X=curX+dx[k];
-		   Y=curY+dy[k];
-		   if (0<=Y && Y<rows && 0<=X && X<cols) {
-		    matrix[Y][X].setFill(null);
-		    foregroundLayer.draw();
-		   }
-		  }
-		 }
-		
-	function fall() {
-		setTimeout(function() {
-		
-			requestAnimationFrame(fall);
-			for (var k=0;k<nSquares;k++){
-				dx_[k]=dx[k];
-				dy_[k]=dy[k];
-				}
-			if (pieceFits(curX,curY+1)){
-				erasePiece();
-				curY++;
-				drawPiece();
-				}
-			else{
-				affirmPiece();
-				getPiece();
+		for (var k=0;k<nSquares;k++) {
+			X=curX+dx[k];
+			Y=curY+dy[k];
+			if (0<=Y && Y<rows && 0<=X && X<cols) {
+				matrix[Y][X].setFill(null);
+				foregroundLayer.draw();
 			}
-		
-		}, 600);
+	  	}
 	}
-
-	
+		
 	function KeyboardController(keys, repeat) {
         // Lookup of key codes to timer ID, or null for no repeat
         //
@@ -279,7 +367,11 @@ $(document).ready(function(){
             if (!(key in keys))
                 return true;
             
-
+            if (key == 13 && !running)
+            	game.start();
+            else if(key == 13 && running)
+            	game.stop();
+            
             if (!(key in timers)) {
                 timers[key]= null;
                 keys[key]();
@@ -301,8 +393,6 @@ $(document).ready(function(){
             }
         };
     };
-    
-    
     
 	$(function(){
 	    initStage();
