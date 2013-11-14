@@ -357,8 +357,8 @@ $(document).ready(function(){
 		});
 		
 		
-		$(".btn-group > button.btn").on("click", function(){
-		    mode = this.value;
+		$(".btn-primary").on("click", function(){
+			mode = $(event.target).find('input').val();
 		});
 		
 		$("#selectColorLeft").ColorPickerSliders({

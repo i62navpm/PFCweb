@@ -15,8 +15,8 @@ $(document).ready(function(){
 	
 	
 	var foregroundLayer = null;
-	var rows = 16;
-	var cols = 10;
+	var rows = $("#rowNumber").val();
+	var cols = $("#colNumber").val();
 	var W = Math.floor(parseFloat($("#container").css("width"))/100)*100;
 	var blockWidth = W/cols;
 	var matrix = [];
@@ -24,6 +24,10 @@ $(document).ready(function(){
 	var nTypes = 7;
 	var skyline=rows-1;
 	var running = false;
+	
+	var level = new Array(1000,700,600,500,400,300,200,100,50,10);
+	var gravity = level[($("#fallSpeed").val()-1)];
+	
 	
 	var dx = new Array(0,0,0,0);
 	var dy = new Array(0,0,0,0);
@@ -114,24 +118,43 @@ $(document).ready(function(){
 		stage.on('mousemove', function(event) {
 			event.returnValue = false;
 			if(event.preventDefault) event.preventDefault();
-			//var touchPos = stage.getTouchPosition();
+
 			var touchPos = stage.getMousePosition();
 			
-				//console.log(matrix[0][i].getX());
-				//console.log(curX);
-			
-			console.log(parseInt(Math.floor(touchPos.x/blockWidth)));
-			console.log("actual "+curX);
 			if (curX > parseInt(Math.floor(touchPos.x/blockWidth)))
 				moveLeft();
-			else
+			else if(curX < parseInt(Math.floor(touchPos.x/blockWidth)))
 				moveRight();
+	    });
+		
+		stage.on('touchmove', function(event) {
+			event.returnValue = false;
+			if(event.preventDefault) event.preventDefault();
+
+			var touchPos = stage.getTouchPosition();
 			
-			//console.log(touchPos.y);
+			if (curX > parseInt(Math.floor(touchPos.x/blockWidth)))
+				moveLeft();
+			else if(curX < parseInt(Math.floor(touchPos.x/blockWidth)))
+				moveRight();
+	    });
+		
+		stage.on('click', function(event) {
+			event.returnValue = false;
+			if(event.preventDefault) event.preventDefault();
+			rotate();
+	    });
+		
+		stage.on('tap', function(event) {
+			event.returnValue = false;
+			if(event.preventDefault) event.preventDefault();
+			var touchPos = stage.getTouchPosition();
+			var x = parseInt(Math.floor(touchPos.x/blockWidth));
+			var y = parseInt(Math.floor(touchPos.y/blockWidth));
 			
-			//console.log(curX);
-			//moveLeft();
-	      });
+			if (matrix[y][x].getFill()!=null)
+				rotate();
+	    });
 		
 		KeyboardController({
 		    83: function() { moveDown(); },
@@ -142,8 +165,7 @@ $(document).ready(function(){
 		    39: function() { moveRight(); },
 		    13: function() { game; },
 		}, 10);
-		
-	    
+  
 	};
 	
 	function Game() {
@@ -165,7 +187,7 @@ $(document).ready(function(){
 						getPiece();
 					}
 				}
-			}, 600);
+			}, gravity);
 		}
 		Game.prototype.start = function() {
 	    	running = true;
@@ -396,5 +418,8 @@ $(document).ready(function(){
     
 	$(function(){
 	    initStage();
+	    $("#fallSpeed" ).change(function() {
+			gravity = level[parseInt(this.value)];
+		});
 	});
 });
