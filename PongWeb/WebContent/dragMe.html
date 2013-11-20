@@ -22,29 +22,18 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Drage-Me HTML5</h1>
+		<h1>Drag-Me HTML5</h1>
 		<div class="row">
 			<div class="col-md-5 col-md-offset-3 col-xs-11" id="container"></div>
 		</div>
 		<div class="row" style="margin-top:15px">
-			<div class="col-md-3 col-md-offset-2 btn-group" data-toggle="buttons" >
-			  	<label class="btn btn-primary active" for="CPU">
-					<input id = "CPU" type="radio" value="CPU">CPU
-			  	</label>
-				<label class="btn btn-primary" for="1">
-					<input id = "1" type="radio" value="1">1 Jugador
-				</label>
-			</div>
-			<div class="col-md-5 alert alert-success hidden-xs hidden-sm">
+			<div class="col-md-6 col-md-offset-3 alert alert-success hidden-xs hidden-sm">
 			  <h4>Instrucciones</h4>
 				<div class="col-md-12">  
 				  <h5>Para PC:</h5>
 				  <ul>
-					  <li>Empezar / pausar el juego: pulsa Intro.</li>
-					  <li>Mover raqueta: 
-					  	<span class="glyphicon glyphicon-arrow-up"></span> 
-					  	<span class="glyphicon glyphicon-arrow-down"></span>
-					  	o W/S o arrastrar con el ratón.</li> 
+					  <li>Empezar / pausar el juego: pulsa en el cuadro central.</li>
+					  <li>Mover cuadro: pulsa y arrastra el cuadro central.</li> 
 				  </ul>
 			  	</div>
 			</div>
@@ -53,69 +42,43 @@
 				<div class="col-md-12">  
 				  <h5>Para Móvil/Tablet:</h5>
 				  <ul>
-					  <li>Empezar / pausar el juego: hacer doble tap.</li>
-					  <li>Mover raqueta: Mover el dedo por la pantalla.</li> 
+					  <li>Empezar / pausar el juego: pulsa en el cuadro central.</li>
+					  <li>Mover cuadro: pulsa y arrastra el cuadro central.</li> 
 				  </ul>
 			  	</div>
 			</div>
 		</div>
 		
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<div class="thumbnail">
 					<h3>Configuración de Tablero</h3>
 
-					<label for="backgroundColor">Color de fondo</label>
-					<input class="form-control" id="backgroundColor" type="color" value="#ffffff">
+					<label for="backgroundOutColor">Color de cuadro exterior</label>
+					<input class="form-control" id="backgroundOutColor" type="color">
 				
-					<label for="lineColor">Color de líneas</label>
-					<input class="form-control" id="lineColor" type="color">
-				
-					<label for="raquetColor">Color de raquetas</label>
-					<input class="form-control" id="raquetColor" type="color">
+					<label for="backgroundInColor">Color de cuadro interior</label>
+					<input class="form-control" id="backgroundInColor" type="color" value="#ffffff">
 
 				</div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<div class="thumbnail">
-					<h3>Configuración de Raquetas</h3>
+					<h3>Configuración de oponentes</h3>
 					
-					<label for="leftSpeed">Velocidad raqueta izquierda</label>
-					<input class="form-control" id="leftSpeed" type="number" min="1" value ="5"/>
+					<label for="selectColorOpponent">Color de oponentes</label>
+					<span id="selectColorOpponent"></span>
 					
-					<label for="rightSpeed">Velocidad raqueta derecha</label>
-					<input class="form-control" id="rightSpeed" type="number" min="1" value ="5"/>
+					<label for="opponentSpeed">Velocidad oponentes</label>
+					<input class="form-control" id="opponentSpeed" type="number" min="1" value ="2"/>
 					
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="thumbnail">
-					<h3>Configuración de Pelota</h3>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="thumbnail">
-								<label for="selectColorLeft">Primer color</label>
-								<span id="selectColorLeft"></span>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="thumbnail">
-								<label for="selectColorRight">Segundo color</label>
-								<span id="selectColorRight"></span>
-							</div>
-						</div>
-						
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<label for="numberZone">Número de franjas:</label>
-							<input class="form-control" id="numberZone" type="number" min="1" value ="5"/>
-						</div>
-						<div class="col-md-6">
-							<label for="ballSpeed">Velocidad de la pelota:</label>
-							<input class="form-control" id="ballSpeed" type="number" min="1" value ="5"/>
-						</div>
-					</div>
+					<h3>Configuración de jugador</h3>
+					<label for="selectColorPlayer">Color de jugador</label>
+					<span id="selectColorPlayer"></span>
 				</div>
 			</div>
 		</div>

@@ -113,7 +113,7 @@ $(document).ready(function(){
 
         };
         Kinetic.Rect.call(this, config);
-        this.speed = parseInt($("#leftSpeed").val());;
+        this.speed = parseInt($("#leftSpeed").val());
         this.name = 'Player';
 	};
 	Player.prototype = new Kinetic.Rect({});
