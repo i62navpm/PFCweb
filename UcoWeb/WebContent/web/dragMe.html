@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Drag-Me HTML5</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Juego Drag-Me HTML5">
+	<meta name="author" content="Manuel Navarro Pérez">
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="jquery-colorpickersliders/jquery.colorpickersliders.css" rel="stylesheet">
+	
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/kinetic-v4.7.2.js"></script>
+	
+	<script type="text/javascript" src="jquery-colorpickersliders/tinycolor.js"></script>
+	<script type="text/javascript" src="jquery-colorpickersliders/jquery.colorpickersliders.js"></script>
+	
+	<script type="text/javascript" src="js/dragMe.js"></script>
+	
+</head>
+<body>
+	<div class="container">
+		<h1>Drag-Me HTML5</h1>
+		<div class="row">
+			<div class="col-md-5 col-md-offset-3 col-xs-11" id="container"></div>
+		</div>
+		<div class="row" style="margin-top:15px">
+			<div class="col-md-6 col-md-offset-3 alert alert-success hidden-xs hidden-sm">
+			  <h4>Instrucciones</h4>
+				<div class="col-md-12">  
+				  <h5>Para PC:</h5>
+				  <ul>
+					  <li>Empezar / pausar el juego: pulsa en el cuadro central.</li>
+					  <li>Mover cuadro: pulsa y arrastra el cuadro central.</li> 
+				  </ul>
+			  	</div>
+			</div>
+			<div class="col-md-6 alert alert-success hidden-md">
+			  <h4>Instrucciones</h4>
+				<div class="col-md-12">  
+				  <h5>Para Móvil/Tablet:</h5>
+				  <ul>
+					  <li>Empezar / pausar el juego: pulsa en el cuadro central.</li>
+					  <li>Mover cuadro: pulsa y arrastra el cuadro central.</li> 
+				  </ul>
+			  	</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<div class="thumbnail">
+					<h3>Configuración de Tablero</h3>
+
+					<label for="backgroundOutColor">Color de cuadro exterior</label>
+					<input class="form-control" id="backgroundOutColor" type="color">
+				
+					<label for="backgroundInColor">Color de cuadro interior</label>
+					<input class="form-control" id="backgroundInColor" type="color" value="#ffffff">
+
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="thumbnail">
+					<h3>Configuración de oponentes</h3>
+					
+					<label for="selectColorOpponent">Color de oponentes</label>
+					<span id="selectColorOpponent"></span>
+					
+					<label for="opponentSpeed">Velocidad oponentes</label>
+					<input class="form-control" id="opponentSpeed" type="number" min="1" value ="2"/>
+					
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="thumbnail">
+					<h3>Configuración de jugador</h3>
+					<label for="selectColorPlayer">Color de jugador</label>
+					<span id="selectColorPlayer"></span>
+				</div>
+			</div>
+		</div>
+		
+	
+
+	</div>
+</body>
+</html>

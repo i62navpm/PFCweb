@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ping Pong HTML5</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Juego Ping-Pong HTML5">
+	<meta name="author" content="Manuel Navarro Pérez">
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="jquery-colorpickersliders/jquery.colorpickersliders.css" rel="stylesheet">
+	
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/kinetic-v4.7.2.js"></script>
+	
+	<script type="text/javascript" src="jquery-colorpickersliders/tinycolor.js"></script>
+	<script type="text/javascript" src="jquery-colorpickersliders/jquery.colorpickersliders.js"></script>
+	
+	<script type="text/javascript" src="js/pong.js"></script>
+	
+</head>
+<body>
+	<div class="container">
+		<h1>Ping-Pong HTML5</h1>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 col-xs-11" id="container"></div>
+		</div>
+		<div class="row" style="margin-top:15px">
+			<div class="col-md-3 col-md-offset-2 btn-group" data-toggle="buttons" >
+			  	<label class="btn btn-primary active" for="CPU">
+					<input id = "CPU" type="radio" value="CPU">CPU
+			  	</label>
+				<label class="btn btn-primary" for="1">
+					<input id = "1" type="radio" value="1">1 Jugador
+				</label>
+			</div>
+			<div class="col-md-5 alert alert-success hidden-xs hidden-sm">
+			  <h4>Instrucciones</h4>
+				<div class="col-md-12">  
+				  <h5>Para PC:</h5>
+				  <ul>
+					  <li>Empezar / pausar el juego: pulsa Intro.</li>
+					  <li>Mover raqueta: 
+					  	<span class="glyphicon glyphicon-arrow-up"></span> 
+					  	<span class="glyphicon glyphicon-arrow-down"></span>
+					  	o W/S o arrastrar con el ratón.</li> 
+				  </ul>
+			  	</div>
+			</div>
+			<div class="col-md-6 alert alert-success hidden-md">
+			  <h4>Instrucciones</h4>
+				<div class="col-md-12">  
+				  <h5>Para Móvil/Tablet:</h5>
+				  <ul>
+					  <li>Empezar / pausar el juego: hacer doble tap.</li>
+					  <li>Mover raqueta: Mover el dedo por la pantalla.</li> 
+				  </ul>
+			  	</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-3">
+				<div class="thumbnail">
+					<h3>Configuración de Tablero</h3>
+
+					<label for="backgroundColor">Color de fondo</label>
+					<input class="form-control" id="backgroundColor" type="color" value="#ffffff">
+				
+					<label for="lineColor">Color de líneas</label>
+					<input class="form-control" id="lineColor" type="color">
+				
+					<label for="raquetColor">Color de raquetas</label>
+					<input class="form-control" id="raquetColor" type="color">
+
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="thumbnail">
+					<h3>Configuración de Raquetas</h3>
+					
+					<label for="leftSpeed">Velocidad raqueta izquierda</label>
+					<input class="form-control" id="leftSpeed" type="number" min="1" value ="5"/>
+					
+					<label for="rightSpeed">Velocidad raqueta derecha</label>
+					<input class="form-control" id="rightSpeed" type="number" min="1" value ="5"/>
+					
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="thumbnail">
+					<h3>Configuración de Pelota</h3>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="thumbnail">
+								<label for="selectColorLeft">Primer color</label>
+								<span id="selectColorLeft"></span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="thumbnail">
+								<label for="selectColorRight">Segundo color</label>
+								<span id="selectColorRight"></span>
+							</div>
+						</div>
+						
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label for="numberZone">Número de franjas:</label>
+							<input class="form-control" id="numberZone" type="number" min="1" value ="5"/>
+						</div>
+						<div class="col-md-6">
+							<label for="ballSpeed">Velocidad de la pelota:</label>
+							<input class="form-control" id="ballSpeed" type="number" min="1" value ="5"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	
+
+	</div>
+</body>
+</html>

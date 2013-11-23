@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Juegos HTML5</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Menú Juegos HTML5">
+	<meta name="author" content="Manuel Navarro Pérez">
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/baraja.css" rel="stylesheet">
+	<link href="css/custom.css" rel="stylesheet">
+	
+	
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/modernizr.custom.79639.js"></script>
+	<script type="text/javascript" src="js/jquery.baraja.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			var $el = $( '#baraja-el' ),
+			baraja = $el.baraja();
+			baraja.fan( {
+				speed : 500,
+				easing : 'ease-out',
+				range : 90,
+				direction : 'left',
+				// note that the x origin changes (symmetric)
+				origin : { x : 75, y : 100 },
+				center : true
+			} );
+
+		});
+	</script>
+	
+	<style type="text/css">
+		.jumbotron{
+			background-image: url(./images/wood.jpg);
+			border-top: 2px black solid;
+			border-bottom: 2px black solid;
+		}
+		
+		.box_skitter_large{
+			-moz-border-radius: 15px;
+			border-radius: 15px;
+		}
+		
+		body{
+			position: relative;
+			-webkit-transition: left .2s ease;
+		}
+		
+		img{
+			-moz-border-radius: 15px;
+			border-radius: 15px;
+		}
+
+	</style>
+</head>
+<body background="./images/noisy.png">
+	<nav class="navbar navbar-default" role="navigation">
+		<a class="navbar-brand" href="#">Juegos HTML5</a>
+		<form class="navbar-form navbar-right form-inline" role="form">
+			<div class="form-group">
+				<label class="sr-only" for="inputEmail">Correo</label>
+				<input type="email" class="form-control input-sm" id="inputEmail" placeholder="Introduzca correo">
+			</div>
+			<div class="form-group">
+				<label class="sr-only" for="inputPassword">Contraseña</label>
+				<input type="password" class="form-control input-sm" id="inputPassword" placeholder="Contraseña">
+			</div>
+			<button type="submit" class="btn btn-primary btn-sm">Entrar</button>
+		</form>
+	</nav>
+	
+	<div class="jumbotron">
+		<div class="container">
+	  			<div class="baraja-demo">
+					<ul id="baraja-el" class="baraja-container">
+					    <li>
+					        <img src="images/1.jpg" alt="image1"/>
+					        <h4>Coco Loko</h4>
+					        <p>Total bicycle rights in blog four loko raw denim ex, helvetica sapiente odio placeat.</p>
+					    </li>
+					    
+					    <li>
+					        <img src="images/2.jpg" alt="image1"/>
+					        <h4>Coco Loko</h4>
+					        <p>Total bicycle rights in blog four loko raw denim ex, helvetica sapiente odio placeat.</p>
+					    </li>
+					</ul>
+			</div>
+		</div>
+	</div>
+	
+
+	
+	<nav class="navbar navbar-default  navbar-fixed-bottom" role="navigation">
+		<p class="navbar-text">Universidad de Córdoba 2013</p>
+	</nav>
+</body>
+</html>
