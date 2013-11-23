@@ -1,11 +1,15 @@
 package acces;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Servlet implementation class User
@@ -37,6 +41,26 @@ public class User extends HttpServlet {
 		
 		System.out.println(request.getParameter("email"));
 		System.out.println(request.getParameter("password"));
+		
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("navBar", "Manuel");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		response.setContentType("application/json");
+		response.getWriter().write(obj.toString());
+		
+		
+		
+		/*
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+	    out.println("texto");*/
+		
+		
 	}
 
 }

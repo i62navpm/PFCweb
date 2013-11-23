@@ -13,7 +13,7 @@ $(document).ready(function(){
 					email: $("#inputEmail").val(),
 					password: $("#inputPassword").val()
 			};
-			
+			var response = null;
 			$.ajax({
 			    url : "http://localhost:8080/UcoWeb/User",
 			    type: "POST",
@@ -28,7 +28,7 @@ $(document).ready(function(){
 			    	response = textStatus;
 			    }
 			}).done(function( msg ) {
-			    console.log(datos);}
+				console.log(response);}
 			);
 
 		}
