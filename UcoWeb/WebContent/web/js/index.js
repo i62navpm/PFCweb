@@ -1,13 +1,9 @@
 $(document).ready(function(){
-	
+
+	$('#error').hide();
 	$( "#enter" ).click(function() {
 		if (validEmail() && validPassword()){
 			toggleContent();
-			
-			/*setTimeout(function(){
-				$("#content").text("Ingresado.");
-				toggleContent();
-			}, 1000);*/
 			
 			var formData = {
 					email: $("#inputEmail").val(),
@@ -35,24 +31,27 @@ $(document).ready(function(){
 	});
 	
 	$( "#inputEmail" ).focusout(function() {
-		if($('#error').hasClass('in') && validEmail()){
-        	$("#error").collapse('toggle');
+		if(validEmail()){
+			$('#error').hide(500);
         	$("#enterEmail.form-group").removeClass("has-error");
         	$("#enterEmail.form-group").addClass("has-success");
 		}
 		});
 	$( "#inputPassword" ).focusout(function() {
-		if($('#error').hasClass('in')  && validPassword()){
-        	$("#error").collapse('toggle');
+		if(validPassword()){
+        	$('#error').hide(500);
 			$("#enterPassword.form-group").removeClass("has-error");
 	    	$("#enterPassword.form-group").addClass("has-success");
 		}
 		});
 	
 	function toggleContent(){
-		$( "#content" ).animate({
-		    height: "toggle"
-		  }, 1000, function() {});
+		$("#leftDiv").animate({
+		    left: "-120%",
+		  }, 1000 );
+		$("#rightDiv").animate({
+			left: "-120%",
+		  }, 1000 );
 	}
 	
 	function validEmail(){
@@ -62,16 +61,17 @@ $(document).ready(function(){
 	        $("#inputEmail").focus();
 	        $("#enterEmail.form-group").addClass("has-error");
 	        $("#errorText").text("Debe introducir una cuenta de correo.");
-	        if(!$('#error').hasClass('in') )
-	        	$("#error").collapse('toggle');
+    		$('#error').show(500);
+	        
+	        /*if(!$('#error').hasClass('in') )
+	        	$("#error").collapse('toggle');*/
 	        return false;
 	    }
 		else if (!re.test($("#inputEmail").val())){
 			$("#inputEmail").focus();
 			$("#enterEmail.form-group").addClass("has-error");
 	        $("#errorText").text("El correo introducido no es correcto.");
-	        if(!$('#error').hasClass('in') )
-	        	$("#error").collapse('toggle');
+       		$('#error').show(500);
 	        return false;
 	    }
 	    return true;
@@ -85,8 +85,7 @@ $(document).ready(function(){
 	        $("#inputPassword").focus();
 	        $("#enterPassword.form-group").addClass("has-error");
 	        $("#errorText").text("Debe introducir una contraseña.");
-	        if(!$('#error').hasClass('in') )
-	        	$("#error").collapse('toggle');
+	        $('#error').show(500);
 	        return false;
 	    }
 		else if ($("#inputPassword").val().length<=6){
@@ -96,9 +95,7 @@ $(document).ready(function(){
 			$("#error").removeClass("alert-danger");
 			$("#error").addClass("alert-warning");
 			$("#errorText").text("Introduzca una contraseña de más de 6 carácteres.");
-	        if(!$('#error').hasClass('in') )
-	        	$("#error").collapse('toggle');
-	        
+			$('#error').show(500);
 	        return false;
 	    }
 	    return true;

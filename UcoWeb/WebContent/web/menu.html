@@ -10,34 +10,23 @@
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/baraja.css" rel="stylesheet">
 	<link href="css/custom.css" rel="stylesheet">
-	
+	<link href="css/liteaccordion.css" rel="stylesheet">
+	<link href="css/reset.css" rel="stylesheet">
+	<link href="css/stimenu.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 	
 	<script src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/modernizr.custom.79639.js"></script>
 	<script type="text/javascript" src="js/jquery.baraja.js"></script>
-	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			
-			var $el = $( '#baraja-el' ),
-			baraja = $el.baraja();
-			baraja.fan( {
-				speed : 500,
-				easing : 'ease-out',
-				range : 90,
-				direction : 'left',
-				// note that the x origin changes (symmetric)
-				origin : { x : 75, y : 100 },
-				center : true
-			} );
-
-		});
-	</script>
+	<script type="text/javascript" src="js/liteaccordion.jquery.js"></script>
+	<script type="text/javascript" src="js/menu.js"></script>
+	<script type="text/javascript" src="js/jquery.iconmenu.js"></script>
 	
 	<style type="text/css">
 		.jumbotron{
-			background-image: url(./images/wood.jpg);
+			background-image: url(./images/Wood.jpg);
 			border-top: 2px black solid;
 			border-bottom: 2px black solid;
 		}
@@ -77,24 +66,67 @@
 	
 	<div class="jumbotron">
 		<div class="container">
-	  			<div class="baraja-demo">
-					<ul id="baraja-el" class="baraja-container">
-					    <li>
-					        <img src="images/1.jpg" alt="image1"/>
-					        <h4>Coco Loko</h4>
-					        <p>Total bicycle rights in blog four loko raw denim ex, helvetica sapiente odio placeat.</p>
-					    </li>
-					    
-					    <li>
-					        <img src="images/2.jpg" alt="image1"/>
-					        <h4>Coco Loko</h4>
-					        <p>Total bicycle rights in blog four loko raw denim ex, helvetica sapiente odio placeat.</p>
-					    </li>
-					</ul>
+  			<div class="row">
+	  			<div class="col-md-7" id="baraja" style="border:2px solid black">
+		  			<div class="baraja-demo">
+						<ul id="baraja-el" class="baraja-container">
+						    <li id="pong">
+						        <img src="images/1.jpg" alt="image1"/>
+						        <h4>Pong</h4>
+						        <p>Total bicycle rights in blog four loko raw denim ex, helvetica sapiente odio placeat.</p>
+						    </li>
+						    <li id="tetris">
+						        <img src="images/2.jpg" alt="image2"/>
+						        <h4>Tetris</h4>
+						        <p>Total bicycle rights in blog four loko raw denim ex, helvetica sapiente odio placeat.</p>
+						    </li>
+						    <li id="dragMe">
+						        <img src="images/3.jpg" alt="image3"/>
+						        <h4>Drag Me</h4>
+						        <p>Total bicycle rights in blog four loko raw denim ex, helvetica sapiente odio placeat.</p>
+						    </li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-5" id="rightDiv" style="padding-left:0px">
+					<div id="scores" >
+						<ol>
+		                    <li>
+		                        <h2><span>Slide One</span></h2>
+		                        <div></div>
+		                    </li>
+		                    <li>
+		                        <h2><span>Slide Two</span></h2>
+		                        <div></div>
+		                    </li>
+		                    <li>
+		                        <h2><span>Slide Three</span></h2>
+		                        <div></div>
+		                    </li>
+		                </ol>
+	                </div>
+				</div>
+			</div>
+			<div class="row" >
+				<div class="col-md-7" style="border:2px solid black">
+				<ul id="sti-menu" class="sti-menu">
+				    <li data-hovercolor="#37c5e9">
+				        <a href="#">
+				            <h2 data-type="mText" class="sti-item">
+				                Some text
+				            </h2>
+				            <h3 data-type="sText" class="sti-item">
+				                Some more text
+				            </h3>
+				            <span data-type="icon" class="sti-icon sti-icon-care sti-item">
+				            </span>
+				        </a>
+				    </li>
+				</ul>
+				</div>
 			</div>
 		</div>
 	</div>
-	
 
 	
 	<nav class="navbar navbar-default  navbar-fixed-bottom" role="navigation">

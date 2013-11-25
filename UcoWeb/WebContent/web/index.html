@@ -58,14 +58,17 @@
 		}
 		
 		#navbar{
-			background-color: #252525
+			background-color: #428bca;
+			-moz-box-shadow: 0px 5px 5px #888;
+			-webkit-box-shadow: 0px 5px 5px #888;
+			box-shadow: 0px 5px 5px #888;
 		}
 	</style>
 				
 </head>
 <body background="./images/noisy.png">
 	<nav class="navbar navbar-default" id="navbar" role="navigation">
-		<a class="navbar-brand" style="color:#00AFE5; font-weight:bold" href="#">Juegos HTML5</a>
+		<a class="navbar-brand" style="color:#FFFFFF; font-weight:bold" href="#">Juegos HTML5</a>
 		<form class="navbar-form navbar-right form-inline" role="form">
 			<div class="form-group" id=enterEmail>
 				<label class="sr-only" for="inputEmail">Correo</label>
@@ -79,16 +82,16 @@
 		</form>
 	</nav>
 	
-	<div class="alert alert-danger collapse" id="error">
+	<div class="alert alert-danger" id="error">
         <h4>Error!</h4>
         <p id="errorText"></p>
      </div>	
 	
 	
 	<div class="jumbotron">
-		<div class="container" id="content">
-	  		<div class="row">
-	  			<div class="col-md-7">
+		<div class="container">
+	  		<div class="row" >
+	  			<div class="col-md-7" id="leftDiv">
 	  			<div class="box_skitter box_skitter_large">
 	  				<ul>
 	  					<li>
@@ -107,7 +110,7 @@
 	  			</div>
 	  			
 	  			</div>
-	  			<div class="col-md-5">
+	  			<div class="col-md-5" id="rightDiv">
 		  			<div class="panel panel-primary" id="register">
 				    	<div class="panel-heading">
 				        	<h3>¿Eres nuevo? <small style="color:white"> Regístrate</small></h3>
