@@ -1,22 +1,6 @@
 $(document).ready(function(){
 	
-	$('#sti-menu').iconmenu({
-		animMouseenter	: {
-			'mText' : {speed : 400, easing : 'easeOutExpo', delay : 140, dir : 1},
-			'sText' : {speed : 400, easing : 'easeOutExpo', delay : 0, dir : 1},
-			'icon'  : {speed : 800, easing : 'easeOutBounce', delay : 280, dir : 1}
-		},
-		animMouseleave	: {
-			'mText' : {speed : 400, easing : 'easeInExpo', delay : 140, dir : 1},
-			'sText' : {speed : 400, easing : 'easeInExpo', delay : 280, dir : 1},
-			'icon'  : {speed : 400, easing : 'easeInExpo', delay : 0, dir : 1}
-		}
-	});
-
-	
-	showGames();
-	
-	$("#scores").css({left:"110%"});
+	$("#scores").css({left:"120%"});
 	var baraja = $('#baraja-el').baraja();
 	baraja.fan( {
 		speed : 500,
@@ -28,13 +12,35 @@ $(document).ready(function(){
 	});
 	
 	$('#scores').liteAccordion({
-		containerWidth : $(".col-md-5").width()-4,
-		containerHeight : $("#baraja").height()-4,
+		containerWidth : $(".col-md-6").width(),
+		containerHeight : "200px",
 		theme: "stitch"
-		
 	});
 	
 	var closedDeck = false;
+	
+	$("#options").css("left", "-110%");
+	
+	
+	
+	
+	$(function() {
+		$('#sti-menu').iconmenu({
+			animMouseenter	: {
+				'mText' : {speed : 500, easing : 'easeOutExpo', delay : 200, dir : -1},
+				'sText' : {speed : 500, easing : 'easeOutExpo', delay : 200, dir : -1},
+				'icon'  : {speed : 700, easing : 'easeOutBounce', delay : 0, dir : 1}
+			},
+			animMouseleave	: {
+				'mText' : {speed : 400, easing : 'easeInExpo', delay : 0, dir : -1},
+				'sText' : {speed : 400, easing : 'easeInExpo', delay : 0, dir : 1},
+				'icon'  : {speed : 400, easing : 'easeInExpo', delay : 0, dir : -1}
+			}
+		});
+	});
+
+	
+	showGames();
 	
 	$("#baraja-el").click(function() {
 		var target = $( event.target );
@@ -43,11 +49,14 @@ $(document).ready(function(){
 		if (closedDeck){
 			openGame(game);
 			showScores();
+			showOptions();
 		}
 		else{
 			showGames();
 			hideScores();
+			hideOptions();
 		}
+		
 	});
 	
 	function openGame(game){
@@ -55,7 +64,7 @@ $(document).ready(function(){
 		    left: "0"
 		  }, 1500 );
 		$(".baraja-container").animate({
-			height: 155,
+			height: $(".baraja-container").height()/2,
 		},1500);
 		
 		$(".baraja-container h4").hide();
@@ -64,7 +73,7 @@ $(document).ready(function(){
 	
 	function showGames(game){
 		$( "#baraja" ).animate({
-		    left: ($(".container").width()-$(".col-md-7").width())/2,
+		    left: ($(".container").width()-$(".col-md-6").width())/2,
 		  }, 1500 );
 		$(".baraja-container").animate({
 			height: 310,
@@ -79,9 +88,22 @@ $(document).ready(function(){
 		    left: "0",
 		  }, 1500 );
 	}
+	
 	function hideScores(){
 		$( "#scores" ).animate({
-		    left: "110%",
+		    left: "120%",
+		  }, 1500 );
+	}
+	
+	function showOptions(){
+		$( "#options" ).animate({
+		    left: "0",
+		  }, 1500 );
+	}
+	
+	function hideOptions(){
+		$( "#options" ).animate({
+		    left: "-110%",
 		  }, 1500 );
 	}
 	

@@ -2,13 +2,18 @@
 .sti-menu{
 	width:100%;
 	position:relative;
-	margin:60px auto 0 auto;
 }
 .sti-menu li{
 	float:left;
 	width:200px;
-	height:300px;
-	margin:1px;
+	height:200px;
+	margin:auto 5px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	-moz-box-shadow: 0px 5px 5px #888;
+	-webkit-box-shadow: 0px 5px 5px #888;
+	box-shadow: 0px 5px 5px #888;
+	
 }
 .sti-menu li a{
 	display:block;
@@ -21,31 +26,27 @@
 	-moz-box-shadow:1px 1px 2px #ddd;
 	-webkit-box-shadow:1px 1px 2px #ddd;
 	box-shadow:1px 1px 2px #ddd;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 }
+
+.sti-menu li a:hover{
+	background: #EBEBEB;
+}
+
 .sti-menu li a h2{
 	color:#000;
-	font-family: 'Wire One', arial, serif; 
-	font-size:42px;
-	font-weight:bold;
+	 
+	font-size:18px;
 	text-transform:uppercase;
 	position:absolute;
 	padding:10px;
-	width:180px;
+	width: 100%;
 	top:140px;
 	left:0px;
 	text-shadow: 0px 1px 1px black;
 }
-.sti-menu li a h3{
-	font-family: Baskerville, "Hoefler Text", Garamond, "Times New Roman", serif; 
-	font-size:18px;
-	font-style:italic;
-	color: #111;
-	position:absolute;
-	top:248px;
-	left:0px;
-	width:180px;
-	padding:10px;
-}
+
 .sti-icon{
 	width:100px;
 	height:100px;
@@ -53,7 +54,7 @@
 	background-position:top left;
 	background-repeat:no-repeat;
 	background-color:transparent;
-	left:50px;
+	left:20%;
 	top:30px;
 }
 .sti-icon-care{
