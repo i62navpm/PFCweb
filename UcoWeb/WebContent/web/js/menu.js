@@ -1,30 +1,41 @@
 $(document).ready(function(){
 	
-	$("#scores").css({left:"120%"});
-	var baraja = $('#baraja-el').baraja();
-	baraja.fan( {
-		speed : 500,
-		easing : 'ease-out',
-		range : 90,
-		direction : 'left',
-		origin : { x : 75, y : 100 },
-		center : true
-	});
-	
-	$('#scores').liteAccordion({
-		containerWidth : $(".col-md-6").width(),
-		containerHeight : "200px",
-		theme: "stitch"
-	});
-	
 	var closedDeck = false;
 	
-	$("#options").css("left", "-110%");
+	function initMenu(){
+		initGames();
+		initScores();
+		initOptions();
+		$(".container").css({visibility:"visible"});
+		console.log("camon");
+		showGames();
+	};
 	
+	function initGames(){
+		$("#scores").css({left:"120%"});
+		var baraja = $('#baraja-el').baraja();
+		baraja.fan( {
+			speed : 500,
+			easing : 'ease-out',
+			range : 90,
+			direction : 'left',
+			origin : { x : 75, y : 100 },
+			center : true
+		});
+		
+		$("#button").css({left:"-120%"});
+	};
 	
+	function initScores(){
+		$('#scores').liteAccordion({
+			containerWidth : $(".col-md-6").width(),
+			containerHeight : "200px",
+			theme: "stitch"
+		});
+	}
 	
-	
-	$(function() {
+	function initOptions() {
+		$("#options").css("left", "-110%");
 		$('#sti-menu').iconmenu({
 			animMouseenter	: {
 				'mText' : {speed : 500, easing : 'easeOutExpo', delay : 200, dir : -1},
@@ -37,10 +48,7 @@ $(document).ready(function(){
 				'icon'  : {speed : 400, easing : 'easeInExpo', delay : 0, dir : -1}
 			}
 		});
-	});
-
-	
-	showGames();
+	};
 	
 	$("#baraja-el").click(function() {
 		var target = $( event.target );
@@ -56,7 +64,6 @@ $(document).ready(function(){
 			hideScores();
 			hideOptions();
 		}
-		
 	});
 	
 	function openGame(game){
@@ -65,6 +72,10 @@ $(document).ready(function(){
 		  }, 1500 );
 		$(".baraja-container").animate({
 			height: $(".baraja-container").height()/2,
+		},1500);
+		
+		$("#button").animate({
+			left: "0",
 		},1500);
 		
 		$(".baraja-container h4").hide();
@@ -78,9 +89,11 @@ $(document).ready(function(){
 		$(".baraja-container").animate({
 			height: 310,
 		},0);
+		$("#button").animate({
+			left: "-120%",
+		},1500);
 		$(".baraja-container h4").show();
 		$(".baraja-container p").show();
-		
 	}
 	
 	function showScores(){
@@ -107,4 +120,7 @@ $(document).ready(function(){
 		  }, 1500 );
 	}
 	
+	$(function(){
+	    initMenu();
+	});
 });

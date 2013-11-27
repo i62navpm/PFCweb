@@ -8,8 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  * Servlet implementation class User
@@ -39,12 +44,33 @@ public class User extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		System.out.println(request.getParameter("email"));
-		System.out.println(request.getParameter("password"));
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		
+		System.out.println(email);
+		System.out.println(password);
+		
+		Document doc = Jsoup.connect("http://localhost:8080/UcoWeb/web/menu.html").get();
+		Element aux = doc.getElementById("userName");
+		aux.html(email+" <b class='caret'></b>");
+		System.out.println(aux.html());
+		
+		Elements scripts = doc.getElementsByTag("script");
+		
+		Element body = doc.body();
+		
+		String url = "http://localhost:8080/UcoWeb/web/";
 		JSONObject obj = new JSONObject();
+		JSONArray lst = new JSONArray();
+		
 		try {
-			obj.put("navBar", "Manuel");
+			for (Element sc : scripts)
+				lst.put(url+sc.attr("src"));
+			obj.put("user", email);
+			//obj.put("scripts", scripts);
+			obj.put("body", body);
+			obj.put("scripts", lst);
+			System.out.println(lst);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,12 +79,6 @@ public class User extends HttpServlet {
 		response.setContentType("application/json");
 		response.getWriter().write(obj.toString());
 		
-		
-		
-		/*
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-	    out.println("texto");*/
 		
 		
 	}

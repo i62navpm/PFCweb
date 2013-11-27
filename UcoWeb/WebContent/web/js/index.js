@@ -1,34 +1,50 @@
 $(document).ready(function(){
+	function initIndex(){
+		$('#error').hide();
+		initGallery();
+		
+		$( "#enter" ).click(function() {
+			if (validEmail() && validPassword()){
+				toggleContent();
+				
+				var formData = {
+						email: $("#inputEmail").val(),
+						password: $("#inputPassword").val()
+				};
+				var response = null;
+				$.ajax({
+				    url : "http://localhost:8080/UcoWeb/User",
+				    type: "POST",
+				    data: formData,
+				    dataType: "json",
+				    success: function(data, textStatus, jqXHR)
+				    {
+				        response = data;
+				    },
+				    error: function (jqXHR, textStatus, errorThrown)
+				    {
+				    	response = textStatus;
+				    }
+				}).done(function( msg ) {
+					console.log(response["user"]);
+					document.body.innerHTML= response["body"];
+					console.log(response["scripts"]);
+					for(aux in response["scripts"])
+						loadjsfile(response["scripts"][aux], 'js');
+				});
+	
+			}
+		});
+	}
+	
+	function loadjsfile(filename){
+		var fileref=document.createElement('script');
+		fileref.setAttribute("type","text/javascript");
+		fileref.setAttribute("src", filename);
 
-	$('#error').hide();
-	$( "#enter" ).click(function() {
-		if (validEmail() && validPassword()){
-			toggleContent();
-			
-			var formData = {
-					email: $("#inputEmail").val(),
-					password: $("#inputPassword").val()
-			};
-			var response = null;
-			$.ajax({
-			    url : "http://localhost:8080/UcoWeb/User",
-			    type: "POST",
-			    data: formData,
-			    dataType: "json",
-			    success: function(data, textStatus, jqXHR)
-			    {
-			        response = data;
-			    },
-			    error: function (jqXHR, textStatus, errorThrown)
-			    {
-			    	response = textStatus;
-			    }
-			}).done(function( msg ) {
-				console.log(response);}
-			);
-
-		}
-	});
+		if (typeof fileref!="undefined")
+			document.getElementsByTagName("head")[0].appendChild(fileref);
+	}
 	
 	$( "#inputEmail" ).focusout(function() {
 		if(validEmail()){
@@ -44,6 +60,21 @@ $(document).ready(function(){
 	    	$("#enterPassword.form-group").addClass("has-success");
 		}
 		});
+	
+	function initGallery(){
+		$(".box_skitter_large").skitter({
+			theme: 'round',
+			dots: true, 
+			preview: true,
+			hideTools: true,
+			numbers_align: 'center',
+			
+		});
+		
+		$(".box_skitter_large").height($("#register").height());
+		$(".box_skitter").height($(".box_skitter_large").height());
+		$(".container_skitter").height($(".box_skitter_large").height());
+	}
 	
 	function toggleContent(){
 		$("#leftDiv").animate({
@@ -100,4 +131,8 @@ $(document).ready(function(){
 	    }
 	    return true;
 	}
+	
+	$(function(){
+	    initIndex();
+	});
 });
