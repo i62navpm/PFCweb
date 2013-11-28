@@ -51,26 +51,26 @@ public class User extends HttpServlet {
 		System.out.println(password);
 		
 		Document doc = Jsoup.connect("http://localhost:8080/UcoWeb/web/menu.html").get();
-		Element aux = doc.getElementById("userName");
-		aux.html(email+" <b class='caret'></b>");
-		System.out.println(aux.html());
 		
 		Elements scripts = doc.getElementsByTag("script");
-		
-		Element body = doc.body();
+		Elements links = doc.getElementsByTag("link");
+		String container = doc.getElementsByClass("container").html();
 		
 		String url = "http://localhost:8080/UcoWeb/web/";
+		
 		JSONObject obj = new JSONObject();
-		JSONArray lst = new JSONArray();
+		JSONArray lstScript = new JSONArray();
+		JSONArray lstLink = new JSONArray();
 		
 		try {
 			for (Element sc : scripts)
-				lst.put(url+sc.attr("src"));
-			obj.put("user", email);
-			//obj.put("scripts", scripts);
-			obj.put("body", body);
-			obj.put("scripts", lst);
-			System.out.println(lst);
+				lstScript.put(url+sc.attr("src"));
+			for (Element lk : links)
+				lstLink.put(url+lk.attr("href"));
+			obj.put("user", "Usuario");
+			obj.put("body", container.toString());
+			obj.put("scripts", lstScript);
+			obj.put("links", lstLink);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

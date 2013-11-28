@@ -9,11 +9,6 @@
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/skitter.styles.css" rel="stylesheet">
-	<link href="css/baraja.css" rel="stylesheet">
-	<link href="css/custom.css" rel="stylesheet">
-	<link href="css/liteaccordion.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
-	<link href="css/stimenu.css" rel="stylesheet">
 	
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
@@ -47,10 +42,10 @@
 	</style>
 				
 </head>
-<body background="./images/noisy.png">
+<body background="./images/noisy.png" style="overflow-x:hidden;">
 	<nav class="navbar navbar-default" id="navbar" role="navigation">
 		<a class="navbar-brand" style="color:#FFFFFF; font-weight:bold" href="#">Juegos HTML5</a>
-		<form class="navbar-form navbar-right form-inline" role="form">
+		<form class="navbar-form navbar-right form-inline" role="form" id="userReg" style="position:relative;">
 			<div class="form-group" id=enterEmail>
 				<label class="sr-only" for="inputEmail">Correo</label>
 				<input type="email" class="form-control input-sm" id="inputEmail" placeholder="Introduzca correo" required value="a@a.es">
@@ -61,6 +56,17 @@
 			</div>
 			<button type="button"  id="enter" class="btn btn-success btn-sm">Entrar</button>
 		</form>
+		
+		<ul class="nav navbar-nav navbar-right" id="userId" style="position:relative; left:50%">
+			<li class="dropdown">
+		        <a href="#" id="userName" class="dropdown-toggle" data-toggle="dropdown" style="color:#FFFFFF; font-weight: bold;">User <b class="caret"></b></a>
+		        <ul class="dropdown-menu">
+		          <li><a href="#">Modificar datos</a></li>
+		          <li class="divider"></li>
+		          <li><a href="#">Salir</a></li>
+		        </ul>
+	      	</li>
+		</ul>
 	</nav>
 	
 	<div class="alert alert-danger" id="error">
@@ -70,9 +76,9 @@
 	
 	
 	<div class="jumbotron">
-		<div class="container">
+		<div class="container" style="position:relative; padding-left:0">
 	  		<div class="row" >
-	  			<div class="col-md-7" id="leftDiv">
+	  			<div class="col-md-7">
 	  			<div class="box_skitter box_skitter_large">
 	  				<ul>
 	  					<li>
@@ -91,7 +97,7 @@
 	  			</div>
 	  			
 	  			</div>
-	  			<div class="col-md-5" id="rightDiv">
+	  			<div class="col-md-5">
 		  			<div class="panel panel-primary" id="register">
 				    	<div class="panel-heading">
 				        	<h3>¿Eres nuevo? <small style="color:white"> Regístrate</small></h3>

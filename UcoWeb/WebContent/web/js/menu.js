@@ -1,15 +1,38 @@
 $(document).ready(function(){
 	
+	
 	var closedDeck = false;
 	
 	function initMenu(){
+		showContainer();
 		initGames();
 		initScores();
 		initOptions();
-		$(".container").css({visibility:"visible"});
-		console.log("camon");
 		showGames();
 	};
+	
+	function hideTools(){
+		$("#scores").css({visibility:"hidden"});
+		$("#options").css({visibility:"hidden"});
+		$("#button").css({visibility:"hidden"});
+	}
+	
+	function showTools(){
+		$("#scores").css({visibility:"visible"});
+		$("#options").css({visibility:"visible"});
+		$("#button").css({visibility:"visible"});
+	}
+	function hideContainer(){
+		$(".container").animate({
+		    left: "120%",
+		  }, 1000);
+	}
+	
+	function showContainer(){
+		$(".container").animate({
+		    left: "0",
+		  }, 1000);
+	}
 	
 	function initGames(){
 		$("#scores").css({left:"120%"});
@@ -22,7 +45,6 @@ $(document).ready(function(){
 			origin : { x : 75, y : 100 },
 			center : true
 		});
-		
 		$("#button").css({left:"-120%"});
 	};
 	
@@ -67,6 +89,8 @@ $(document).ready(function(){
 	});
 	
 	function openGame(game){
+		showTools();
+		
 		$("#baraja").animate({
 		    left: "0"
 		  }, 1500 );
@@ -121,6 +145,13 @@ $(document).ready(function(){
 	}
 	
 	$(function(){
-	    initMenu();
+		$(".btn").css({
+			"-moz-box-shadow":"5px 5px 5px #888",
+			"-webkit-box-shadow":"5px 5px 5px #888",
+			"box-shadow":"5px 5px 5px #888"
+		});
+		$(".container").css({visibility:"visible"});
+		hideTools();
+		initMenu();
 	});
 });

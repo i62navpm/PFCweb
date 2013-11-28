@@ -1,17 +1,18 @@
 $(document).ready(function(){
+	var response = null;
 	function initIndex(){
+		
+		
 		$('#error').hide();
 		initGallery();
 		
 		$( "#enter" ).click(function() {
 			if (validEmail() && validPassword()){
-				toggleContent();
-				
 				var formData = {
 						email: $("#inputEmail").val(),
 						password: $("#inputPassword").val()
 				};
-				var response = null;
+				
 				$.ajax({
 				    url : "http://localhost:8080/UcoWeb/User",
 				    type: "POST",
@@ -26,22 +27,49 @@ $(document).ready(function(){
 				    	response = textStatus;
 				    }
 				}).done(function( msg ) {
-					console.log(response["user"]);
-					document.body.innerHTML= response["body"];
-					console.log(response["scripts"]);
-					for(aux in response["scripts"])
-						loadjsfile(response["scripts"][aux], 'js');
+					$("#userName").html(response["user"] +"<b class='caret'></b>");
+					showUserId();
+					changePage();
+					//document.body.innerHTML= response["body"];
+					//console.log(response["scripts"]);
+					
+					//$(".container").html(response["body"]);
 				});
 	
 			}
 		});
 	}
 	
-	function loadjsfile(filename){
-		var fileref=document.createElement('script');
-		fileref.setAttribute("type","text/javascript");
-		fileref.setAttribute("src", filename);
-
+	function showUserId(){
+		$("#userReg").animate({
+		    left: "50%",
+		  }, 1000 );
+		$("#userId").animate({
+		    left: "35%",
+		  }, 1000);
+	}
+	function hideUserId(){
+		$("#userReg").animate({
+		    left: "0",
+		  }, 1000 );
+		$("#userId").animate({
+		    left: "50%",
+		  }, 1000);
+	}
+	
+	function loadjscssfile(filename, filetype){
+		var fileref = undefined;
+		if (filetype=="js"){
+			fileref=document.createElement('script');
+			fileref.setAttribute("type","text/javascript");
+			fileref.setAttribute("src", filename);
+		}
+		else if (filetype=="css"){
+			fileref=document.createElement("link");
+			fileref.setAttribute("rel", "stylesheet");
+			fileref.setAttribute("type", "text/css");
+			fileref.setAttribute("href", filename);
+		}
 		if (typeof fileref!="undefined")
 			document.getElementsByTagName("head")[0].appendChild(fileref);
 	}
@@ -76,13 +104,29 @@ $(document).ready(function(){
 		$(".container_skitter").height($(".box_skitter_large").height());
 	}
 	
-	function toggleContent(){
-		$("#leftDiv").animate({
+	function changePage(){
+		//window.history.pushState({"html":document.html,"pageTitle":document.pageTitle},"", "www.myadmin.com");
+		$(".container").animate({
 		    left: "-120%",
-		  }, 1000 );
-		$("#rightDiv").animate({
-			left: "-120%",
-		  }, 1000 );
+		  }, 1000, changeContainer);
+	}
+	
+	function changeContainer(){
+		$(".container").css({left: "120%"});
+		for(aux in response["scripts"])
+			loadjscssfile(response["scripts"][aux], 'js');
+		for(aux in response["links"])
+			loadjscssfile(response["links"][aux], 'css');
+		$(".container").html(response["body"]);
+		$(".container").animate({
+		    left: "0",
+		  }, 1000);	
+		
+	}
+	function showContainer(){
+		$(".container").animate({
+		    left: "0",
+		  }, 1000);
 	}
 	
 	function validEmail(){
