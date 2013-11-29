@@ -1,18 +1,18 @@
 $(document).ready(function(){
-	var response = null;
+	
 	function initIndex(){
-		
-		
+	
 		$('#error').hide();
 		initGallery();
 		
 		$( "#enter" ).click(function() {
+			
 			if (validEmail() && validPassword()){
 				var formData = {
 						email: $("#inputEmail").val(),
 						password: $("#inputPassword").val()
 				};
-				
+				var response = null;
 				$.ajax({
 				    url : "http://localhost:8080/UcoWeb/User",
 				    type: "POST",
@@ -29,7 +29,7 @@ $(document).ready(function(){
 				}).done(function( msg ) {
 					$("#userName").html(response["user"] +"<b class='caret'></b>");
 					showUserId();
-					changePage();
+					nextPage(response);
 					//document.body.innerHTML= response["body"];
 					//console.log(response["scripts"]);
 					
@@ -104,29 +104,60 @@ $(document).ready(function(){
 		$(".container_skitter").height($(".box_skitter_large").height());
 	}
 	
-	function changePage(){
-		//window.history.pushState({"html":document.html,"pageTitle":document.pageTitle},"", "www.myadmin.com");
-		$(".container").animate({
-		    left: "-120%",
-		  }, 1000, changeContainer);
-	}
+	//Para mandar el link
+		 
+	window.onload = function() {
+	     setInterval(pollHash, 1000);
+   };
 	
-	function changeContainer(){
-		$(".container").css({left: "120%"});
+   var recentHash = "";
+   function pollHash() {
+  
+     if (window.location.hash==recentHash) {
+       return; // Nothing's changed since last polled.
+     }
+     recentHash = window.location.hash;
+  
+     // URL has changed, update the UI accordingly.
+     if(recentHash == "")
+    	 previousPage();
+  
+   }
+	
+	function nextPage(response){
+		//Problema de Unique URL: http://ajaxpatterns.org/Unique_URLs
+		
+		window.location.hash = "#menu";
 		for(aux in response["scripts"])
 			loadjscssfile(response["scripts"][aux], 'js');
 		for(aux in response["links"])
 			loadjscssfile(response["links"][aux], 'css');
-		$(".container").html(response["body"]);
-		$(".container").animate({
-		    left: "0",
-		  }, 1000);	
+
+		$("#stage2").html(response["body"]);
 		
+		$("#stage1").animate({
+		    left: "-60%",
+		  },1000);
+		$("#stage2").animate({
+		    left: "-50%",
+		  },1000);
 	}
-	function showContainer(){
-		$(".container").animate({
+	
+	
+//	  $(window).bind("popstate", function(e) {
+//		  alert("hola");
+//		   });
+		 
+	
+	function previousPage(){
+		console.log("yipikayei");
+		//window.history.pushState({"html":document.html,"pageTitle":document.pageTitle},"", "www.myadmin.com");
+		$("#stage1").animate({
 		    left: "0",
-		  }, 1000);
+		  },1000);
+		$("#stage2").animate({
+		    left: "0",
+		  },1000);
 	}
 	
 	function validEmail(){

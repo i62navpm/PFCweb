@@ -1,38 +1,30 @@
 $(document).ready(function(){
 	
-	
 	var closedDeck = false;
-	
+	$('#options').hide();
+
 	function initMenu(){
-		showContainer();
 		initGames();
 		initScores();
 		initOptions();
 		showGames();
 	};
 	
-	function hideTools(){
-		$("#scores").css({visibility:"hidden"});
-		$("#options").css({visibility:"hidden"});
-		$("#button").css({visibility:"hidden"});
-	}
-	
-	function showTools(){
-		$("#scores").css({visibility:"visible"});
-		$("#options").css({visibility:"visible"});
-		$("#button").css({visibility:"visible"});
-	}
-	function hideContainer(){
-		$(".container").animate({
-		    left: "120%",
-		  }, 1000);
-	}
-	
-	function showContainer(){
-		$(".container").animate({
-		    left: "0",
-		  }, 1000);
-	}
+	$("#baraja-el").click(function() {
+		var target = $( event.target );
+		game = target.parent().attr("id");
+		closedDeck = !closedDeck;
+		if (closedDeck){
+			openGame(game);
+			showScores();
+			showOptions();
+		}
+		else{
+			showGames();
+			hideScores();
+			hideOptions();
+		}
+	});
 	
 	function initGames(){
 		$("#scores").css({left:"120%"});
@@ -57,38 +49,26 @@ $(document).ready(function(){
 	}
 	
 	function initOptions() {
-		$("#options").css("left", "-110%");
-		$('#sti-menu').iconmenu({
-			animMouseenter	: {
-				'mText' : {speed : 500, easing : 'easeOutExpo', delay : 200, dir : -1},
-				'sText' : {speed : 500, easing : 'easeOutExpo', delay : 200, dir : -1},
-				'icon'  : {speed : 700, easing : 'easeOutBounce', delay : 0, dir : 1}
-			},
-			animMouseleave	: {
-				'mText' : {speed : 400, easing : 'easeInExpo', delay : 0, dir : -1},
-				'sText' : {speed : 400, easing : 'easeInExpo', delay : 0, dir : 1},
-				'icon'  : {speed : 400, easing : 'easeInExpo', delay : 0, dir : -1}
-			}
-		});
+		
 	};
 	
-	$("#baraja-el").click(function() {
-		var target = $( event.target );
-		game = target.parent().attr("id");
-		closedDeck = !closedDeck;
-		if (closedDeck){
-			openGame(game);
-			showScores();
-			showOptions();
-		}
-		else{
-			showGames();
-			hideScores();
-			hideOptions();
-		}
-	});
+	function showGames(game){
+		hideTools();
+		$( "#baraja" ).animate({
+		    left: ($("#stage2").width()-$(".col-md-6").width())/2,
+		  }, 1500 );
+		$(".baraja-container").animate({
+			height: 310,
+		},0);
+		$("#button").animate({
+			left: "-120%",
+		},1500);
+		$(".baraja-container h4").show(500);
+		$(".baraja-container p").show(500);
+	}
 	
 	function openGame(game){
+		
 		showTools();
 		
 		$("#baraja").animate({
@@ -102,22 +82,8 @@ $(document).ready(function(){
 			left: "0",
 		},1500);
 		
-		$(".baraja-container h4").hide();
-		$(".baraja-container p").hide();
-	}
-	
-	function showGames(game){
-		$( "#baraja" ).animate({
-		    left: ($(".container").width()-$(".col-md-6").width())/2,
-		  }, 1500 );
-		$(".baraja-container").animate({
-			height: 310,
-		},0);
-		$("#button").animate({
-			left: "-120%",
-		},1500);
-		$(".baraja-container h4").show();
-		$(".baraja-container p").show();
+		$(".baraja-container h4").hide(500);
+		$(".baraja-container p").hide(500);
 	}
 	
 	function showScores(){
@@ -128,11 +94,12 @@ $(document).ready(function(){
 	
 	function hideScores(){
 		$( "#scores" ).animate({
-		    left: "120%",
+		    left: "140%",
 		  }, 1500 );
 	}
 	
 	function showOptions(){
+		$('#options').show(500);
 		$( "#options" ).animate({
 		    left: "0",
 		  }, 1500 );
@@ -141,7 +108,19 @@ $(document).ready(function(){
 	function hideOptions(){
 		$( "#options" ).animate({
 		    left: "-110%",
-		  }, 1500 );
+		  }, 1500, function(){$('#options').hide(500);} );
+	}
+	
+	function hideTools(){
+		$("#scores").css({visibility:"hidden"});
+		$("#options").css({visibility:"hidden"});
+		$("#button").css({visibility:"hidden"});
+	}
+	
+	function showTools(){
+		$("#scores").css({visibility:"visible"});
+		$("#options").css({visibility:"visible"});
+		$("#button").css({visibility:"visible"});
 	}
 	
 	$(function(){
@@ -150,8 +129,9 @@ $(document).ready(function(){
 			"-webkit-box-shadow":"5px 5px 5px #888",
 			"box-shadow":"5px 5px 5px #888"
 		});
-		$(".container").css({visibility:"visible"});
 		hideTools();
+		$("#stage2").css({visibility:"visible"});
+
 		initMenu();
 	});
 });
