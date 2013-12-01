@@ -1,8 +1,8 @@
 $(document).ready(function(){
 	
 	function initIndex(){
-	
 		$('#error').hide();
+		$("#userId").hide();
 		initGallery();
 		
 		$( "#enter" ).click(function() {
@@ -30,48 +30,31 @@ $(document).ready(function(){
 					$("#userName").html(response["user"] +"<b class='caret'></b>");
 					showUserId();
 					nextPage(response);
-					//document.body.innerHTML= response["body"];
-					//console.log(response["scripts"]);
-					
-					//$(".container").html(response["body"]);
 				});
-	
 			}
 		});
 	}
 	
 	function showUserId(){
 		$("#userReg").animate({
-		    left: "50%",
-		  }, 1000 );
-		$("#userId").animate({
-		    left: "35%",
-		  }, 1000);
+		    left: "100%",
+		  }, 1000, function(){$("#userReg").hide();
+		  					  $("#userId").show();
+		  				  	  $("#userId").animate({
+		  						 left: "0",
+		  					 	}, 1000);
+		  });
 	}
 	function hideUserId(){
-		$("#userReg").animate({
-		    left: "0",
-		  }, 1000 );
+		
 		$("#userId").animate({
-		    left: "50%",
-		  }, 1000);
-	}
-	
-	function loadjscssfile(filename, filetype){
-		var fileref = undefined;
-		if (filetype=="js"){
-			fileref=document.createElement('script');
-			fileref.setAttribute("type","text/javascript");
-			fileref.setAttribute("src", filename);
-		}
-		else if (filetype=="css"){
-			fileref=document.createElement("link");
-			fileref.setAttribute("rel", "stylesheet");
-			fileref.setAttribute("type", "text/css");
-			fileref.setAttribute("href", filename);
-		}
-		if (typeof fileref!="undefined")
-			document.getElementsByTagName("head")[0].appendChild(fileref);
+		    left: "100%",
+		  }, 1000, function(){$("#userId").hide();
+			  				  $("#userReg").show();
+			  				  $("#userReg").animate({
+			  				    left: "0",
+			  				  }, 1000 );
+		  });
 	}
 	
 	$( "#inputEmail" ).focusout(function() {
@@ -126,14 +109,9 @@ $(document).ready(function(){
 	
 	function nextPage(response){
 		//Problema de Unique URL: http://ajaxpatterns.org/Unique_URLs
-		
-		window.location.hash = "#menu";
-		for(aux in response["scripts"])
-			loadjscssfile(response["scripts"][aux], 'js');
-		for(aux in response["links"])
-			loadjscssfile(response["links"][aux], 'css');
 
 		$("#stage2").html(response["body"]);
+		obj = new userMenu();
 		
 		$("#stage1").animate({
 		    left: "-60%",
@@ -141,6 +119,7 @@ $(document).ready(function(){
 		$("#stage2").animate({
 		    left: "-50%",
 		  },1000);
+		
 	}
 	
 	

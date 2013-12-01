@@ -1,33 +1,35 @@
-$(document).ready(function(){
-	
-	var closedDeck = false;
-	$('#options').hide();
-
-	function initMenu(){
-		initGames();
-		initScores();
-		initOptions();
-		showGames();
+	function userMenu(){
+		this.closedDeck = false;
+		$("#button .btn").css({
+			"-moz-box-shadow":"5px 5px 5px #888",
+			"-webkit-box-shadow":"5px 5px 5px #888",
+			"box-shadow":"5px 5px 5px #888"
+		});
+		this.hideTools();
+		this.initTools();
+		this.initGames();
+		this.initScores();
+		this.showGames();
 	};
 	
-	$("#baraja-el").click(function() {
+	userMenu.prototype.gameClick = function() {
 		var target = $( event.target );
-		game = target.parent().attr("id");
-		closedDeck = !closedDeck;
-		if (closedDeck){
-			openGame(game);
-			showScores();
-			showOptions();
+		var game = target.parent().attr("id");
+		this.closedDeck = !this.closedDeck;
+		if (this.closedDeck){
+			this.openGame(game);
+			this.showScores();
+			this.showOptions();
 		}
 		else{
-			showGames();
-			hideScores();
-			hideOptions();
+			this.showGames();
+			this.hideScores();
+			this.hideOptions();
 		}
-	});
+	};
 	
-	function initGames(){
-		$("#scores").css({left:"120%"});
+	userMenu.prototype.initGames = function(){
+		$("#baraja-el").click($.proxy(this, "gameClick"));
 		var baraja = $('#baraja-el').baraja();
 		baraja.fan( {
 			speed : 500,
@@ -37,23 +39,23 @@ $(document).ready(function(){
 			origin : { x : 75, y : 100 },
 			center : true
 		});
-		$("#button").css({left:"-120%"});
 	};
 	
-	function initScores(){
+	userMenu.prototype.initScores = function(){
 		$('#scores').liteAccordion({
 			containerWidth : $(".col-md-6").width(),
 			containerHeight : "200px",
 			theme: "stitch"
 		});
-	}
-	
-	function initOptions() {
-		
 	};
 	
-	function showGames(game){
-		hideTools();
+	userMenu.prototype.initTools = function() {
+		$("#scores").css({left:"120%"});
+		$("#options").css({left:"-120%"});
+		$("#button").css({left:"-120%"});
+	};
+	
+	userMenu.prototype.showGames = function(){
 		$( "#baraja" ).animate({
 		    left: ($("#stage2").width()-$(".col-md-6").width())/2,
 		  }, 1500 );
@@ -65,11 +67,10 @@ $(document).ready(function(){
 		},1500);
 		$(".baraja-container h4").show(500);
 		$(".baraja-container p").show(500);
-	}
+	};
 	
-	function openGame(game){
-		
-		showTools();
+	userMenu.prototype.openGame = function(game){
+		this.showTools();
 		
 		$("#baraja").animate({
 		    left: "0"
@@ -84,54 +85,42 @@ $(document).ready(function(){
 		
 		$(".baraja-container h4").hide(500);
 		$(".baraja-container p").hide(500);
-	}
+	};
 	
-	function showScores(){
+	userMenu.prototype.showScores = function(){
 		$( "#scores" ).animate({
 		    left: "0",
 		  }, 1500 );
-	}
+	};
 	
-	function hideScores(){
+	userMenu.prototype.hideScores = function(){
 		$( "#scores" ).animate({
 		    left: "140%",
 		  }, 1500 );
-	}
+	};
 	
-	function showOptions(){
+	userMenu.prototype.showOptions = function(){
 		$('#options').show(500);
 		$( "#options" ).animate({
 		    left: "0",
-		  }, 1500 );
-	}
+		  }, 1500);
+	};
 	
-	function hideOptions(){
+	userMenu.prototype.hideOptions = function(){
 		$( "#options" ).animate({
-		    left: "-110%",
-		  }, 1500, function(){$('#options').hide(500);} );
-	}
+		    left: "-120%",
+		  }, 1500, function(){$("#options").hide(500);});
+	};
 	
-	function hideTools(){
-		$("#scores").css({visibility:"hidden"});
-		$("#options").css({visibility:"hidden"});
-		$("#button").css({visibility:"hidden"});
-	}
+	userMenu.prototype.hideTools = function(){
+		$("#scores").hide();
+		$("#options").hide();
+		$("#button").hide();
+	};
 	
-	function showTools(){
-		$("#scores").css({visibility:"visible"});
-		$("#options").css({visibility:"visible"});
-		$("#button").css({visibility:"visible"});
-	}
-	
-	$(function(){
-		$(".btn").css({
-			"-moz-box-shadow":"5px 5px 5px #888",
-			"-webkit-box-shadow":"5px 5px 5px #888",
-			"box-shadow":"5px 5px 5px #888"
-		});
-		hideTools();
-		$("#stage2").css({visibility:"visible"});
+	userMenu.prototype.showTools = function(){
+		$("#scores").show();
+		$("#options").show();
+		$("#button").show();
+	};
 
-		initMenu();
-	});
-});
