@@ -12,6 +12,19 @@
 		this.showGames();
 	};
 	
+	userMenu.prototype.initGames = function(){
+		$("#baraja-el").click($.proxy(this, "gameClick"));
+		var baraja = $('#baraja-el').baraja();
+		baraja.fan( {
+			speed : 500,
+			easing : 'ease-out',
+			range : 90,
+			direction : 'left',
+			origin : { x : 75, y : 100 },
+			center : true
+		});
+	};
+
 	userMenu.prototype.gameClick = function() {
 		var target = $( event.target );
 		var game = target.parent().attr("id");
@@ -26,19 +39,6 @@
 			this.hideScores();
 			this.hideOptions();
 		}
-	};
-	
-	userMenu.prototype.initGames = function(){
-		$("#baraja-el").click($.proxy(this, "gameClick"));
-		var baraja = $('#baraja-el').baraja();
-		baraja.fan( {
-			speed : 500,
-			easing : 'ease-out',
-			range : 90,
-			direction : 'left',
-			origin : { x : 75, y : 100 },
-			center : true
-		});
 	};
 	
 	userMenu.prototype.initScores = function(){
@@ -109,7 +109,12 @@
 	userMenu.prototype.hideOptions = function(){
 		$( "#options" ).animate({
 		    left: "-120%",
-		  }, 1500, function(){$("#options").hide(500);});
+		  }, 1500, $.proxy(this,"hideAsinc"));
+	};
+	
+	userMenu.prototype.hideAsinc = function(){
+		if(!this.closedDeck)
+			$('#options').hide(500);
 	};
 	
 	userMenu.prototype.hideTools = function(){

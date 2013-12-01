@@ -7,14 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * Servlet implementation class User
@@ -56,6 +54,10 @@ public class User extends HttpServlet {
 		
 		JSONObject obj = new JSONObject();
 		
+		HttpSession session = request.getSession(true);
+		session.setAttribute("usuario", session.getId());
+		System.out.println(session.isNew());
+		session.setMaxInactiveInterval(3);
 		try {
 			obj.put("user", "Usuario");
 			obj.put("body", container.toString());

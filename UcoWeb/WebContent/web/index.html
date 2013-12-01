@@ -31,7 +31,7 @@
 			border-bottom: 2px black solid;
 			padding-left: 10px; 
 			padding-right: 10px;
-			width:100%;
+			width:200%;
 			float:left;
 		}
 		
@@ -48,23 +48,27 @@
 		}
 		
 		#navbar{
-			width: 50%;
+			width: 100%;
 			background-color: #428bca;
 			-moz-box-shadow: 0px 5px 5px #888;
 			-webkit-box-shadow: 0px 5px 5px #888;
 			box-shadow: 0px 5px 5px #888;
 		}
-		
+	
+		html{
+			overflow-x:hidden;
+		}
+	
 		body{
-			width: 200%;
 			background: url(./images/noisy.png);
-			/* overflow-x:hidden; */
+			overflow-x:hidden;
 		}
 		
 		img{
 			-moz-border-radius: 15px;
 			border-radius: 15px;
 		}
+		
 	</style>
 				
 </head>
@@ -160,9 +164,8 @@
 		</div>
 	</div>
 	
-	<nav class="navbar navbar-default  navbar-fixed-bottom" role="navigation">
+	<footer>
 		<p class="navbar-text">Universidad de Córdoba 2013</p>
-	</nav>
-	
+	</footer>
 </body>
 </html>

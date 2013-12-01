@@ -3,10 +3,10 @@ $(document).ready(function(){
 	function initIndex(){
 		$('#error').hide();
 		$("#userId").hide();
+		
 		initGallery();
 		
 		$( "#enter" ).click(function() {
-			
 			if (validEmail() && validPassword()){
 				var formData = {
 						email: $("#inputEmail").val(),
@@ -45,6 +45,7 @@ $(document).ready(function(){
 		  					 	}, 1000);
 		  });
 	}
+	
 	function hideUserId(){
 		
 		$("#userId").animate({
