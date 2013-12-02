@@ -1,10 +1,13 @@
-	function userMenu(){
+	function UserMenu(){
 		this.closedDeck = false;
 		$("#button .btn").css({
 			"-moz-box-shadow":"5px 5px 5px #888",
 			"-webkit-box-shadow":"5px 5px 5px #888",
 			"box-shadow":"5px 5px 5px #888"
 		});
+	};
+	
+	UserMenu.prototype.startMenu = function(){
 		this.hideTools();
 		this.initTools();
 		this.initGames();
@@ -12,7 +15,7 @@
 		this.showGames();
 	};
 	
-	userMenu.prototype.initGames = function(){
+	UserMenu.prototype.initGames = function(){
 		$("#baraja-el").click($.proxy(this, "gameClick"));
 		var baraja = $('#baraja-el').baraja();
 		baraja.fan( {
@@ -25,7 +28,7 @@
 		});
 	};
 
-	userMenu.prototype.gameClick = function() {
+	UserMenu.prototype.gameClick = function() {
 		var target = $( event.target );
 		var game = target.parent().attr("id");
 		this.closedDeck = !this.closedDeck;
@@ -41,7 +44,7 @@
 		}
 	};
 	
-	userMenu.prototype.initScores = function(){
+	UserMenu.prototype.initScores = function(){
 		$('#scores').liteAccordion({
 			containerWidth : $(".col-md-6").width(),
 			containerHeight : "200px",
@@ -49,13 +52,13 @@
 		});
 	};
 	
-	userMenu.prototype.initTools = function() {
+	UserMenu.prototype.initTools = function() {
 		$("#scores").css({left:"120%"});
 		$("#options").css({left:"-120%"});
 		$("#button").css({left:"-120%"});
 	};
 	
-	userMenu.prototype.showGames = function(){
+	UserMenu.prototype.showGames = function(){
 		$( "#baraja" ).animate({
 		    left: ($("#stage2").width()-$(".col-md-6").width())/2,
 		  }, 1500 );
@@ -69,7 +72,7 @@
 		$(".baraja-container p").show(500);
 	};
 	
-	userMenu.prototype.openGame = function(game){
+	UserMenu.prototype.openGame = function(game){
 		this.showTools();
 		
 		$("#baraja").animate({
@@ -87,43 +90,43 @@
 		$(".baraja-container p").hide(500);
 	};
 	
-	userMenu.prototype.showScores = function(){
+	UserMenu.prototype.showScores = function(){
 		$( "#scores" ).animate({
 		    left: "0",
 		  }, 1500 );
 	};
 	
-	userMenu.prototype.hideScores = function(){
+	UserMenu.prototype.hideScores = function(){
 		$( "#scores" ).animate({
 		    left: "140%",
 		  }, 1500 );
 	};
 	
-	userMenu.prototype.showOptions = function(){
+	UserMenu.prototype.showOptions = function(){
 		$('#options').show(500);
 		$( "#options" ).animate({
 		    left: "0",
 		  }, 1500);
 	};
 	
-	userMenu.prototype.hideOptions = function(){
+	UserMenu.prototype.hideOptions = function(){
 		$( "#options" ).animate({
 		    left: "-120%",
 		  }, 1500, $.proxy(this,"hideAsinc"));
 	};
 	
-	userMenu.prototype.hideAsinc = function(){
+	UserMenu.prototype.hideAsinc = function(){
 		if(!this.closedDeck)
 			$('#options').hide(500);
 	};
 	
-	userMenu.prototype.hideTools = function(){
+	UserMenu.prototype.hideTools = function(){
 		$("#scores").hide();
 		$("#options").hide();
 		$("#button").hide();
 	};
 	
-	userMenu.prototype.showTools = function(){
+	UserMenu.prototype.showTools = function(){
 		$("#scores").show();
 		$("#options").show();
 		$("#button").show();

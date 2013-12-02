@@ -1,41 +1,120 @@
 $(document).ready(function(){
 	
-	function initIndex(){
-		$('#error').hide();
+	function Index(){
+		$("#error").hide();
 		$("#userId").hide();
-		
-		initGallery();
-		
-		$( "#enter" ).click(function() {
-			if (validEmail() && validPassword()){
-				var formData = {
-						email: $("#inputEmail").val(),
-						password: $("#inputPassword").val()
-				};
-				var response = null;
-				$.ajax({
-				    url : "http://localhost:8080/UcoWeb/User",
-				    type: "POST",
-				    data: formData,
-				    dataType: "json",
-				    success: function(data, textStatus, jqXHR)
-				    {
-				        response = data;
-				    },
-				    error: function (jqXHR, textStatus, errorThrown)
-				    {
-				    	response = textStatus;
-				    }
-				}).done(function( msg ) {
-					$("#userName").html(response["user"] +"<b class='caret'></b>");
-					showUserId();
-					nextPage(response);
-				});
-			}
-		});
+		$("#inputEmail").focusout($.proxy(this, "focusOutEmail"));
+		$("#inputPassword").focusout($.proxy(this, "focusOutPassword"));
+		this.menu = new UserMenu();	
 	}
 	
-	function showUserId(){
+	Index.prototype.focusOutEmail = function(){
+		if(this.validEmail()){
+			$('#error').hide(500);
+        	$("#enterEmail.form-group").removeClass("has-error");
+        	$("#enterEmail.form-group").addClass("has-success");
+		}
+	};
+	
+	Index.prototype.focusOutPassword = function(){
+		if(this.validPassword()){
+        	$('#error').hide(500);
+			$("#enterPassword.form-group").removeClass("has-error");
+	    	$("#enterPassword.form-group").addClass("has-success");
+		}
+	};
+	
+	Index.prototype.checkSession = function(){
+		var formData = {
+				subject: "signIn",
+		};
+		$.ajax({
+		    url : "http://localhost:8080/UcoWeb/Session",
+		    type: "POST",
+		    data: formData,
+		    dataType: "json",
+		    success: function(data, textStatus, jqXHR)
+		    {
+		        response = data;
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		    	response = textStatus;
+		    }
+		}).done($.proxy(this, "responseCheckSession"));
+	};
+	
+	Index.prototype.responseCheckSession = function(){
+		if(!response["user"])
+			this.initIndex();
+		else
+			this.showMenuInm();
+	};
+	
+	Index.prototype.initIndex = function(){
+		$("#stage1").css({visibility:"visible"});
+		this.initGallery();
+		$("#enter").click($.proxy(this, "enterClick"));
+			
+	};
+	
+	Index.prototype.enterClick = function(){
+		if (this.validEmail() && this.validPassword()){
+			var formData = {
+					email: $("#inputEmail").val(),
+					password: $("#inputPassword").val()
+			};
+			$.ajax({
+			    url : "http://localhost:8080/UcoWeb/User",
+			    type: "POST",
+			    data: formData,
+			    dataType: "json",
+			    success: function(data, textStatus, jqXHR)
+			    {
+			        response = data;
+			    },
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			    	response = textStatus;
+			    }
+			}).done($.proxy(this, "responseInitIndex"));
+		}
+	};
+	
+	Index.prototype.responseInitIndex = function(){
+		$("#userName").html(response["user"] +"<b class='caret'></b>");
+		this.showUserId();
+		this.showMenu();
+	};
+	
+	Index.prototype.exitWeb = function(){
+		var formData = {
+				subject: "logOut",
+		};
+		$.ajax({
+		    url : "http://localhost:8080/UcoWeb/Session",
+		    type: "POST",
+		    data: formData,
+		    dataType: "json",
+		    success: function(data, textStatus, jqXHR)
+		    {
+		        response = data;
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		    	response = textStatus;
+		    }
+		}).done($.proxy(this, "responseLogOutSession"));
+	};
+	
+	Index.prototype.responseLogOutSession = function(){
+		this.hideUserId();
+		this.showIndex();
+		
+	};
+	
+	Index.prototype.showUserId = function(){
+		$("#exit").click($.proxy(this, "exitWeb"));
 		$("#userReg").animate({
 		    left: "100%",
 		  }, 1000, function(){$("#userReg").hide();
@@ -44,10 +123,9 @@ $(document).ready(function(){
 		  						 left: "0",
 		  					 	}, 1000);
 		  });
-	}
+	};
 	
-	function hideUserId(){
-		
+	Index.prototype.hideUserId = function(){
 		$("#userId").animate({
 		    left: "100%",
 		  }, 1000, function(){$("#userId").hide();
@@ -56,24 +134,9 @@ $(document).ready(function(){
 			  				    left: "0",
 			  				  }, 1000 );
 		  });
-	}
+	};
 	
-	$( "#inputEmail" ).focusout(function() {
-		if(validEmail()){
-			$('#error').hide(500);
-        	$("#enterEmail.form-group").removeClass("has-error");
-        	$("#enterEmail.form-group").addClass("has-success");
-		}
-		});
-	$( "#inputPassword" ).focusout(function() {
-		if(validPassword()){
-        	$('#error').hide(500);
-			$("#enterPassword.form-group").removeClass("has-error");
-	    	$("#enterPassword.form-group").addClass("has-success");
-		}
-		});
-	
-	function initGallery(){
+	Index.prototype.initGallery = function(){
 		$(".box_skitter_large").skitter({
 			theme: 'round',
 			dots: true, 
@@ -86,7 +149,7 @@ $(document).ready(function(){
 		$(".box_skitter_large").height($("#register").height());
 		$(".box_skitter").height($(".box_skitter_large").height());
 		$(".container_skitter").height($(".box_skitter_large").height());
-	}
+	};
 	
 	//Para mandar el link
 		 
@@ -108,11 +171,11 @@ $(document).ready(function(){
   
    }
 	
-	function nextPage(response){
+   Index.prototype.showMenu = function(){
 		//Problema de Unique URL: http://ajaxpatterns.org/Unique_URLs
 
 		$("#stage2").html(response["body"]);
-		obj = new userMenu();
+		this.menu.startMenu();
 		
 		$("#stage1").animate({
 		    left: "-60%",
@@ -120,8 +183,16 @@ $(document).ready(function(){
 		$("#stage2").animate({
 		    left: "-50%",
 		  },1000);
-		
-	}
+	};
+	
+	Index.prototype.showMenuInm = function(){
+		$("#userName").html(response["user"] +"<b class='caret'></b>");
+		this.showUserId();
+		$("#stage1").css({left: "-60%"});
+		$("#stage2").css({left: "-50%"});
+		$("#stage2").html(response["body"]);
+		this.menu.startMenu();
+	};
 	
 	
 //	  $(window).bind("popstate", function(e) {
@@ -129,8 +200,8 @@ $(document).ready(function(){
 //		   });
 		 
 	
-	function previousPage(){
-		console.log("yipikayei");
+	Index.prototype.showIndex = function(){
+		this.initIndex();
 		//window.history.pushState({"html":document.html,"pageTitle":document.pageTitle},"", "www.myadmin.com");
 		$("#stage1").animate({
 		    left: "0",
@@ -138,9 +209,9 @@ $(document).ready(function(){
 		$("#stage2").animate({
 		    left: "0",
 		  },1000);
-	}
+	};
 	
-	function validEmail(){
+	Index.prototype.validEmail = function(){
 		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	    
 		if($("#inputEmail").val() == ""){
@@ -161,9 +232,9 @@ $(document).ready(function(){
 	        return false;
 	    }
 	    return true;
-	}
+	};
 	
-	function validPassword(){
+	Index.prototype.validPassword = function(){
 		$("#error").removeClass("alert-warning");
 		$("#error").addClass("alert-danger");
 		
@@ -185,9 +256,10 @@ $(document).ready(function(){
 	        return false;
 	    }
 	    return true;
-	}
+	};
 	
 	$(function(){
-	    initIndex();
+		aux = new Index();
+		aux.checkSession();
 	});
 });

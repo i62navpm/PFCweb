@@ -55,6 +55,12 @@
 			box-shadow: 0px 5px 5px #888;
 		}
 	
+		#button .btn{
+			-moz-box-shadow:5px 5px 5px #888;
+			-webkit-box-shadow:5px 5px 5px #888;
+			box-shadow:5px 5px 5px #888;
+		}
+		
 		html{
 			overflow-x:hidden;
 		}
@@ -93,7 +99,7 @@
 		        <ul class="dropdown-menu">
 		          <li><a href="#">Modificar datos</a></li>
 		          <li class="divider"></li>
-		          <li><a href="#">Salir</a></li>
+		          <li><a href="#" id="exit">Salir</a></li>
 		        </ul>
 	      	</li>
 		</ul>
@@ -106,7 +112,7 @@
 	
 	
 	<div class="jumbotron">
-		<div class="container" id="stage1">
+		<div class="container" id="stage1" style="visibility:hidden">
 	  		<div class="row" >
 	  			<div class="col-md-7">
 	  			<div class="box_skitter box_skitter_large">
