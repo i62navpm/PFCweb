@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="js/jquery.baraja.js"></script>
 	<script type="text/javascript" src="js/liteaccordion.jquery.js"></script>
 	<script type="text/javascript" src="js/menu.js"></script>
+	<script type="text/javascript" src="js/registerUser.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	
 	
@@ -119,15 +120,15 @@
 	  				<ul>
 	  					<li>
 	  						<a href="#cut"><img src="images/1.jpg" class="randomSmart" /></a>
-							<div class="label_text"><p>cut</p></div>
+							<div class="label_text"><p>Ping-Pong</p></div>
 	  					</li>
 	  					<li>
 	  						<a href="#cut"><img src="images/2.jpg" class="randomSmart" /></a>
-							<div class="label_text"><p>cut</p></div>
+							<div class="label_text"><p>Tetris</p></div>
 	  					</li>
 	  					<li>
 	  						<a href="#cut"><img src="images/3.jpg" class="randomSmart" /></a>
-							<div class="label_text"><p>cut</p></div>
+							<div class="label_text"><p>Drag-Me</p></div>
 	  					</li>
 	  				</ul>
 	  			</div>
@@ -140,24 +141,24 @@
 			        	</div>	
 			        	<div class="panel-body">
 							<form role="form">
-							  <div class="form-group">
+							  <div class="form-group" id="formRegisterName">
 							    <label class="sr-only" for="registerName">Nombre</label>
 							    <input type="text" class="form-control input-sm" id="registerName" placeholder="Nombre completo">
 							  </div>
-							  <div class="form-group">
-							    <label class="sr-only" for="registerAddress">Dirección</label>
-							  	<input type="text" class="form-control input-sm" id="registerAddress" placeholder="Dirección">
+							  <div class="form-group" id="formRegisterAdress">
+							    <label class="sr-only" for="registerAdress">Dirección</label>
+							  	<input type="text" class="form-control input-sm" id="registerAdress" placeholder="Dirección">
 							  </div>
-							  <div class="form-group">
-							    <label class="sr-only" for="registerMail">Correo</label>
-							    <input type="email" class="form-control input-sm" id="registerMail" placeholder="Correo electrónico">
+							  <div class="form-group" id="formRegisterEmail">
+							    <label class="sr-only" for="registerEmail">Correo</label>
+							    <input type="email" class="form-control input-sm" id="registerEmail" placeholder="Correo electrónico">
 							  </div>
-							  <div class="form-group">
+							  <div class="form-group" id="formRegisterPassword">
 							    <label class="sr-only" for="registerPassword">Contraseña</label>
 							  	<input type="password" class="form-control input-sm" id="registerPassword" placeholder="Contraseña">
 							  </div>
 							  <div class="panel-footer">
-							  <button type="submit" class="btn btn-warning btn-lg center-block">Registrarte</button>
+							  <button type="button"  id="registerButton"  class="btn btn-warning btn-lg center-block">Registrarte</button>
 							  </div>
 							</form>
 				    	</div>
