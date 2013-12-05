@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	
 	function Index(){
+		
 		$("#error").hide();
 		$("#userId").hide();
 		$("#inputEmail").focusout($.proxy(this, "focusOutEmail"));
@@ -137,7 +138,7 @@ $(document).ready(function(){
 	};
 	
 	Index.prototype.initGallery = function(){
-		$(".box_skitter_large").skitter({
+		$(".box_skitter_large").css({width: $(".col-md-7").width(), height: $(".col-md-7").height()}).skitter({
 			theme: 'round',
 			dots: true, 
 			preview: true,
@@ -146,9 +147,9 @@ $(document).ready(function(){
 			
 		});
 		
-		$(".box_skitter_large").height($("#register").height());
-		$(".box_skitter").height($(".box_skitter_large").height());
-		$(".container_skitter").height($(".box_skitter_large").height());
+		
+//		$(".box_skitter").height($(".box_skitter_large").height());
+//		$(".container_skitter").height($(".box_skitter_large").height());
 	};
 	
 	//Para mandar el link

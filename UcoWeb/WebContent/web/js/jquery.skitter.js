@@ -2110,14 +2110,14 @@
 				var _ftop = _itop; 
 				var box_clone = null;
 
-//				if ($.browser.mozilla) {
-//					box_clone = this.getBoxCloneImgOld(image_old);
-//					box_clone.css({left: _ileft, top:_itop, width:size_box, height:size_box}).css3({
-//						'border-radius': radius+'px'
-//					});
-//					box_clone.find('img').css({left: -_ileft, top: -_itop});
-//				}
-//				else {
+				if ($.browser.mozilla) {
+					box_clone = this.getBoxCloneImgOld(image_old);
+					box_clone.css({left: _ileft, top:_itop, width:size_box, height:size_box}).css3({
+						'border-radius': radius+'px'
+					});
+					box_clone.find('img').css({left: -_ileft, top: -_itop});
+				}
+				else {
 					box_clone = this.getBoxCloneBackground({
 						image: 		image_old,
 						left: 		_ileft, 
@@ -2131,8 +2131,8 @@
 					}).css3({
 						'border-radius': radius+'px'
 					});
-//				}
-//				
+				}
+				
 				size_box -= 100;
 				
 				this.addBoxClone(box_clone);

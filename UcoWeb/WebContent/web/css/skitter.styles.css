@@ -248,10 +248,10 @@
 	bottom: 0px;
 	left: 0px;
 	display: none;
-	-moz-border-bottom-left-radius: 15px;
+/* 	-moz-border-bottom-left-radius: 15px;
 	-moz-border-bottom-right-radius: 15px;
 	-webkit-border-bottom-left-radius: 15px;
-	-webkit-border-bottom-right-radius: 15px;
+	-webkit-border-bottom-right-radius: 15px; */
 }
 
 .box_skitter .label_skitter {
