@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	
 	function Index(){
-		
 		$("#error").hide();
 		$("#userId").hide();
 		$("#inputEmail").focusout($.proxy(this, "focusOutEmail"));
@@ -63,7 +62,7 @@ $(document).ready(function(){
 		if (this.validEmail() && this.validPassword()){
 			var formData = {
 					email: $("#inputEmail").val(),
-					password: $("#inputPassword").val()
+					password: CryptoJS.SHA3($("#inputPassword").val()).toString(CryptoJS.enc.Hex) 
 			};
 			$.ajax({
 			    url : "http://localhost:8080/UcoWeb/User",
@@ -260,7 +259,7 @@ $(document).ready(function(){
 	};
 	
 	$(function(){
-		aux = new Index();
-		aux.checkSession();
+		objIndex = new Index();
+		objIndex.checkSession();
 	});
 });

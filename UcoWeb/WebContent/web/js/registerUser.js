@@ -6,6 +6,7 @@ $(document).ready(function(){
 		$("#registerAdress").focusout($.proxy(this, "focusOutAdress"));
 		$("#registerEmail").focusout($.proxy(this, "focusOutEmail"));
 		$("#registerPassword").focusout($.proxy(this, "focusOutPassword"));
+		console.log(objIndex);
 	}
 	
 	RegisterUser.prototype.focusOutName = function(){
@@ -43,8 +44,10 @@ $(document).ready(function(){
 	RegisterUser.prototype.registerClick = function(){
 		if (this.validForm()){
 			var formData = {
-					email: $("#inputEmail").val(),
-					password: $("#inputPassword").val()
+					name: $("#registerName").val(),
+					adress: $("#registerAdress").val(),
+					email: $("#registerEmail").val(),
+					password: CryptoJS.SHA3($("#registerPassword").val()).toString(CryptoJS.enc.Hex)
 			};
 			$.ajax({
 			    url : "http://localhost:8080/UcoWeb/RegisterUser",
@@ -64,6 +67,16 @@ $(document).ready(function(){
 	};
 	
 	RegisterUser.prototype.responseRegisterUser = function(){
+		console.log(response);
+		if (response){
+			console.log("verdadero");
+		}
+		else{
+			$("#registerEmail").focus();
+	        $("#formRegisterEmail.form-group").addClass("has-error");
+			$("#errorText").text("La cuenta de correo ya existe.");
+			$('#error').show(500);
+		}
 //		$("#userName").html(response["user"] +"<b class='caret'></b>");
 //		this.showUserId();
 //		this.showMenu();

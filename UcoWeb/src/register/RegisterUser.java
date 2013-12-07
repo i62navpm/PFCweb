@@ -1,7 +1,12 @@
-package acces;
+package register;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -13,8 +18,6 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -23,20 +26,19 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 /**
- * Servlet implementation class User
+ * Servlet implementation class RegisterUser
  */
-@WebServlet("/User")
-public class User extends HttpServlet {
+@WebServlet("/RegisterUser")
+public class RegisterUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MongoClient mongoClient = null;
+    private MongoClient mongoClient = null;
     private DB db = null;
     private DBCollection coll = null;
-       
     /**
      * @throws UnknownHostException 
      * @see HttpServlet#HttpServlet()
      */
-    public User() throws UnknownHostException {
+    public RegisterUser() throws UnknownHostException {
         super();
         // TODO Auto-generated constructor stub
         mongoClient = new MongoClient("localhost", 27017);
@@ -56,41 +58,34 @@ public class User extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
-		Pattern email = Pattern.compile(request.getParameter("email").toLowerCase(), Pattern.CASE_INSENSITIVE);
-		Pattern password = Pattern.compile(request.getParameter("password").toLowerCase(), Pattern.CASE_INSENSITIVE);
-		BasicDBObject query = new BasicDBObject("email", email).
-											append("password", password);
-		DBObject myDoc = coll.findOne(query);
-		System.out.println(myDoc);
-		if (myDoc != null){
-			System.out.println("Encontrado el usuario");
+		response.setContentType("text/plain");
+		PrintWriter out = response.getWriter();
+		if (!exists(request)){
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			Date date = new Date();
+			BasicDBObject user = new BasicDBObject("name", request.getParameter("name")).
+											append("adress", request.getParameter("adress")).
+											append("dateIn", dateFormat.format(date)).
+											append("email", request.getParameter("email")).
+											append("password", request.getParameter("password"));
+			coll.insert(user);
+			System.out.println("Nuevo usuario insertado");
 			
-			Document doc = Jsoup.connect("http://localhost:8080/UcoWeb/web/menu.html").get();
-			String container = doc.getElementsByClass("container").html();
-			
-			JSONObject obj = new JSONObject();
-			
-			HttpSession session = request.getSession(true);
-			session.setAttribute(session.getId(),email);
-			System.out.println(session.isNew());
-	
-			try {
-				obj.put("user", myDoc.get("name").toString());
-				obj.put("body", container.toString());
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			response.setContentType("application/json");
-			response.getWriter().write(obj.toString());
-		}else{
-			System.out.println("No se ha encontrado el usuario");
+			out.write("true");
 		}
-		
-		
+		else{
+			System.out.println("Existe");
+			out.write("false");
+		}
+	}
+	
+	protected boolean exists(HttpServletRequest request){
+		Pattern email = Pattern.compile(request.getParameter("email").toLowerCase(), Pattern.CASE_INSENSITIVE);
+		BasicDBObject query = new BasicDBObject("email", email);
+		DBObject myDoc = coll.findOne(query);
+		if (myDoc != null)
+			return true;
+		return false;
 	}
 
 }
