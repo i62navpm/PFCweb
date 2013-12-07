@@ -6,7 +6,6 @@ $(document).ready(function(){
 		$("#registerAdress").focusout($.proxy(this, "focusOutAdress"));
 		$("#registerEmail").focusout($.proxy(this, "focusOutEmail"));
 		$("#registerPassword").focusout($.proxy(this, "focusOutPassword"));
-		console.log(objIndex);
 	}
 	
 	RegisterUser.prototype.focusOutName = function(){
@@ -70,6 +69,9 @@ $(document).ready(function(){
 		console.log(response);
 		if (response){
 			console.log("verdadero");
+			$("#inputEmail").val($("#registerEmail").val());
+			$("#inputPassword").val($("#registerPassword").val());
+			objIndex.enterClick();
 		}
 		else{
 			$("#registerEmail").focus();

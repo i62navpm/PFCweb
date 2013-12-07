@@ -56,24 +56,24 @@ public class User extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
+		JSONObject obj = new JSONObject();
 		
 		Pattern email = Pattern.compile(request.getParameter("email").toLowerCase(), Pattern.CASE_INSENSITIVE);
 		Pattern password = Pattern.compile(request.getParameter("password").toLowerCase(), Pattern.CASE_INSENSITIVE);
 		BasicDBObject query = new BasicDBObject("email", email).
 											append("password", password);
 		DBObject myDoc = coll.findOne(query);
-		System.out.println(myDoc);
+		
 		if (myDoc != null){
 			System.out.println("Encontrado el usuario");
 			
 			Document doc = Jsoup.connect("http://localhost:8080/UcoWeb/web/menu.html").get();
 			String container = doc.getElementsByClass("container").html();
 			
-			JSONObject obj = new JSONObject();
-			
+		
 			HttpSession session = request.getSession(true);
-			session.setAttribute(session.getId(),email);
+			session.setAttribute(session.getId(),myDoc.get("name").toString());
 			System.out.println(session.isNew());
 	
 			try {
@@ -83,12 +83,17 @@ public class User extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			response.setContentType("application/json");
-			response.getWriter().write(obj.toString());
 		}else{
 			System.out.println("No se ha encontrado el usuario");
+			try {
+				obj.put("user", false);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		response.setContentType("application/json");
+		response.getWriter().write(obj.toString());
 		
 		
 	}

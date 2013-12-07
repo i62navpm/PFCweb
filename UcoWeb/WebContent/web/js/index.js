@@ -82,9 +82,16 @@ $(document).ready(function(){
 	};
 	
 	Index.prototype.responseInitIndex = function(){
-		$("#userName").html(response["user"] +"<b class='caret'></b>");
-		this.showUserId();
-		this.showMenu();
+		if (response["user"]){
+			$("#userName").html(response["user"] +"<b class='caret'></b>");
+			this.showUserId();
+			this.showMenu();
+		}else{
+			$("#inputEmail").focus();
+	        $("#enterEmail.form-group").addClass("has-error");
+	        $("#errorText").text("Los datos de acceso no son correctos.");
+    		$('#error').show(500);	
+		}
 	};
 	
 	Index.prototype.exitWeb = function(){
