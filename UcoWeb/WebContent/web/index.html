@@ -22,8 +22,10 @@
 	<script type="text/javascript" src="js/liteaccordion.jquery.js"></script>
 	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
 	<script type="text/javascript" src="js/menu.js"></script>
+	<script type="text/javascript" src="js/modifyUser.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/registerUser.js"></script>
+	
 	
 	<style type="text/css">
 		.jumbotron{
@@ -88,7 +90,7 @@
 			<li class="dropdown">
 		        <a href="#" id="userName" class="dropdown-toggle" data-toggle="dropdown" style="color:#FFFFFF; font-weight: bold;">User <b class="caret"></b></a>
 		        <ul class="dropdown-menu">
-		          <li><a href="#">Modificar datos</a></li>
+		          <li><a href="#" data-toggle="modal" data-target="#myModal">Modificar datos</a></li>
 		          <li class="divider"></li>
 		          <li><a href="#" id="exit">Salir</a></li>
 		        </ul>
@@ -159,6 +161,52 @@
 		<div class="container" id="stage2">
 		HOLA
 		</div>
+	</div>
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Modificar datos</h4>
+	      </div>
+	      <div class="modal-body">
+		      <form class="form-horizontal" role="form">
+				  <div class="form-group" id="formModifyName">
+				    <label for="modifyName" class="col-sm-3 control-label">Nombre:</label>
+				    <div class="col-sm-9">
+				    	<input type="text" class="form-control input-sm" id="modifyName" placeholder="Nombre completo">
+				    </div>
+				  </div>
+				  <div class="form-group" id="formModifyAdress">
+				    <label for="modifyAdress" class="col-sm-3 control-label">Dirección:</label>
+				  	<div class="col-sm-9">
+				  		<input type="text" class="form-control input-sm" id="modifyAdress" placeholder="Dirección">
+			  		</div>
+				  </div>
+				  <div class="form-group" id="formModifyEmail">
+				    <label for="modifyEmail" class="col-sm-3 control-label">Correo:</label>
+				    <div class="col-sm-9">
+				    	<input type="email" class="form-control input-sm" id="modifyEmail" placeholder="Correo electrónico">
+			    	</div>
+				  </div>
+				  <div class="form-group" id="formModifyPassword">
+				    <label for="modifyPassword" class="col-sm-3 control-label">Contraseña:</label>
+				  	<div class="col-sm-9">
+				  		<input type="password" class="form-control input-sm" id="modifyPassword" placeholder="Contraseña">
+			  		</div>
+				  </div>
+		  	  </form>
+		  	  <div class="alert alert-danger alert-dismissable" id="dialogError">
+				  <strong>Error!</strong><p id="dialogErrorText">juju</p>
+			  </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	        <button type="button" class="btn btn-primary" id="modifyButton">Guardar</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 	
 	<footer>

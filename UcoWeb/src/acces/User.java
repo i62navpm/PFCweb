@@ -73,11 +73,12 @@ public class User extends HttpServlet {
 			
 		
 			HttpSession session = request.getSession(true);
-			session.setAttribute(session.getId(),myDoc.get("name").toString());
+			session.setAttribute(session.getId(),myDoc.get("_id").toString());
 			System.out.println(session.isNew());
 	
 			try {
-				obj.put("user", myDoc.get("name").toString());
+				obj.put("user", myDoc);
+				obj.put("id", myDoc.get("_id").toString());
 				obj.put("body", container.toString());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

@@ -159,7 +159,7 @@ $(document).ready(function(){
 	        
 			$("#error").removeClass("alert-danger");
 			$("#error").addClass("alert-warning");
-			$("#errorText").text("Introduzca una contraseña de más de 6 carácteres.");
+			$("#errorText").text("Introduzca una contraseña de más de 6 caracteres.");
 			$('#error').show(500);
 	        return false;
 	    }

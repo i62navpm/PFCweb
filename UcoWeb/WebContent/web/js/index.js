@@ -6,6 +6,7 @@ $(document).ready(function(){
 		$("#inputEmail").focusout($.proxy(this, "focusOutEmail"));
 		$("#inputPassword").focusout($.proxy(this, "focusOutPassword"));
 		this.menu = new UserMenu();	
+		this.modifyDialog = new ModifyUser();
 	}
 	
 	Index.prototype.focusOutEmail = function(){
@@ -45,10 +46,15 @@ $(document).ready(function(){
 	};
 	
 	Index.prototype.responseCheckSession = function(){
+		console.log(response["user"]);
+		response["user"]["_id"] = response["id"];
 		if(!response["user"])
 			this.initIndex();
-		else
+		else{
+			$("#userName").html(response["user"]["name"] +"<b class='caret'></b>");
+			this.modifyDialog.setModifyDialog(response["user"]);
 			this.showMenuInm();
+		}
 	};
 	
 	Index.prototype.initIndex = function(){
@@ -83,7 +89,9 @@ $(document).ready(function(){
 	
 	Index.prototype.responseInitIndex = function(){
 		if (response["user"]){
-			$("#userName").html(response["user"] +"<b class='caret'></b>");
+			$("#userName").html(response["user"]["name"] +"<b class='caret'></b>");
+			response["user"]["_id"] = response["id"];
+			this.modifyDialog.setModifyDialog(response["user"]);
 			this.showUserId();
 			this.showMenu();
 		}else{
@@ -193,7 +201,6 @@ $(document).ready(function(){
 	};
 	
 	Index.prototype.showMenuInm = function(){
-		$("#userName").html(response["user"] +"<b class='caret'></b>");
 		this.showUserId();
 		$("#stage1").css({left: "-60%"});
 		$("#stage2").css({left: "-50%"});
@@ -258,7 +265,7 @@ $(document).ready(function(){
 	        
 			$("#error").removeClass("alert-danger");
 			$("#error").addClass("alert-warning");
-			$("#errorText").text("Introduzca una contraseña de más de 6 carácteres.");
+			$("#errorText").text("Introduzca una contraseña de más de 6 caracteres.");
 			$('#error').show(500);
 	        return false;
 	    }
