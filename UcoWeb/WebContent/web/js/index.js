@@ -160,10 +160,6 @@ $(document).ready(function(){
 			numbers_align: 'center',
 			
 		});
-		
-		
-//		$(".box_skitter").height($(".box_skitter_large").height());
-//		$(".container_skitter").height($(".box_skitter_large").height());
 	};
 	
 	//Para mandar el link

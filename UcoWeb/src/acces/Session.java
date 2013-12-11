@@ -2,8 +2,6 @@ package acces;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.Enumeration;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -65,11 +63,11 @@ public class Session extends HttpServlet {
 		try {
 			if (subject.equals("signIn")){
 				if (session.isNew() || !isRegistered(session)){
-					System.out.println("Nuevo usuario");
+					System.out.println("Sesión de nuevo usuario");
 					obj.put("user", false);
 				}
 				else{
-					System.out.println(session.getAttribute(session.getId()));
+					System.out.println("Sesión de usuario existente " + session.getAttribute(session.getId()));
 					
 					ObjectId id = new ObjectId(session.getAttribute(session.getId()).toString());
 

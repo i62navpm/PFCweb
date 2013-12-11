@@ -42,7 +42,7 @@
 			width: 50%;
 			float: left;
 			position: relative;
-			border:1px solid black;
+			/* border:1px solid black; */
 		}
 
 		#navbar{
@@ -77,11 +77,11 @@
 		<form class="navbar-form navbar-right form-inline" role="form" id="userReg" style="position:relative;">
 			<div class="form-group" id=enterEmail>
 				<label class="sr-only" for="inputEmail">Correo</label>
-				<input type="email" class="form-control input-sm" id="inputEmail" placeholder="Introduzca correo" required value="a@a.es">
+				<input type="email" class="form-control input-sm" id="inputEmail" placeholder="Introduzca correo" required>
 			</div>
 			<div class="form-group" id=enterPassword>
 				<label class="sr-only" for="inputPassword">Contraseña</label>
-				<input type="password" class="form-control input-sm" id="inputPassword" placeholder="Contraseña" required value="aaaaaaa">
+				<input type="password" class="form-control input-sm" id="inputPassword" placeholder="Contraseña" required>
 			</div>
 			<button type="button"  id="enter" class="btn btn-success btn-sm">Entrar</button>
 		</form>
@@ -135,19 +135,19 @@
 							<form role="form">
 							  <div class="form-group" id="formRegisterName">
 							    <label class="sr-only" for="registerName">Nombre</label>
-							    <input type="text" class="form-control input-sm" id="registerName" placeholder="Nombre completo" value="Manuel">
+							    <input type="text" class="form-control input-sm" id="registerName" placeholder="Nombre completo">
 							  </div>
 							  <div class="form-group" id="formRegisterAdress">
 							    <label class="sr-only" for="registerAdress">Dirección</label>
-							  	<input type="text" class="form-control input-sm" id="registerAdress" placeholder="Dirección" value="direccion">
+							  	<input type="text" class="form-control input-sm" id="registerAdress" placeholder="Dirección">
 							  </div>
 							  <div class="form-group" id="formRegisterEmail">
 							    <label class="sr-only" for="registerEmail">Correo</label>
-							    <input type="email" class="form-control input-sm" id="registerEmail" placeholder="Correo electrónico" value="manuel@uco.es">
+							    <input type="email" class="form-control input-sm" id="registerEmail" placeholder="Correo electrónico">
 							  </div>
 							  <div class="form-group" id="formRegisterPassword">
 							    <label class="sr-only" for="registerPassword">Contraseña</label>
-							  	<input type="password" class="form-control input-sm" id="registerPassword" placeholder="Contraseña" value="Contraseña">
+							  	<input type="password" class="form-control input-sm" id="registerPassword" placeholder="Contraseña">
 							  </div>
 							  <div class="panel-footer">
 							  <button type="button"  id="registerButton"  class="btn btn-warning btn-lg center-block">Registrarte</button>
@@ -159,7 +159,6 @@
 	  		</div>
 		</div>
 		<div class="container" id="stage2">
-		HOLA
 		</div>
 	</div>
 	
@@ -198,7 +197,7 @@
 				  </div>
 		  	  </form>
 		  	  <div class="alert alert-danger alert-dismissable" id="dialogError">
-				  <strong>Error!</strong><p id="dialogErrorText">juju</p>
+				  <strong>Error!</strong><p id="dialogErrorText"></p>
 			  </div>
 	      </div>
 	      <div class="modal-footer">

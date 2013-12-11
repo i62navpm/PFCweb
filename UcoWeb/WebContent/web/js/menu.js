@@ -88,6 +88,12 @@
 		
 		$(".baraja-container h4").hide(500);
 		$(".baraja-container p").hide(500);
+		if (game=="pong")
+			$("#playButton").attr("onclick", "window.location.href='http://localhost:8080/UcoWeb/web/pong.html'");
+		else if(game=="tetris")
+			$("#playButton").attr("onclick", "window.location.href='http://localhost:8080/UcoWeb/web/tetris.html'");
+		else if(game=="dragMe")
+			$("#playButton").attr("onclick", "window.location.href='http://localhost:8080/UcoWeb/web/dragMe.html'");
 	};
 	
 	UserMenu.prototype.showScores = function(){

@@ -79,9 +79,6 @@ $(document).ready(function(){
 			$("#errorText").text("La cuenta de correo ya existe.");
 			$('#error').show(500);
 		}
-//		$("#userName").html(response["user"] +"<b class='caret'></b>");
-//		this.showUserId();
-//		this.showMenu();
 	};
 	
 	RegisterUser.prototype.validForm = function(){

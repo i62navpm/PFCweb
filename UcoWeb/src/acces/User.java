@@ -71,10 +71,8 @@ public class User extends HttpServlet {
 			Document doc = Jsoup.connect("http://localhost:8080/UcoWeb/web/menu.html").get();
 			String container = doc.getElementsByClass("container").html();
 			
-		
 			HttpSession session = request.getSession(true);
 			session.setAttribute(session.getId(),myDoc.get("_id").toString());
-			System.out.println(session.isNew());
 	
 			try {
 				obj.put("user", myDoc);

@@ -70,7 +70,6 @@ public class RegisterUser extends HttpServlet {
 											append("password", request.getParameter("password"));
 			coll.insert(user);
 			System.out.println("Nuevo usuario insertado");
-			
 			out.write("true");
 		}
 		else{
