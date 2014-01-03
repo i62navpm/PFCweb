@@ -51,9 +51,63 @@ $(document).ready(function(){
 		    middleLine.add(linePart);
 		};
 		
+		var pause = new Kinetic.Group({
+			x: stage.getWidth()-40,
+	        y: 50,
+		});
+		
+		var circlePause = new Kinetic.Circle({
+	        radius: 24,
+	        stroke: 'black',
+	        fill: 'red',
+	        strokeWidth: 1,
+	        shadowColor: 'black',
+            shadowBlur: 10,
+            shadowOffset: [2, 2],
+            shadowOpacity: 0.5,
+            
+		});
+		pause.add(circlePause);
+		
+		
+		var rectPause = new Kinetic.Group();
+		for (var i=0; i<2; i++) {
+		    var linePause = new Kinetic.Rect({
+		    	x: -12+17*i,
+		    	y: -12,
+		    	width : 6,
+		        height : 24,
+		        fill : 'white',
+	        	shadowColor: 'black',
+	            shadowBlur: 10,
+	            shadowOffset: [2, 2],
+	            shadowOpacity: 0.5,
+	            cornerRadius: 2
+		    });
+		    rectPause.add(linePause);
+		};
+		pause.add(rectPause);
+		
+		var trianglePause = new Kinetic.RegularPolygon({
+	        sides: 3,
+	        radius: 15,
+	        rotation: Math.PI/2,
+	        fill : 'white',
+        	shadowColor: 'black',
+            shadowBlur: 10,
+            shadowOffset: [2, 2],
+            shadowOpacity: 0.5,
+            cornerRadius: 2,
+            visible: false
+	      });
+		pause.add(trianglePause);
+		
 		var backgroundLayer = new Kinetic.Layer();
 		backgroundLayer.add(background);
 		backgroundLayer.add(middleLine);
+		backgroundLayer.add(pause);
+		
+
 		
 		var ballLayer = new Kinetic.Layer();
 		ball = new Ball(stage, ballLayer);
@@ -70,11 +124,33 @@ $(document).ready(function(){
 		stage.add(ballLayer);
 		stage.add(playerLayer);
 		
+		var tween = new Kinetic.Tween({
+	        node: pause, 
+	        duration: 1,
+	        x: stage.getWidth()/2,
+	        y: stage.getHeight()/2,
+	        rotation: Math.PI * 2,
+	        opacity: 0.8,
+	        
+	        scaleX: 2,
+	        scaleY: 2,
+        
+	      });
+		
+		pause.on('mousedown touchstart', function() {
+			setTimeout(function() {
+				pause.find('Group').hide();
+				pause.find('RegularPolygon').show();
+				tween.play();
+		      }, 10);
+		});
+		
 		game = new Game();
-
-		stage.on('dbltap dblclick', function() {
+		menu = new initMenu();
+		menu.showMenu();
+		menu.menuLayer.on('mousedown touchstart', function() {
     		if (!running)
-    			game.start();
+    			menu.clickMenu();
     		else
     			game.stop();
     	});
@@ -264,6 +340,66 @@ $(document).ready(function(){
 	    	running = false;
 	    };
 		
+    };
+    
+    function initMenu(){
+    	this.group = new Kinetic.Group({
+    		x: stage.getWidth()/2,
+            y: stage.getHeight()/2,
+            offsetX: 150,
+        	offsetY: 75
+    	});
+    	
+    	this.text = new Kinetic.Text({
+            text: 'Pong HTML5\n\n\nPulse aquí para empezar a jugar',
+            fontSize: 18,
+            fontFamily: 'Calibri',
+            fill: 'white',
+            padding: 20,
+            width: 300,
+            height: 150,
+            align: 'center'
+          });
+    	
+    	this.box = new Kinetic.Rect({
+            width: 300,
+            height: 150,
+            opacity: 0.8,
+            fill: 'red',
+            stroke: 'black',
+            strokeWidth: 10,
+            shadowColor: 'black',
+            shadowBlur: 10,
+            shadowOffset: [10, 10],
+            shadowOpacity: 0.2,
+            cornerRadius: 10
+    	});
+    	
+    	this.group.add(this.box);
+    	this.group.add(this.text);
+    	this.menuLayer= new Kinetic.Layer();
+    	this.menuLayer.add(this.group);
+    	stage.add(this.menuLayer);
+    };
+    
+    initMenu.prototype.showMenu = function(){
+    	this.menuLayer.show();
+    };
+    initMenu.prototype.clickMenu = function(){
+    	this.box.setOpacity(1);
+    	this.group.setScale(0.9);
+    	this.menuLayer.draw();
+    	this.menuLayer.on('mouseup touchend',$.proxy(this, "hideGroup"));
+    };
+    initMenu.prototype.hideGroup = function(){
+    	this.box.setOpacity(0.8);
+    	this.group.setScale(1);
+    	this.menuLayer.draw();
+    	setTimeout($.proxy(this, "hideLayer"), 100);
+    };
+    initMenu.prototype.hideLayer = function(){
+    	this.menuLayer.hide();
+		game.start();
     };
     
     function KeyboardController(keys, repeat) {
