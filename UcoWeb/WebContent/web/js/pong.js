@@ -18,6 +18,9 @@ $(document).ready(function(){
 	var player = null;
 	var opponent = null;
 	var ball = null;
+	var greyBack = null;
+	var level = 0;
+	var score = 0;
 	var running = false;
 	var zones = $("#numberZone").val();
 	var mode = "CPU";
@@ -51,6 +54,15 @@ $(document).ready(function(){
 		    middleLine.add(linePart);
 		};
 		
+    	var backBox = new Kinetic.Rect({
+            x: 0,
+            y: 0,
+    		width: stage.getWidth(),
+            height: stage.getHeight(),
+            opacity: 0.8,
+            fill: 'grey',
+    	});
+		
 		var pause = new Kinetic.Group({
 			x: stage.getWidth()-40,
 	        y: 50,
@@ -68,7 +80,6 @@ $(document).ready(function(){
             
 		});
 		pause.add(circlePause);
-		
 		
 		var rectPause = new Kinetic.Group();
 		for (var i=0; i<2; i++) {
@@ -106,8 +117,10 @@ $(document).ready(function(){
 		backgroundLayer.add(background);
 		backgroundLayer.add(middleLine);
 		backgroundLayer.add(pause);
+		var foregroundLayer = new Kinetic.Layer();
+		foregroundLayer.add(backBox);
 		
-
+		var pauseLayer = new Kinetic.Layer();
 		
 		var ballLayer = new Kinetic.Layer();
 		ball = new Ball(stage, ballLayer);
@@ -124,35 +137,68 @@ $(document).ready(function(){
 		stage.add(ballLayer);
 		stage.add(playerLayer);
 		
-		var tween = new Kinetic.Tween({
-	        node: pause, 
+    	greyBack = new Kinetic.Tween({
+	        node: backBox, 
 	        duration: 1,
-	        x: stage.getWidth()/2,
-	        y: stage.getHeight()/2,
-	        rotation: Math.PI * 2,
-	        opacity: 0.8,
-	        
-	        scaleX: 2,
-	        scaleY: 2,
-        
-	      });
+	        opacity: 0,
+	        onFinish: function() {
+	            foregroundLayer.hide();
+	          }
+    	});
 		
-		pause.on('mousedown touchstart', function() {
-			setTimeout(function() {
-				pause.find('Group').hide();
-				pause.find('RegularPolygon').show();
-				tween.play();
-		      }, 10);
-		});
-		
-		game = new Game();
+    	game = new Game();
+		stage.add(foregroundLayer);
+		stage.add(pauseLayer);
+    			
 		menu = new initMenu();
 		menu.showMenu();
 		menu.menuLayer.on('mousedown touchstart', function() {
-    		if (!running)
+			if (!running){
+				playerLayer.moveUp();
+				var tween = null;
+				setTimeout(function() {
+					pause.remove();
+					backgroundLayer.draw();
+					pauseLayer.add(pause);
+					tween = new Kinetic.Tween({
+				        node: pause, 
+				        duration: 1,
+				        x: stage.getWidth()/2,
+				        y: stage.getHeight()/2,
+				        rotation: Math.PI * 2,
+				        opacity: 0.8,
+				        scaleX: 2,
+				        scaleY: 2,
+				});},1000);
     			menu.clickMenu();
-    		else
-    			game.stop();
+    			pause.on('mouseover', function () {
+    	            document.body.style.cursor = 'pointer';
+    	        });
+    	        pause.on('mouseout', function () {
+    	            document.body.style.cursor = 'default';
+    	        });
+    	        
+    			pause.on('mousedown touchstart', function() {
+    				setTimeout(function() {
+    					if (running){
+    						pause.find('Group').hide();
+    						pause.find('RegularPolygon').show();
+    						foregroundLayer.show();
+    						greyBack.reverse();
+    						tween.play();
+    						game.stop();
+    					}
+    					else{
+    						pause.find('RegularPolygon').hide();
+    						pause.find('Group').show();
+    						greyBack.play();
+    						tween.reverse();
+    						game.start();
+    					}
+    			      }, 10);
+    			});
+    		}
+    		
     	});
 		
 		stage.on('touchmove', function(event) {
@@ -243,6 +289,76 @@ $(document).ready(function(){
     Ball.prototype.constructor = Ball;
 
     function Game() {
+    	var point = new Kinetic.Text({
+			x:player.getX()+player.getWidth(),
+			y:player.getY()+player.getHeight()/2,
+			text: '10',
+            fontSize: 20,
+            fontFamily: 'Calibri',
+            fontStyle: 'bold',
+            fill: 'black',
+            opacity: 0
+          });
+    	
+    	var scoreBoard = new Kinetic.Group();
+		var playerScore = new Kinetic.Text({
+			x:stage.getWidth()/2 - 60,
+			y:20,
+			text: '7',
+            fontSize: 60,
+            fontFamily: 'Courier',
+            fontStyle: 'bold',
+            fill: 'black',
+          });
+		
+		var opponentScore = new Kinetic.Text({
+			x:stage.getWidth()/2 +25,
+			y:20,
+			text: '10',
+            fontSize: 60,
+            fontFamily: 'Courier',
+            fontStyle: 'bold',
+            fill: 'black',
+          });
+		
+		var textScore = new Kinetic.Text({
+			padding: 20,
+			text: 'Nivel: '+level+' Puntos: '+score,
+            fontSize: 12,
+            fontFamily: 'Calibri',
+            fontStyle: 'bold',
+            fill: 'black',
+          });
+		
+		var scoreLayer = new Kinetic.Layer();
+		scoreBoard.add(playerScore);
+		scoreBoard.add(opponentScore);
+		scoreBoard.add(textScore);
+		scoreLayer.add(scoreBoard);
+		scoreLayer.add(point);
+    	stage.add(scoreLayer);
+    	
+    	var anim = new Kinetic.Animation(function(frame) {
+            point.setY(point.getY()-5);
+          }, scoreLayer);
+    	
+    	var crash = new Kinetic.Tween({
+            node: point, 
+            duration: 0.5,
+            opacity: 1,
+            onFinish: function() {
+            	crash.reverse();
+            	setTimeout(function(){
+            		anim.stop();
+        		},500);
+              }
+          });
+    	
+    	function updateScore(){
+    		textScore.setText('Nivel: '+level+' Puntos: '+score);
+    		scoreLayer.draw();
+    	}
+    	
         function animBall () {
         	ballLayer = ball.getLayer();
         	
@@ -319,6 +435,11 @@ $(document).ready(function(){
 				if(turno=="izquierda" && top_y < (player.getY() + player.getHeight()) && bottom_y > player.getY() && top_x < (player.getX() + player.getWidth()) && bottom_x > player.getX()){
 	    			turno = "derecha";
 					ball.direction.x = ball.direction.x * (-1);
+					point.setY(top_y);
+					score += 10;
+					updateScore();
+					anim.start();
+					crash.play();
 				}
 	    		
     			//Rebote en la raqueta derecha
@@ -365,7 +486,7 @@ $(document).ready(function(){
             width: 300,
             height: 150,
             opacity: 0.8,
-            fill: 'red',
+            fill: 'blue',
             stroke: 'black',
             strokeWidth: 10,
             shadowColor: 'black',
@@ -374,11 +495,19 @@ $(document).ready(function(){
             shadowOpacity: 0.2,
             cornerRadius: 10
     	});
-    	
     	this.group.add(this.box);
     	this.group.add(this.text);
+    	
+    	this.group.on('mouseover', function () {
+            document.body.style.cursor = 'pointer';
+        });
+    	this.group.on('mouseout', function () {
+            document.body.style.cursor = 'default';
+        });
+    	
     	this.menuLayer= new Kinetic.Layer();
     	this.menuLayer.add(this.group);
+    	
     	stage.add(this.menuLayer);
     };
     
@@ -399,6 +528,7 @@ $(document).ready(function(){
     };
     initMenu.prototype.hideLayer = function(){
     	this.menuLayer.hide();
+    	greyBack.play();
 		game.start();
     };
     
@@ -473,7 +603,6 @@ $(document).ready(function(){
 		
 		$("#leftSpeed" ).change(function() {
 			player.speed = parseInt(this.value);
-
 		});
 		
 		$("#rightSpeed" ).change(function() {
@@ -482,6 +611,7 @@ $(document).ready(function(){
 		
 		$( window ).resize(function() {
 			stage.setWidth(parseFloat($("#container").css("width")));
+//			stage.setScaleX(scale)
 			background.setWidth(stage.getWidth());
 			opponent.setX(stage.getWidth()-80);
 			lines = middleLine.get("Rect");
