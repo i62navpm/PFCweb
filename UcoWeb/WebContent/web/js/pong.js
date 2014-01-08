@@ -13,15 +13,10 @@ $(document).ready(function(){
 	})();
 	
 	var stage = null;
-	var background = null;
-	var middleLine = null;
-	var player = null;
-	var opponent = null;
-	var ball = null;
+	var game = null;
 	var greyBack = null;
-	var level = 0;
-	var score = 0;
 	var running = false;
+	var playerKick = false;
 	var zones = $("#numberZone").val();
 	var mode = "CPU";
 	
@@ -32,27 +27,45 @@ $(document).ready(function(){
 		    height: 300
 		});
 		
-		background = new Kinetic.Rect({
+		var backGroup= new Kinetic.Group();
+		var background = new Kinetic.Rect({
 		    fill: 'white',
 		    x : 0,
 		    y : 0,
 		    stroke: 'black',
-	        strokeWidth: 20,
+	        strokeWidth: 5,
 		    width : stage.getWidth(),
-		    height : stage.getHeight()
+		    height : stage.getHeight(),
+		    lineCap: 'round',
+		    dashArray: [25, 25, 0.001, 25],
+		    id: 'background'
 		});
 		
-		middleLine = new Kinetic.Group();
-		for (var y = 0; y <= stage.getHeight(); y += 30) {
-		    var linePart = new Kinetic.Rect({
-		        x : (stage.getWidth()/2)-2,
-		        y : y,
-		        width : 4,
-		        height : 20,
-		        fill : 'black'
-		    });
-		    middleLine.add(linePart);
-		};
+		var topLine = new Kinetic.Line({
+	    	points: [0, 0, stage.getWidth(), 0],
+	        stroke: 'black',
+	        strokeWidth: 20,
+	        id: 'topLine'
+	    });
+		
+		var bottomLine = new Kinetic.Line({
+	    	points: [0, stage.getHeight(), stage.getWidth(), stage.getHeight()],
+	        stroke: 'black',
+	        strokeWidth: 20,
+	        id: 'bottomLine'
+	    });
+		backGroup.add(background);
+		backGroup.add(topLine);
+		backGroup.add(bottomLine);
+		
+	    var middleLine = new Kinetic.Line({
+	    	points: [stage.getWidth()/2, 0, stage.getWidth()/2, stage.getHeight()],
+	        stroke: 'black',
+	        strokeWidth: 6,
+	        lineCap: 'round',
+	        dashArray: [35, 20],
+	        id: 'middleLine'
+	    });
 		
     	var backBox = new Kinetic.Rect({
             x: 0,
@@ -61,11 +74,13 @@ $(document).ready(function(){
             height: stage.getHeight(),
             opacity: 0.8,
             fill: 'grey',
+            id: 'backBox'
     	});
 		
 		var pause = new Kinetic.Group({
 			x: stage.getWidth()-40,
 	        y: 50,
+	        id: 'pause'
 		});
 		
 		var circlePause = new Kinetic.Circle({
@@ -114,23 +129,24 @@ $(document).ready(function(){
 		pause.add(trianglePause);
 		
 		var backgroundLayer = new Kinetic.Layer();
-		backgroundLayer.add(background);
+		backgroundLayer.add(backGroup);
 		backgroundLayer.add(middleLine);
 		backgroundLayer.add(pause);
+		
 		var foregroundLayer = new Kinetic.Layer();
 		foregroundLayer.add(backBox);
 		
 		var pauseLayer = new Kinetic.Layer();
 		
 		var ballLayer = new Kinetic.Layer();
-		ball = new Ball(stage, ballLayer);
+		var ball = new Ball(stage, ballLayer);
 		ballLayer.add(ball);
 		
 		var playerLayer = new Kinetic.Layer();
-		player = new Player(stage, playerLayer);
+		var player = new Player(stage, playerLayer);
 		playerLayer.add(player);
 		
-		opponent = new Opponent(stage, playerLayer);
+		var opponent = new Opponent(stage, playerLayer);
 		playerLayer.add(opponent);
 		
 		stage.add(backgroundLayer);
@@ -150,7 +166,7 @@ $(document).ready(function(){
 		stage.add(foregroundLayer);
 		stage.add(pauseLayer);
     			
-		menu = new initMenu();
+		var menu = new initMenu();
 		menu.showMenu();
 		menu.menuLayer.on('mousedown touchstart', function() {
 			if (!running){
@@ -180,6 +196,7 @@ $(document).ready(function(){
     	        
     			pause.on('mousedown touchstart', function() {
     				setTimeout(function() {
+    					console.log(playerKick);
     					if (running){
     						pause.find('Group').hide();
     						pause.find('RegularPolygon').show();
@@ -193,7 +210,8 @@ $(document).ready(function(){
     						pause.find('Group').show();
     						greyBack.play();
     						tween.reverse();
-    						game.start();
+    						
+							game.start();
     					}
     			      }, 10);
     			});
@@ -227,12 +245,34 @@ $(document).ready(function(){
             height: 80,
             draggable: true,
             dragBoundFunc: function(pos) {
-              return {
-                x: this.getAbsolutePosition().x,
-                y: pos.y
-              };
+            	var ball = stage.find('#ball')[0];
+        		var ballLayer = ball.getLayer();
+            	var newY= null;
+	        	if (pos.y<0){
+	        		newY = 0;
+	        		if(playerKick)
+	        			ball.setY(this.getHeight()/2);
+	        	}
+	        	else if(pos.y+this.getHeight() > stage.getHeight()){
+	        		newY = stage.getHeight()-this.getHeight();
+	        		if(playerKick)
+	        			ball.setY(stage.getHeight()-this.getHeight()/2);
+	        	}
+	        	else{
+	        		newY = pos.y;
+	        		if(playerKick)
+	        			ball.setY(pos.y+this.getHeight()/2);
+	        	}
+	        	
+	    		ballLayer.draw();
+	//            newY = pos.y < 0 ? 0 : pos.y;
+	//           	newY = pos.y+this.getHeight() > stage.getHeight() ? stage.getHeight()-this.getHeight() : pos.y;
+	        	return {
+	                x: this.getAbsolutePosition().x,
+	                y: newY
+	              };
             },
-
+            id: 'player'
         };
         Kinetic.Rect.call(this, config);
         this.speed = parseInt($("#leftSpeed").val());
@@ -245,16 +285,32 @@ $(document).ready(function(){
      * Función para mover abajo la raqueta
      */
     Player.prototype.moveDown = function() {
-    	if (this.getY()+40 < stage.getHeight()) 
+    	if (this.getY()+this.getHeight() < stage.getHeight()){
             this.setY(this.getY()+this.speed);
+            this.getLayer().draw();
+	    	if (playerKick){
+	    		var ball = stage.find('#ball')[0];
+	    		var ballLayer = ball.getLayer();
+	    		ball.setY(ball.getY()+this.speed);
+	    		ballLayer.draw();
+	    	}
+    	}
     };
     
     /*
      * Función para mover arriba la raqueta
      */
-    Player.prototype.moveUp = function(playerSpeed) {
-        if (this.getY() > -40 )
+    Player.prototype.moveUp = function() {
+    	if (this.getY() > 0 ){
         	this.setY(this.getY()-this.speed);
+        	this.getLayer().draw();
+        	if (playerKick){
+        		var ball = stage.find('#ball')[0];
+        		var ballLayer = ball.getLayer();
+        		ball.setY(ball.getY()-this.speed);
+        		ballLayer.draw();
+        	}
+        }
     };
     
     function Opponent(stage,layer){
@@ -264,6 +320,7 @@ $(document).ready(function(){
             y : stage.getHeight()/2-40,
             width: 10,
             height: 80,
+            id: 'opponent'
         };
         Kinetic.Rect.call(this, config);
         this.speed = parseInt($("#rightSpeed").val());
@@ -277,18 +334,30 @@ $(document).ready(function(){
     		radius : 10,
             fill : 'black',
             x : stage.getWidth()/2,
-            y : stage.getHeight()/2
+            y : stage.getHeight()/2,
+            id: 'ball'
         };
         Kinetic.Circle.call(this, config);
         this.speed = parseInt($("#ballSpeed").val());
         this.colorLeft = "black";
         this.colorRight = "black";
-        this.direction = { x: +1, y: -1 };
+        this.direction = { x: 1, y: -1 };
     };
     Ball.prototype = new Kinetic.Circle({});
     Ball.prototype.constructor = Ball;
 
     function Game() {
+    	var ball = stage.find('#ball')[0];
+    	var player = stage.find('#player')[0];
+    	var opponent = stage.find('#opponent')[0];
+    	var ballLayer = ball.getLayer();
+    	var playerLayer = player.getLayer();
+    	
+    	var points = 0;
+    	var level = 0;
+    	var pScore = 0;
+    	var oScore = 0;
+    	
     	var point = new Kinetic.Text({
 			x:player.getX()+player.getWidth(),
 			y:player.getY()+player.getHeight()/2,
@@ -302,9 +371,9 @@ $(document).ready(function(){
     	
     	var scoreBoard = new Kinetic.Group();
 		var playerScore = new Kinetic.Text({
-			x:stage.getWidth()/2 - 60,
+			x:stage.getWidth()/2 - 75,
 			y:20,
-			text: '7',
+			text: 0,
             fontSize: 60,
             fontFamily: 'Courier',
             fontStyle: 'bold',
@@ -312,9 +381,9 @@ $(document).ready(function(){
           });
 		
 		var opponentScore = new Kinetic.Text({
-			x:stage.getWidth()/2 +25,
+			x:stage.getWidth()/2 +40,
 			y:20,
-			text: '10',
+			text: 0,
             fontSize: 60,
             fontFamily: 'Courier',
             fontStyle: 'bold',
@@ -323,7 +392,7 @@ $(document).ready(function(){
 		
 		var textScore = new Kinetic.Text({
 			padding: 20,
-			text: 'Nivel: '+level+' Puntos: '+score,
+			text: 'Nivel: '+level+' Puntos: '+points,
             fontSize: 12,
             fontFamily: 'Calibri',
             fontStyle: 'bold',
@@ -347,7 +416,8 @@ $(document).ready(function(){
             duration: 0.5,
             opacity: 1,
             onFinish: function() {
-            	crash.reverse();
+            	
+            	this.reverse();
             	setTimeout(function(){
             		anim.stop();
         		},500);
@@ -355,13 +425,13 @@ $(document).ready(function(){
           });
     	
     	function updateScore(){
-    		textScore.setText('Nivel: '+level+' Puntos: '+score);
+    		textScore.setText('Nivel: '+level+' Puntos: '+points);
+    		playerScore.setText(pScore);
+    		opponentScore.setText(oScore);
     		scoreLayer.draw();
     	}
     	
         function animBall () {
-        	ballLayer = ball.getLayer();
-        	
     		if (running == true){
 	    		requestAnimationFrame(animBall);
 
@@ -385,10 +455,8 @@ $(document).ready(function(){
 	    }; 
 	    
 	    function animRaquets () {
-	    	playerLayer = player.getLayer();
-	    	
-    		if (running == true){
-    			requestAnimationFrame(animRaquets);
+	    	if (running == true){	
+	    		requestAnimationFrame(animRaquets);
 				// Drawing code goes here
 				if(ball.getX()<stage.getWidth()/2){
 					if(mode == "CPU"){
@@ -405,15 +473,13 @@ $(document).ready(function(){
 						opponent.setY(opponent.getY()-opponent.speed);
 				}
 				playerLayer.draw();
-				
-    		}
-			
+	    	}
 		}; 
 		
-		var turno = "derecha";
+//		var turno = "derecha";
+		var border = stage.find('#topLine')[0].getStrokeWidth()/2;
+		var backgroundStroke = stage.find('#background')[0].getStrokeWidth()/2;
 		function controlCollision () {
-			playerLayer = player.getLayer();
-			
 			var top_x = ball.getX()- ball.getRadius();
 			var top_y = ball.getY()- ball.getRadius();
 			var bottom_x = ball.getX()+ ball.getRadius();
@@ -422,36 +488,60 @@ $(document).ready(function(){
     		if (running == true){
 				requestAnimationFrame(controlCollision);
 				//Rebote en las paredes verticales
-				if (top_x < background.getStrokeWidth()/2 ||
-	    				bottom_x > stage.getWidth()-(background.getStrokeWidth()/2)) 
-	    			ball.direction.x *= -1;
+//				if (top_x < backgroundStroke ||
+//	    				bottom_x > stage.getWidth()-(backgroundStroke)) 
+//	    			ball.direction.x *= -1;
 	    		
+				if (top_x < backgroundStroke){
+					game.stop();
+					oScore += 1;
+					updateScore();
+					playerKick = true;
+					ball.setX(player.getX()+player.getWidth()+ball.getRadius());
+					ball.setY(player.getY()+player.getHeight()/2);
+					ballLayer.draw();
+					ball.direction.x *= -1;
+					
+					
+				}
+				else if(bottom_x > stage.getWidth()-(backgroundStroke)){
+					game.stop();
+					pScore += 1;
+					updateScore();
+					playerKick = true;
+					ball.setX(opponent.getX()-ball.getRadius());
+					ball.setY(opponent.getY()+opponent.getHeight()/2);
+					ballLayer.draw();
+					ball.direction.x *= -1;
+				}
 				//Rebote en las paredes horizontales
-				if (top_y < background.getStrokeWidth()/2 ||
-	    				bottom_y > stage.getHeight()-(background.getStrokeWidth()/2)) 
+				if (top_y < border ||
+	    				bottom_y > stage.getHeight()-border) 
 	    			ball.direction.y *= -1;
 									
 				//Rebote en la raqueta izquierda    		
-				if(turno=="izquierda" && top_y < (player.getY() + player.getHeight()) && bottom_y > player.getY() && top_x < (player.getX() + player.getWidth()) && bottom_x > player.getX()){
-	    			turno = "derecha";
+//				if(turno=="izquierda" && top_y < (player.getY() + player.getHeight()) && bottom_y > player.getY() && top_x < (player.getX() + player.getWidth()) && bottom_x > player.getX()){
+				if(top_y < (player.getY() + player.getHeight()) && bottom_y > player.getY() && top_x < (player.getX() + player.getWidth()) && bottom_x > player.getX()){
+//	    			turno = "derecha";
 					ball.direction.x = ball.direction.x * (-1);
 					point.setY(top_y);
-					score += 10;
+					points += 10;
 					updateScore();
 					anim.start();
 					crash.play();
 				}
 	    		
     			//Rebote en la raqueta derecha
-    			else if(turno=="derecha" && top_y < (opponent.getY() + opponent.getHeight()) && bottom_y > opponent.getY() && top_x < (opponent.getX() + opponent.getWidth()) && bottom_x > opponent.getX()){ 
-	    			turno = "izquierda";
+//    			else if(turno=="derecha" && top_y < (opponent.getY() + opponent.getHeight()) && bottom_y > opponent.getY() && top_x < (opponent.getX() + opponent.getWidth()) && bottom_x > opponent.getX()){ 
+				else if(top_y < (opponent.getY() + opponent.getHeight()) && bottom_y > opponent.getY() && top_x < (opponent.getX() + opponent.getWidth()) && bottom_x > opponent.getX()){
+//	    			turno = "izquierda";
     				ball.direction.x = ball.direction.x * (-1);
     			}
 			}
 		}; 
 	    Game.prototype.start = function() {
 	    	running = true;
-	    	
+	    	playerKick = false;
 	    	animBall();
 	    	animRaquets();
 	    	controlCollision();
@@ -548,8 +638,8 @@ $(document).ready(function(){
             
             if (key == 13 && !running)
             	game.start();
-            else if(key == 13 && running)
-            	game.stop();
+//            else if(key == 13 && running)
+//            	game.stop();
             
             if (mode=="1"){
 	            if (!(key in timers)) {
@@ -576,15 +666,25 @@ $(document).ready(function(){
     
 	$(function(){
 	    initStage();
+	    
+    	var ball = stage.find('#ball')[0];
+    	var player = stage.find('#player')[0];
+    	var opponent = stage.find('#opponent')[0];
+    	var background = stage.find('#background')[0];
+    	var topLine = stage.find('#topLine')[0];
+    	var bottomLine = stage.find('#bottomLine')[0];
+    	var middleLine = stage.find('#middleLine')[0];
+    	
 	    $("#backgroundColor" ).change(function() {
 			background.setFill(this.value);
 			stage.draw();
 		});
 		
 		$("#lineColor" ).change(function() {
-			var nodes = middleLine.get('Rect');
-			for (var i = 0; i <nodes.length; i++) 
-				nodes[i].setFill(this.value);
+			middleLine.setStroke(this.value);
+			background.setStroke(this.value);
+			topLine.setStroke(this.value);
+			bottomLine.setStroke(this.value);
 			stage.draw();
 		});
 		$("#raquetColor" ).change(function() {
@@ -614,9 +714,7 @@ $(document).ready(function(){
 //			stage.setScaleX(scale)
 			background.setWidth(stage.getWidth());
 			opponent.setX(stage.getWidth()-80);
-			lines = middleLine.get("Rect");
-			for (var i=0; i<lines.length; i ++)
-				lines[i].setX((stage.getWidth()/2)-2);
+			middleLine.setPoints([stage.getWidth()/2, 0, stage.getWidth()/2-5, stage.getHeight()]);
 			ball.setX(stage.getWidth()/2);
 			
 			stage.draw();
