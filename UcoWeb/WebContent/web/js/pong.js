@@ -16,6 +16,7 @@ $(document).ready(function(){
 	var game = null;
 	var greyBack = null;
 	var running = false;
+	var pauseState = false;
 	var playerKick = false;
 	var zones = $("#numberZone").val();
 	var mode = "CPU";
@@ -196,22 +197,20 @@ $(document).ready(function(){
     	        
     			pause.on('mousedown touchstart', function() {
     				setTimeout(function() {
-    					console.log(playerKick);
-    					if (running){
+    					if (!pauseState){
     						pause.find('Group').hide();
     						pause.find('RegularPolygon').show();
     						foregroundLayer.show();
     						greyBack.reverse();
     						tween.play();
-    						game.stop();
+    						game.pause();
     					}
     					else{
     						pause.find('RegularPolygon').hide();
     						pause.find('Group').show();
     						greyBack.play();
     						tween.reverse();
-    						
-							game.start();
+							game.resume();
     					}
     			      }, 10);
     			});
@@ -285,7 +284,7 @@ $(document).ready(function(){
      * Función para mover abajo la raqueta
      */
     Player.prototype.moveDown = function() {
-    	if (this.getY()+this.getHeight() < stage.getHeight()){
+    	if (this.getY()+this.getHeight() < stage.getHeight() && !pauseState){
             this.setY(this.getY()+this.speed);
             this.getLayer().draw();
 	    	if (playerKick){
@@ -301,7 +300,7 @@ $(document).ready(function(){
      * Función para mover arriba la raqueta
      */
     Player.prototype.moveUp = function() {
-    	if (this.getY() > 0 ){
+    	if (this.getY() > 0  && !pauseState){
         	this.setY(this.getY()-this.speed);
         	this.getLayer().draw();
         	if (playerKick){
@@ -508,7 +507,6 @@ $(document).ready(function(){
 					game.stop();
 					pScore += 1;
 					updateScore();
-					playerKick = true;
 					ball.setX(opponent.getX()-ball.getRadius());
 					ball.setY(opponent.getY()+opponent.getHeight()/2);
 					ballLayer.draw();
@@ -541,7 +539,6 @@ $(document).ready(function(){
 		}; 
 	    Game.prototype.start = function() {
 	    	running = true;
-	    	playerKick = false;
 	    	animBall();
 	    	animRaquets();
 	    	controlCollision();
@@ -549,6 +546,21 @@ $(document).ready(function(){
 	    
 	    Game.prototype.stop = function() {
 	    	running = false;
+	    };
+	    
+	    Game.prototype.resume = function() {
+	    	pauseState = false;
+	    	if(!playerKick){
+		    	running = true;
+	    		animBall();
+		    	animRaquets();
+		    	controlCollision();
+	    	}
+	    };
+	    
+	    Game.prototype.pause = function() {
+	    	running = false;
+	    	pauseState = true;
 	    };
 		
     };
@@ -636,8 +648,10 @@ $(document).ready(function(){
                 return true;
             
             
-            if (key == 13 && !running)
-            	game.start();
+            if (key == 13 && !running && !pauseState){
+            	playerKick=false;
+            	game.resume();
+            }
 //            else if(key == 13 && running)
 //            	game.stop();
             
