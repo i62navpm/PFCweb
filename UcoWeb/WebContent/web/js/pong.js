@@ -18,6 +18,7 @@ $(document).ready(function(){
 	var running = false;
 	var pauseState = false;
 	var playerKick = false;
+	var tweenPause = null;
 	var zones = $("#numberZone").val();
 	var mode = "CPU";
 	
@@ -172,12 +173,11 @@ $(document).ready(function(){
 		menu.menuLayer.on('mousedown touchstart', function() {
 			if (!running){
 				playerLayer.moveUp();
-				var tween = null;
 				setTimeout(function() {
 					pause.remove();
 					backgroundLayer.draw();
 					pauseLayer.add(pause);
-					tween = new Kinetic.Tween({
+					tweenPause = new Kinetic.Tween({
 				        node: pause, 
 				        duration: 1,
 				        x: stage.getWidth()/2,
@@ -202,14 +202,14 @@ $(document).ready(function(){
     						pause.find('RegularPolygon').show();
     						foregroundLayer.show();
     						greyBack.reverse();
-    						tween.play();
+    						tweenPause.play();
     						game.pause();
     					}
     					else{
     						pause.find('RegularPolygon').hide();
     						pause.find('Group').show();
     						greyBack.play();
-    						tween.reverse();
+    						tweenPause.reverse();
 							game.resume();
     					}
     			      }, 10);
@@ -377,6 +377,7 @@ $(document).ready(function(){
             fontFamily: 'Courier',
             fontStyle: 'bold',
             fill: 'black',
+            id: 'playerScore'
           });
 		
 		var opponentScore = new Kinetic.Text({
@@ -387,6 +388,7 @@ $(document).ready(function(){
             fontFamily: 'Courier',
             fontStyle: 'bold',
             fill: 'black',
+            id: 'opponentScore'
           });
 		
 		var textScore = new Kinetic.Text({
@@ -475,7 +477,7 @@ $(document).ready(function(){
 	    	}
 		}; 
 		
-//		var turno = "derecha";
+		var turno = "derecha";
 		var border = stage.find('#topLine')[0].getStrokeWidth()/2;
 		var backgroundStroke = stage.find('#background')[0].getStrokeWidth()/2;
 		function controlCollision () {
@@ -499,6 +501,7 @@ $(document).ready(function(){
 					ball.setX(player.getX()+player.getWidth()+ball.getRadius());
 					ball.setY(player.getY()+player.getHeight()/2);
 					ballLayer.draw();
+					turno = "derecha";
 					ball.direction.x *= -1;
 					
 					
@@ -510,6 +513,7 @@ $(document).ready(function(){
 					ball.setX(opponent.getX()-ball.getRadius());
 					ball.setY(opponent.getY()+opponent.getHeight()/2);
 					ballLayer.draw();
+					turno = "izquierda";
 					ball.direction.x *= -1;
 				}
 				//Rebote en las paredes horizontales
@@ -518,9 +522,8 @@ $(document).ready(function(){
 	    			ball.direction.y *= -1;
 									
 				//Rebote en la raqueta izquierda    		
-//				if(turno=="izquierda" && top_y < (player.getY() + player.getHeight()) && bottom_y > player.getY() && top_x < (player.getX() + player.getWidth()) && bottom_x > player.getX()){
-				if(top_y < (player.getY() + player.getHeight()) && bottom_y > player.getY() && top_x < (player.getX() + player.getWidth()) && bottom_x > player.getX()){
-//	    			turno = "derecha";
+				if(turno=="izquierda" && top_y < (player.getY() + player.getHeight()) && bottom_y > player.getY() && top_x < (player.getX() + player.getWidth()) && bottom_x > player.getX()){
+	    			turno = "derecha";
 					ball.direction.x = ball.direction.x * (-1);
 					point.setY(top_y);
 					points += 10;
@@ -530,9 +533,8 @@ $(document).ready(function(){
 				}
 	    		
     			//Rebote en la raqueta derecha
-//    			else if(turno=="derecha" && top_y < (opponent.getY() + opponent.getHeight()) && bottom_y > opponent.getY() && top_x < (opponent.getX() + opponent.getWidth()) && bottom_x > opponent.getX()){ 
-				else if(top_y < (opponent.getY() + opponent.getHeight()) && bottom_y > opponent.getY() && top_x < (opponent.getX() + opponent.getWidth()) && bottom_x > opponent.getX()){
-//	    			turno = "izquierda";
+				else if(turno=="derecha" && top_y < (opponent.getY() + opponent.getHeight()) && bottom_y > opponent.getY() && top_x < (opponent.getX() + opponent.getWidth()) && bottom_x > opponent.getX()){ 
+	    			turno = "izquierda";
     				ball.direction.x = ball.direction.x * (-1);
     			}
 			}
@@ -570,7 +572,8 @@ $(document).ready(function(){
     		x: stage.getWidth()/2,
             y: stage.getHeight()/2,
             offsetX: 150,
-        	offsetY: 75
+        	offsetY: 75,
+        	id: 'initMenu'
     	});
     	
     	this.text = new Kinetic.Text({
@@ -680,15 +683,42 @@ $(document).ready(function(){
     
 	$(function(){
 	    initStage();
+
+	    document.addEventListener("keydown", function(e) {
+	    	var elem = document.getElementById('container');
+	    	if (e.keyCode == 113) {
+    	
+    	  if (!screenfull.isFullscreen){
+    		  if ( $("#container").hasClass('col-md-10') ){ 
+		    	    $("#container").removeClass('col-md-10');
+		    		$("#container").removeClass('col-md-offset-1');
+		    	}
+		    	$("#container").width('100%');
+		    	$("#container").height('100%');
+    	  }
+    	  else{
+    		  	  $("#container").addClass('col-md-10');
+    			  $("#container").addClass('col-md-offset-1');
+    			  $("#container").width('808px');
+    			  $("#container").height('300px');
+    	  }
+    	  screenfull.toggle(elem);
+	      }
+	    }, false);
 	    
-    	var ball = stage.find('#ball')[0];
+	    var ball = stage.find('#ball')[0];
     	var player = stage.find('#player')[0];
     	var opponent = stage.find('#opponent')[0];
     	var background = stage.find('#background')[0];
     	var topLine = stage.find('#topLine')[0];
     	var bottomLine = stage.find('#bottomLine')[0];
     	var middleLine = stage.find('#middleLine')[0];
-    	
+		var pause = stage.find('#pause')[0];
+		var backBox = stage.find('#backBox')[0];
+		var playerScore = stage.find('#playerScore')[0];
+		var opponentScore = stage.find('#opponentScore')[0];
+		var initMenu = stage.find('#initMenu')[0];
+		
 	    $("#backgroundColor" ).change(function() {
 			background.setFill(this.value);
 			stage.draw();
@@ -723,14 +753,46 @@ $(document).ready(function(){
 			opponent.speed = parseInt(this.value);
 		});
 		
-		$( window ).resize(function() {
+		$(window).resize(function() {
 			stage.setWidth(parseFloat($("#container").css("width")));
-//			stage.setScaleX(scale)
+			stage.setHeight(parseFloat($("#container").css("height")));
+			
+			if(!initMenu.isVisible()){
+				tweenPause.reset();
+				pause.setX(stage.getWidth()-40);	
+				tweenPause = new Kinetic.Tween({
+			        node: pause, 
+			        duration: 1,
+			        x: stage.getWidth()/2,
+			        y: stage.getHeight()/2,
+			        rotation: Math.PI * 2,
+			        opacity: 0.8,
+			        scaleX: 2,
+			        scaleY: 2,
+				});
+				if(pauseState)
+					tweenPause.seek(1);
+			}
+			else{
+				pause.setX(stage.getWidth()-40);
+				initMenu.setX(stage.getWidth()/2);
+			}
+			backBox.setWidth(stage.getWidth());
+			backBox.setHeight(stage.getHeight());
 			background.setWidth(stage.getWidth());
+			background.setHeight(stage.getHeight());
+			topLine.setPoints([0, 0, stage.getWidth(), 0]);
+			bottomLine.setPoints([0, stage.getHeight(), stage.getWidth(), stage.getHeight()]);
+			
 			opponent.setX(stage.getWidth()-80);
 			middleLine.setPoints([stage.getWidth()/2, 0, stage.getWidth()/2-5, stage.getHeight()]);
-			ball.setX(stage.getWidth()/2);
 			
+			playerScore.setX(stage.getWidth()/2 - 75);
+			opponentScore.setX(stage.getWidth()/2 + 40);
+			
+			ball.setX(stage.getWidth()/2);
+			if(playerKick)
+				ball.setY(stage.getHeight()/2);
 			stage.draw();
 		});
 		
