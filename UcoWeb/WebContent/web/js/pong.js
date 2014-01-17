@@ -39,23 +39,7 @@ $(document).ready(function(){
 		var player = new Player();
 		var opponent = new Opponent();
 		var menu = new initMenu();
-		var game = new Game(background, ball, player, opponent, menu, texts);
-		//game.startAnimation();
-//		console.log(isMobile());
-		
-//		var w=$(window).width();
-//		var h=$(window).height()-20;
-//		
-//		$("#container").css("height",w);
-//		$("#container").css("width",h);
-//		
-//		stage.setWidth(h);
-//		stage.setHeight(w-40);
-//		
-//		stage.rotate(Math.PI/2);
-//		stage.setX(h);
-//		stage.draw();
-//		//game.resizeWindow();
+		new Game(background, ball, player, opponent, menu, texts);
 
 	}
 	
@@ -557,7 +541,7 @@ $(document).ready(function(){
 	
 	Game.prototype.enableKeyboard= function(){
 		this.KeyboardController({
-            83: $.proxy(function(){this.gPlayer.moveDown(); },this),
+            83: $.proxy(function(){ this.gPlayer.moveDown(); },this),
             40: $.proxy(function(){ this.gPlayer.moveDown(); },this),
             87: $.proxy(function(){ this.gPlayer.moveUp(); },this),
             38: $.proxy(function(){ this.gPlayer.moveUp(); },this),
@@ -743,19 +727,17 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.toggleFullScreen = function(){
-		
-//		if (isMobile){
-//			var W = $(window).width();
-//			var H = $(window).height();
-//
-//			$("#container").width(W);
-//            $("#container").height(H);
-////            $("#container").css("top",-$("#container").position().top+'px');
-////            $("#container").setStyle({position:'relative', top: '100px'});
-//            this.resizeWindow();
-//		}
-//		else{
-			var elem=$("#container")[0];
+		var elem=$("#container")[0];
+		if (isMobile()){
+			$("#container").width('100%');
+            $("#container").height('100%');
+			$("#container").width($(window).width());
+            $("#container").height( $(window).height());
+            
+			$("#container").css("top",-$("#container").position().top+'px');
+			this.resizeWindow();
+		}
+		else{
 			if (!screenfull.isFullscreen){
 				this.oldWidth = $("#container").width();
 				this.oldHeight = $("#container").height();
@@ -767,7 +749,7 @@ $(document).ready(function(){
 			    $("#container").height(this.oldHeight);
 			}
 			screenfull.toggle(elem);
-//		}
+		}
 	};
 	
 	Game.prototype.restartGame = function(){
