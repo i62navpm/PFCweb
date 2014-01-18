@@ -2,17 +2,19 @@
 <html>
 <head>
 <title>Tetris HTML5</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Juego Tetris HTML5">
-	<meta name="author" content="Manuel Navarro P茅rez">
+	<meta name="author" content="Manuel Navarro P閞ez">
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 	
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/kinetic-v4.7.2.js"></script>
-	
+	<script type="text/javascript" src="js/detectmobilebrowser.js"></script>
+	<script type="text/javascript" src="js/screenfull.min.js"></script>
+	<script type="text/javascript" src="js/initMenu.js"></script>
 	<script type="text/javascript" src="js/tetris.js"></script>
 	
 </head>
@@ -23,7 +25,15 @@
 			<div class="col-md-4 col-md-offset-4 col-xs-12" id="container"></div>
 		</div>
 		<div class="row" style="margin-top:15px">
-			<div class="col-md-6 col-md-offset-3 alert alert-success hidden-xs hidden-sm">
+			<div class="col-md-3 col-md-offset-2 btn-group" data-toggle="buttons" >
+			  	<label class="btn btn-primary active" for="1color">
+					<input id = "1color" type="radio" value="1color">1 Color
+			  	</label>
+				<label class="btn btn-primary" for="2colors">
+					<input id="2colors" type="radio" value="2colors">2 Colores
+				</label>
+			</div>
+			<div class="col-md-5 alert alert-success hidden-xs hidden-sm">
 			  <h4>Instrucciones</h4>
 				<div class="col-md-12">  
 				  <h5>Para PC:</h5>
@@ -33,16 +43,16 @@
 					  	<span class="glyphicon glyphicon-arrow-left"></span> 
 					  	<span class="glyphicon glyphicon-arrow-right"></span>
 					  	<span class="glyphicon glyphicon-arrow-down"></span>
-						o A/D/S o mover el rat贸n.
+						o A/D/S o mover el rat髇.
 					  </li> 
-					  <li>Rotar pieza: <span class="glyphicon glyphicon-arrow-up"></span> o W o hacer Click con el rat贸n.</li>
+					  <li>Rotar pieza: <span class="glyphicon glyphicon-arrow-up"></span> o W o hacer Click con el rat髇.</li>
 				  </ul>
 			  	</div>
 			</div>
 			<div class="col-md-6 col-md-offset-3 alert alert-success hidden-md">
 			  <h4>Instrucciones</h4>
 				<div class="col-md-12">  
-				  <h5>Para M贸vil/Tablet:</h5>
+				  <h5>Para M髒il/Tablet:</h5>
 				  <ul>
 					  <li>Empezar / pausar el juego: hacer doble tap.</li>
 					  <li>Mover pieza: Mover el dedo por la pantalla.</li>
@@ -55,19 +65,19 @@
 		<div class="row">
 			<div class="col-md-4 col-md-offset-2">
 				<div class="thumbnail">
-					<h3>Configuraci贸n de Tablero</h3>
+					<h3>Configuraci髇 de Tablero</h3>
 
-					<label for="colNumber">N煤mero de columnas</label>
+					<label for="colNumber">N鷐ero de columnas</label>
 					<input class="form-control" id="colNumber" type="number" min="7" value ="10"/>
 					
-					<label for="rowNumber">N煤mero de filas</label>
+					<label for="rowNumber">N鷐ero de filas</label>
 					<input class="form-control" id="rowNumber" type="number" min="7" value ="15"/>
 
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="thumbnail">
-					<h3>Configuraci贸n de Piezas</h3>
+					<h3>Configuraci髇 de Piezas</h3>
 					<label for="fallSpeed">Gravedad de piezas</label>
 					<input class="form-control" id="fallSpeed" type="number" min="1" max="10" value ="5"/>
 					
