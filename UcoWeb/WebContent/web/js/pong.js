@@ -399,6 +399,7 @@ $(document).ready(function(){
 		}
 			
 	};
+	
 	Game.prototype.kickPlayer = function(){
 		this.gTexts.oScore += 1;
         this.updateScore();
@@ -466,15 +467,7 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.restartGame = function(){
-		stage.clear();
-		var background = new Background();
-		var ball = new Ball();
-		var texts = new Texts();
-		var player = new Player();
-		var opponent = new Opponent();
-		var menu = new initMenu(stage);
-		new Game(background, ball, player, opponent, menu, texts);
-		
+		location.reload();
 	};
 	
 	Game.prototype.KeyboardController = function(keys, repeat){

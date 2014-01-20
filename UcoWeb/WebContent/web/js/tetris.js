@@ -29,12 +29,13 @@ $(document).ready(function(){
 		stage = new Kinetic.Stage({
 		    container : "container",
 		    width: parseFloat($("#container").css("width")),
-		    height: $("#rowNumber").val() * parseFloat($("#container").css("width"))/$("#colNumber").val()
+		    height: $("#rowNumber").val() * parseFloat($("#container").css("width"))*0.5/$("#colNumber").val()
 		});
 		
-		var background = new Background();
 		var foreground = new Foreground();
+		var background = new Background();
 		var menu = new initMenu(stage);
+		menu.text.setText("Tetris HTML5\n\n\nPulse aquí para empezar a jugar");
 		new Game(background, foreground,menu);
 
 //		stage.on('dbltap dblclick', function() {
@@ -102,8 +103,9 @@ $(document).ready(function(){
 		    y : 0,
 		    stroke: 'black',
 	        strokeWidth: 10,
-		    width : stage.getWidth(),
-		    height : stage.getHeight()
+		    width : stage.getWidth()*0.5,
+		    height : stage.getHeight()-10,
+		    offset: {x:-5, y: -5}
 		});
 
 		this.backgroundLayer = new Kinetic.Layer();
@@ -117,7 +119,7 @@ $(document).ready(function(){
 		this.cols = $("#colNumber").val();
 		this.matrix = [];
 //		var W = Math.floor(parseFloat($("#container").css("width"))/100)*100;
-		this.blockWidth = parseFloat($("#container").css("width"))/this.cols;
+		this.blockWidth = stage.getWidth()*0.5/this.cols;
 		
 		for (var i = 0; i < this.rows; i++){
 			this.matrix[i] = [];
@@ -129,6 +131,8 @@ $(document).ready(function(){
 					height: this.blockWidth,
 					stroke: '#BDBDBD',
 			        strokeWidth: 1,
+			        offset: {x:-5},
+			        id: 'foreground'
 		        });
 		        this.matrix[i][j] = square;
 		        this.foregroundLayer.add(this.matrix[i][j]);
@@ -137,8 +141,44 @@ $(document).ready(function(){
 		stage.add(this.foregroundLayer);
 	}
 	
+	function NextPiece(blockWidth){
+		this.matrix = [];
+		
+		this.background = new Kinetic.Rect({
+		    x : stage.getWidth()-stage.getWidth()*0.4,
+		    y : 0,
+		    stroke: 'black',
+	        strokeWidth: 5,
+		    width : blockWidth*4,
+		    height : blockWidth*4,
+		    offset: {x:-5, y: -5}
+		});
+		
+		this.nextPieceLayer = stage.find('#foreground')[0].getLayer();
+		
+		for (var i = 0; i < 4; i++){
+			this.matrix[i] = [];
+			for (var j = 0; j < 4; j++) {
+		        var square = new Kinetic.Rect({
+		        	x: this.background.getX()+(j * blockWidth),
+		    		y: this.background.getY()+(i * blockWidth),
+					width: blockWidth,
+					height: blockWidth,
+					stroke: '#BDBDBD',
+			        strokeWidth: 1,
+			        offset: {x:-5, y: -5}
+		        });
+		        this.matrix[i][j] = square;
+		        this.nextPieceLayer.add(this.matrix[i][j]);
+			}
+		};
+		
+		this.nextPieceLayer.add(this.background);
+	}
+	
 	function Piece(foreground){
 		this.pForeground = foreground;
+		this.pNextPiece = new NextPiece(this.pForeground.blockWidth);
 		
 		this.dx = new Array(0,0,0,0);
 		this.dy = new Array(0,0,0,0);
@@ -149,6 +189,7 @@ $(document).ready(function(){
 		this.nSquares = 4;
 		this.nTypes = 7;
 		this.skyline = this.pForeground.rows-1;
+		this.stack = new Array(1);
 		this.mode = '1color';
 		
 		this.eventsGame();
@@ -181,8 +222,38 @@ $(document).ready(function(){
 		this.yPiece[7]= new Array(0, 0, 1, 1);
 	};
 	
+	Piece.prototype.pushStack = function() {
+		for (var i=0;i<this.nSquares;i++) 
+			for (var j=0;j<this.nSquares;j++) 
+				this.pNextPiece.matrix[i][j].setFill(null);
+			
+		var next = 1+Math.floor(this.nTypes*Math.random());
+		
+		this.stack.push(next);
+		var dx = new Array(0,0,0,0);
+		var dy = new Array(0,0,0,0);
+		
+		for (var i=0;i<this.nSquares;i++){
+			dx[i]=this.xPiece[next][i]; 
+			dy[i]=this.yPiece[next][i];
+			}
+		for (var i=0;i<this.nSquares;i++) {
+			var X=2+dx[i];
+			var Y=2+dy[i];
+			if (this.mode == '1color')
+				this.pNextPiece.matrix[Y][X].setFill("red");
+			else
+				if(i%2==0)
+					this.pNextPiece.matrix[Y][X].setFill("red");
+				else
+					this.pNextPiece.matrix[Y][X].setFill("green");
+		 }
+	};
+	
 	Piece.prototype.getPiece = function() {
-		var curPiece = 1+Math.floor(this.nTypes*Math.random());
+		var curPiece = this.stack.pop();
+		this.pushStack();
+		
 		this.curX=Math.floor(this.pForeground.cols/2);
 		this.curY=0;
 
@@ -314,13 +385,15 @@ $(document).ready(function(){
 		if (Y<this.skyline)
 			this.skyline=Y;
 		else if(this.skyline <= 0){
-			console.log("terminado");
+//			console.log("terminado");
 			return true;
 		}
-		this.removeLines();
+		return this.removeLines();
+		
 	};
 	
 	Piece.prototype.removeLines = function(){
+		var ret = "notGetPoint";
 		for (var i=0;i<this.pForeground.rows;i++) {
 			var gapFound=0;
 			for (var j=0;j<this.pForeground.cols;j++)
@@ -334,7 +407,9 @@ $(document).ready(function(){
 					this.pForeground.matrix[k][j].setFill(this.pForeground.matrix[k-1][j].getFill());
 			
 			this.skyline++;
+			ret = "getPoint";
 		}
+		return ret;
 	};
 	
 	Piece.prototype.eventsGame= function(){
@@ -343,18 +418,45 @@ $(document).ready(function(){
 	    },this));
 	};
 	
+	function Texts(){
+    	this.level = 0;
+        this.points = 0;
+    	
+    	this.scoreBoard = new Kinetic.Group();
+
+	    this.textScore = new Kinetic.Text({
+	    	x:stage.getWidth()/1.75,
+            y:stage.getHeight()/2.5,
+	    	
+            text: 'Nivel: '+ this.level+'\nPuntos: '+ this.points,
+			fontSize: 36,
+			fontFamily: 'Calibri',
+			fontStyle: 'bold',
+			fill: 'black',
+		});
+	    
+	    this.scoreBoard.add(this.textScore);
+        
+        this.scoreLayer = stage.find('#foreground')[0].getLayer();
+        this.scoreLayer.add(this.scoreBoard);
+    };
+	
 	function Game(background, foreground, menu) {
 		this.gBackground = background;
 		this.gForeground = foreground;
-		this.gPiece = new Piece(this.gForeground);
 		this.gMenu = menu;
+		this.gPiece = new Piece(this.gForeground);
+		this.gTexts = new Texts();
 		
 		this.pauseState = false;
-		this.level = new Array(1000,700,600,500,400,300,200,100,50,10);
-//		this.gravity = this.level[($("#fallSpeed").val()-1)];
-		this.gravity=10;
+		this.gravity = 200;
+		this.difficult = "easy";
+		this.dictDifficult = {easy:{speedFactor:10},normal:{speedFactor:20}, hard:{speedFactor:30}};
+		this.pointLevelUp = 10;
+		this.count = 0;
 		
-//		this.startGame();
+		this.gPiece.pushStack();
+		stage.draw();
 		this.gMenu.mainMenu.on('mouseup touchend',$.proxy(this, "startGame"));
 		this.gMenu.pause.on('mousedown touchstart',$.proxy(this, "clickPause"));
 		this.gMenu.full.on('mousedown touchstart',$.proxy(this, "toggleFullScreen"));
@@ -377,11 +479,15 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.clickPause= function(){
-		if (this.pauseState)
+		if (this.pauseState){
 			this.resumeGame();
-		else
+			this.pauseState = false;
+		}
+		else{
 			this.pauseGame();
-		this.pauseState = !this.pauseState;
+			this.pauseState = true;
+		}
+		
 	};
 	
 	Game.prototype.pauseGame = function(){
@@ -404,7 +510,7 @@ $(document).ready(function(){
 		this.idTimeout = setTimeout($.proxy(function(){
 			this.idAnim = requestAnimationFrame(this.startFallPiece.bind(this));
 			this.fall();
-		},this), 200);
+		},this),this.gravity);
 	};
 	
 	Game.prototype.stopAnimation = function(){
@@ -413,8 +519,6 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.fall = function() {
-		var isFinish = false;
-
 		for (var i=0;i<this.gPiece.nSquares;i++){
 			this.gPiece.dx_[i]=this.gPiece.dx[i];
 			this.gPiece.dy_[i]=this.gPiece.dy[i];
@@ -425,11 +529,39 @@ $(document).ready(function(){
 			this.gPiece.drawPiece();
 			}
 		else{
-			isFinish = this.gPiece.affirmPiece();
-			if (isFinish)
+			var isFinish = this.gPiece.affirmPiece();
+			if (isFinish == true)
 				this.stopAnimation();
+			else if(isFinish == "getPoint")
+				this.getPoint();
 			this.gPiece.getPiece();
 		}
+	};
+	
+	Game.prototype.getPoint = function(){
+        this.gTexts.points += 10;
+        this.checkIfLevelUp();
+        this.updateScore();
+	};
+	
+	Game.prototype.updateScore = function(){
+		this.gTexts.textScore.setText('Nivel: '+this.gTexts.level+'\nPuntos: '+this.gTexts.points);
+	};
+	
+	Game.prototype.checkIfLevelUp = function(){
+		this.count += 10;
+		if(this.count == this.pointLevelUp){
+			this.count = 0;
+			this.gTexts.level += 1;
+			this.levelUp();
+		}
+	};
+	
+	Game.prototype.levelUp = function(){
+		if(this.gravity - this.dictDifficult[this.difficult].speedFactor <= 0)
+			this.gravity = 1;
+		else
+			this.gravity -= this.dictDifficult[this.difficult].speedFactor;
 	};
 	
 	Game.prototype.toggleFullScreen = function(){
@@ -459,12 +591,7 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.restartGame = function(){
-		stage.clear();
-		var background = new Background();
-		var foreground = new Foreground();
-		var menu = new initMenu(stage);
-		new Game(background, foreground,menu);
-		
+		location.reload();
 	};
 	
 	Game.prototype.enableKeyboard= function(){
@@ -492,7 +619,7 @@ $(document).ready(function(){
 	
 	Game.prototype.KeyboardController = function(keys, repeat){
 		var timers= {};
-
+		
         document.onkeydown= function(event) {
             var key= (event || window.event).keyCode;
             if (!(key in keys))
@@ -501,9 +628,13 @@ $(document).ready(function(){
                 if (!(key in timers)) {
                     timers[key]= null;
                     keys[key]();
-                    if (repeat!==0)
+                    if (repeat!==0 && key!=38)
                         timers[key]= setInterval(keys[key], repeat);
+                    else if(key==38)
+                    	timers[key]= setInterval(keys[key], 200);
+                    
                 }
+            
             return false;
         };
 
