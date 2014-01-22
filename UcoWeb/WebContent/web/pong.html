@@ -9,6 +9,8 @@
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="jquery-colorpickersliders/jquery.colorpickersliders.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/ion.rangeSlider.css">
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css">
 	
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
@@ -16,6 +18,8 @@
 	
 	<script type="text/javascript" src="jquery-colorpickersliders/tinycolor.js"></script>
 	<script type="text/javascript" src="jquery-colorpickersliders/jquery.colorpickersliders.js"></script>
+	<script type="text/javascript" src="js/ion.rangeSlider.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.touchspin.js"></script>
 	<script type="text/javascript" src="js/detectmobilebrowser.js"></script>
 	<script type="text/javascript" src="js/screenfull.min.js"></script>
 	<script type="text/javascript" src="js/initMenu.js"></script>
@@ -28,39 +32,55 @@
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1 col-xs-12" id="container" style="padding:0"></div>
 		</div>
-		<div class="row" style="margin-top:15px">
-			<div class="col-md-3 col-md-offset-2 btn-group" data-toggle="buttons" >
-			  	<label class="btn btn-primary active" for="CPU">
-					<input id = "CPU" type="radio" value="CPU">CPU
-			  	</label>
-				<label class="btn btn-primary" for="1">
-					<input id = "1" type="radio" value="1">1 Jugador
-				</label>
+		<div class="col-md-4" style="margin-top:15px">
+			<div class="row">
+				<div class="col-md-9 col-md-offset-2 btn-group" data-toggle="buttons" >
+				  	<label class="btn btn-primary active" for="CPU">
+						<input id = "CPU" type="radio" value="CPU">CPU
+				  	</label>
+					<label class="btn btn-primary" for="1">
+						<input id = "1" type="radio" value="1">1 Jugador
+					</label>
+				</div>
 			</div>
-			<div class="col-md-5 alert alert-success hidden-xs hidden-sm">
-			  <h4>Instrucciones</h4>
-				<div class="col-md-12">  
-				  <h5>Para PC:</h5>
-				  <ul>
-					  <li>Empezar / pausar el juego: pulsa Intro.</li>
-					  <li>Mover raqueta: 
-					  	<span class="glyphicon glyphicon-arrow-up"></span> 
-					  	<span class="glyphicon glyphicon-arrow-down"></span>
-					  	o W/S o arrastrar con el ratón.</li> 
-				  </ul>
-			  	</div>
-			</div>
-			<div class="col-md-6 alert alert-success hidden-md">
-			  <h4>Instrucciones</h4>
-				<div class="col-md-12">  
-				  <h5>Para Móvil/Tablet:</h5>
-				  <ul>
-					  <li>Empezar / pausar el juego: hacer doble tap.</li>
-					  <li>Mover raqueta: Mover el dedo por la pantalla.</li> 
-				  </ul>
-			  	</div>
+			<div class="row" style="margin-top:15px">
+				<div class="col-md-9 col-md-offset-2 btn-group" data-toggle="buttons" >
+					<label class="btn btn-primary active" for="easy">
+						<input id = "easy" type="radio" value="easy">Fácil
+					</label>
+					<label class="btn btn-primary" for="normal">
+						<input id = "normal" type="radio" value="normal">Normal
+					</label>
+					<label class="btn btn-primary" for="hard">
+						<input id = "hard" type="radio" value="hard">Difícil
+					</label>
+				</div>
 			</div>
 		</div>
+		<div class="col-md-8 alert alert-success hidden-xs hidden-sm">
+		  <h4>Instrucciones</h4>
+			<div class="col-md-12">  
+			  <h5>Para PC:</h5>
+			  <ul>
+				  <li>Empezar / pausar el juego: pulsa Intro.</li>
+				  <li>Mover raqueta: 
+				  	<span class="glyphicon glyphicon-arrow-up"></span> 
+				  	<span class="glyphicon glyphicon-arrow-down"></span>
+				  	o W/S o arrastrar con el ratón.</li> 
+			  </ul>
+		  	</div>
+		</div>
+		<div class="col-md-8 alert alert-success hidden-md">
+		  <h4>Instrucciones</h4>
+			<div class="col-md-12">  
+			  <h5>Para Móvil/Tablet:</h5>
+			  <ul>
+				  <li>Empezar / pausar el juego: hacer doble tap.</li>
+				  <li>Mover raqueta: Mover el dedo por la pantalla.</li> 
+			  </ul>
+		  	</div>
+		</div>
+	
 		
 		<div class="row">
 			<div class="col-md-3">
@@ -68,14 +88,16 @@
 					<h3>Configuración de Tablero</h3>
 
 					<label for="backgroundColor">Color de fondo</label>
-					<input class="form-control" id="backgroundColor" type="color" value="#ffffff">
+					<input type="button" class="form-control" id="backgroundColor" value="#ffffff">
 				
 					<label for="lineColor">Color de líneas</label>
-					<input class="form-control" id="lineColor" type="color">
+					<input type="button" class="form-control" id="lineColor" value="#000000">
 				
 					<label for="raquetColor">Color de raquetas</label>
-					<input class="form-control" id="raquetColor" type="color">
-
+					<input type="button" class="form-control" id="raquetColor" value="#000000">
+					
+					<label for="textColor">Color de texto</label>
+					<input type="button" class="form-control" id="textColor" value="#000000">
 				</div>
 			</div>
 			<div class="col-md-3">
@@ -83,10 +105,16 @@
 					<h3>Configuración de Raquetas</h3>
 					
 					<label for="leftSpeed">Velocidad raqueta izquierda</label>
-					<input class="form-control" id="leftSpeed" type="number" min="1" value ="5"/>
+					<input class="form-control" id="leftSpeed" type="text" value=5/>
 					
 					<label for="rightSpeed">Velocidad raqueta derecha</label>
-					<input class="form-control" id="rightSpeed" type="number" min="1" value ="5"/>
+					<input class="form-control" id="rightSpeed" type="text" value=5/>
+					
+					<label for="raquetWidth">Anchura raqueta</label>
+					<input class="form-control" id="raquetWidth" type="text" min="1" value ="10;100"/>
+					
+					<label for="raquetHeight">Altura raqueta</label>
+					<input class="form-control" id="raquetHeight" type="text" min="1" value ="80;200"/>
 					
 				</div>
 			</div>
@@ -111,11 +139,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<label for="numberZone">Número de franjas:</label>
-							<input class="form-control" id="numberZone" type="number" min="1" value ="5"/>
+							<input class="form-control" id="numberZone" type="text" value=5/>
 						</div>
 						<div class="col-md-6">
 							<label for="ballSpeed">Velocidad de la pelota:</label>
-							<input class="form-control" id="ballSpeed" type="number" min="1" value ="5"/>
+							<input class="form-control" id="ballSpeed" type="text" value=5/>
 						</div>
 					</div>
 				</div>

@@ -379,7 +379,6 @@ $(document).ready(function(){
 		for (var i=0;i<this.nSquares;i++) {
 			X=this.curX+this.dx[i];
 			Y=this.curY+this.dy[i];
-//			if (0<=Y && Y<this.pForeground.cols || 0<=X && X<this.pForeground.rows)
 			this.pForeground.matrix[Y][X].setFill("blue");
 		}
 		if (Y<this.skyline)
@@ -461,6 +460,9 @@ $(document).ready(function(){
 		this.gMenu.pause.on('mousedown touchstart',$.proxy(this, "clickPause"));
 		this.gMenu.full.on('mousedown touchstart',$.proxy(this, "toggleFullScreen"));
 		this.gMenu.restart.on('mousedown touchstart',$.proxy(this, "restartGame"));
+		this.gBackground.background.on('touchmove',$.proxy(this, "movePieceTouch"));
+		this.gBackground.background.on('tap',$.proxy(this, "rotatePieceTouch"));
+		this.gBackground.background.on('touchend',$.proxy(this, "onTouchEnd"));
 	};
 	
 	Game.prototype.startGame = function(){
@@ -594,6 +596,30 @@ $(document).ready(function(){
 		location.reload();
 	};
 	
+	Game.prototype.movePieceTouch = function(event){
+		this.move=true;
+		event.returnValue = false;
+		if(event.preventDefault) event.preventDefault();
+		var touchPos = stage.getTouchPosition();
+		if (this.gPiece.curX > parseInt(Math.floor(touchPos.x/this.gForeground.blockWidth)))
+			this.gPiece.moveLeft();
+		else if(this.gPiece.curX < parseInt(Math.floor(touchPos.x/this.gForeground.blockWidth)))
+			this.gPiece.moveRight();
+	};
+	
+	Game.prototype.rotatePieceTouch = function(event){
+		this.move=false;
+		event.returnValue = false;
+		if(event.preventDefault) event.preventDefault();
+	};
+	
+	Game.prototype.onTouchEnd = function(event){
+		event.returnValue = false;
+		if(event.preventDefault) event.preventDefault();
+		if(!this.move)
+			this.gPiece.rotate();
+	};
+	
 	Game.prototype.enableKeyboard= function(){
 		this.KeyboardController({
             83: $.proxy(function(){ this.gPiece.moveDown(); },this),
@@ -650,8 +676,8 @@ $(document).ready(function(){
     
 	$(function(){
 	    initStage();
-	    $("#fallSpeed" ).change(function() {
-			gravity = level[parseInt(this.value)];
-		});
+//	    $("#fallSpeed" ).change(function() {
+//			gravity = level[parseInt(this.value)];
+//		});
 	});
 });

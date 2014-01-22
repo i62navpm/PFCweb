@@ -231,6 +231,7 @@ $(document).ready(function(){
 		this.gMenu.pause.on('mousedown touchstart',$.proxy(this, "clickPause"));
 		this.gMenu.full.on('mousedown touchstart',$.proxy(this, "toggleFullScreen"));
 		this.gMenu.restart.on('mousedown touchstart',$.proxy(this, "restartGame"));
+		this.gBackground.background.on('touchmove',$.proxy(this, "movePlayerTouch"));
 		$(window).resize($.proxy(this, "resizeWindow"));
 	}
 	
@@ -369,7 +370,7 @@ $(document).ready(function(){
 		}
 		else if (top_y < 10 ||bottom_y > stage.getHeight()-10) 
 			this.gBall.direction.y *= -1;
-		else if(this.turn == "left" && top_y < (this.gPlayer.player.getY() + this.gPlayer.player.getHeight()) && bottom_y > this.gPlayer.player.getY() && top_x < (this.gPlayer.player.getX() + this.gPlayer.player.getWidth())){
+		else if(this.turn == "left" && top_y < (this.gPlayer.player.getY() + this.gPlayer.player.getHeight()) && bottom_y > this.gPlayer.player.getY() && top_x < (this.gPlayer.player.getX() + this.gPlayer.player.getWidth())&& bottom_x > this.gPlayer.player.getX()){
 			this.gBall.direction.x = this.gBall.direction.x * (-1);
             this.getPoint(top_y);
             this.turn = "right";
@@ -499,6 +500,13 @@ $(document).ready(function(){
         };
 	};
 	
+	Game.prototype.movePlayerTouch = function(event){
+		event.returnValue = false;
+		if(event.preventDefault) event.preventDefault();
+		var touchPos = stage.getTouchPosition();
+		this.gPlayer.player.setY(touchPos.y);
+	};
+	
 	Game.prototype.resizeWindow= function(){
 //		var scaleX = stage.getWidth()/W;
 //		var scaleY = stage.getHeight()/H;
@@ -577,41 +585,123 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.eventsGame= function(){
-		$("#backgroundColor" ).change($.proxy(function(e){
-			this.gBackground.background.setFill(e.target.value);
-            stage.draw();
-		},this));
+		$("#raquetWidth").ionRangeSlider({
+			hasGrid: true,
+			onChange: $.proxy(function(obj){
+		        this.gPlayer.player.setWidth(obj.fromNumber);
+		        this.gOpponent.opponent.setWidth(obj.fromNumber);
+		        
+		        //this.gOpponent.opponent.setX(this.gOpponent.opponent.getX()-obj.fromNumber);
+		        stage.draw();
+		    },this),
+		});
+		
+		$("#raquetHeight").ionRangeSlider({
+			hasGrid: true,
+			onChange: $.proxy(function(obj){
+		        this.gPlayer.player.setHeight(obj.fromNumber);
+		        this.gOpponent.opponent.setHeight(obj.fromNumber);
+		        stage.draw();
+		    },this),
+		});
 	    
-	    $("#lineColor" ).change($.proxy(function(e){
-	    	this.gBackground.middleLine.setStroke(e.target.value);
-	    	this.gBackground.background.setStroke(e.target.value);
-            stage.draw();
+		$('#backgroundColor').ColorPickerSliders({
+		    previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    onchange: $.proxy(function(container, color){
+		    		this.gBackground.background.setFill(color.tiny.toRgbString());
+	            	stage.draw();
+		    		},this)
+		});
+		
+		$('#lineColor').ColorPickerSliders({
+		    previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    onchange: $.proxy(function(container, color){
+	    		this.gBackground.middleLine.setStroke(color.tiny.toRgbString());
+		    	this.gBackground.background.setStroke(color.tiny.toRgbString());
+	            stage.draw();
+	    		},this)
+		});
+		
+		$('#raquetColor').ColorPickerSliders({
+		    previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    onchange: $.proxy(function(container, color){
+	    		this.gPlayer.player.setFill(color.tiny.toRgbString());
+	            this.gOpponent.opponent.setFill(color.tiny.toRgbString());
+	            stage.draw();
+	    		},this)
+		});
+	    
+		$('#textColor').ColorPickerSliders({
+		    previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    onchange: $.proxy(function(container, color){
+		    		this.gTexts.playerScore.setFill(color.tiny.toRgbString());
+		    		this.gTexts.opponentScore.setFill(color.tiny.toRgbString());
+		    		this.gTexts.textScore.setFill(color.tiny.toRgbString());
+		    		stage.draw();
+		    		},this)
+		});
+		
+	    $("#leftSpeed, #rightSpeed, #ballSpeed, #numberZone").TouchSpin({
+	        initval: 5,
+	        buttondown_class: "btn btn-danger",
+	        buttonup_class: "btn btn-primary",
+	    });
+	    
+	    $("#leftSpeed").change($.proxy(function(e){
+          this.gPlayer.speed = parseInt(e.target.value);
 	    },this));
+
 	    
-	    $("#raquetColor" ).change($.proxy(function(e){
-            this.gPlayer.player.setFill(e.target.value);
-            this.gOpponent.opponent.setFill(e.target.value);
-            stage.draw();
-	    },this));
-	    
-	    $("#numberZone" ).change($.proxy(function(e){
-            this.zones = parseInt(e.target.value);
+	    $("#rightSpeed" ).change($.proxy(function(e){
+            this.gOpponent.speed = parseInt(e.target.value);
 	    },this));
 	    
 	    $("#ballSpeed" ).change($.proxy(function(e){
 	    	this.gBall.speed = parseInt(e.target.value);
 	    },this));
 	    
-	    $("#leftSpeed" ).change($.proxy(function(e){
-            this.gPlayer.speed = parseInt(e.target.value);
+	    $("#numberZone" ).change($.proxy(function(e){
+			this.zones = parseInt(e.target.value);
 	    },this));
 	    
-	    $("#rightSpeed" ).change($.proxy(function(e){
-            this.gOpponent.speed = parseInt(e.target.value);
-	    },this));
-	    
-	    $(".btn-primary").on("click", $.proxy(function(){
-            this.mode = $(event.target).find('input').val();
+	    $(".btn-group").on("click", $.proxy(function(){
+	    	var val = $(event.target).find('input').val();
+	    	if (val == "1" || val == "CPU")
+	    		this.mode = val;
+	    	else
+	    		this.difficult = val;
 	    },this));
     
 	    $("#selectColorLeft").ColorPickerSliders({
