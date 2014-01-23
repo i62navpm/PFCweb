@@ -421,8 +421,6 @@ $(document).ready(function(){
     	this.level = 0;
         this.points = 0;
     	
-    	this.scoreBoard = new Kinetic.Group();
-
 	    this.textScore = new Kinetic.Text({
 	    	x:stage.getWidth()/1.75,
             y:stage.getHeight()/2.5,
@@ -433,11 +431,9 @@ $(document).ready(function(){
 			fontStyle: 'bold',
 			fill: 'black',
 		});
-	    
-	    this.scoreBoard.add(this.textScore);
         
         this.scoreLayer = stage.find('#foreground')[0].getLayer();
-        this.scoreLayer.add(this.scoreBoard);
+        this.scoreLayer.add(this.textScore);
     };
 	
 	function Game(background, foreground, menu) {

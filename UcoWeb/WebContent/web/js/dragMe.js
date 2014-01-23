@@ -1,246 +1,400 @@
 $(document).ready(function(){
 	
-	var fps = 60;
-	window.requestAnimationFrame = (function(){
-		return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function( callback ){
-			window.setTimeout(callback, 1000 / fps);
-        };
-	})();
+	(function() {
+	    var lastTime = 0;
+	    var vendors = ['ms', 'moz', 'webkit', 'o'];
+	    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+	        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+	        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+	                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+	    }
+	 
+	    if (!window.requestAnimationFrame)
+	        window.requestAnimationFrame = function(callback, element) {
+	            var currTime = new Date().getTime();
+	            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+	            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+	              timeToCall);
+	            lastTime = currTime + timeToCall;
+	            return id;
+	        };
+	 
+	    if (!window.cancelAnimationFrame)
+	        window.cancelAnimationFrame = function(id) {
+	            clearTimeout(id);
+	        };
+	}());
 	
 	var stage = null;
-	var nOpponents = 4;
-	var opponents = new Array();
-	var player = null;
-	var background = null;
-	var playerColor = "red";
-	var opponentColor = "blue";
-	var running = false;
 	
 	function initStage(){
 		stage = new Kinetic.Stage({
 		    container : "container",
 		    width: parseFloat($("#container").css("width")),
-		    height: parseFloat($("#container").css("width"))
+		    height: parseFloat($("#container").css("width"))*0.7
 		});
-		
-		var backgroundLayer = new Kinetic.Layer();
-		var foregroundLayer = new Kinetic.Layer();
-		var playerLayer = new Kinetic.Layer();
-		
-		background = new Background();
-		backgroundLayer.add(background.group);
-		
-		for (var i=0;i<nOpponents; i++){
-			var size = getRandomSize();
-			var pos = getRandomPos(background.squareIn, size);
-			var dir = getRandomDir();
-			var opponent = new Opponent(pos,size,dir);
-			opponents.push(opponent);
-			foregroundLayer.add(opponent.square);
-		};
-		
-		player = new Player();
-		console.log(running);
-		player.square.on('dragstart', function() {
-			if (running == false){
-				running = true;
-				animOpponents();
-			}
-	    });
-		
-		foregroundLayer.add(player.square);
-		
-		stage.add(backgroundLayer);
-		stage.add(foregroundLayer);
-		stage.add(playerLayer);
-		
+
+		var background = new Background();
+		var player = new Player(background);		
+		var opponents = new Opponents(background);
+		var menu = new initMenu(stage);
+		menu.text.setText("Drag-Me HTML5\n\n\nPulse sobre el cuadrado central para empezar a jugar");
+		new Game(background, player, opponents, menu);
 	}
-	
-	function Player(){
-		this.square = new Kinetic.Rect({
-            fill: playerColor,
-            x : stage.getWidth()/2-25,
-            y : stage.getHeight()/2-25,
-            width: 50,
-            height: 50,
-            stroke: 'black',
-			strokeWidth: 4,
-			cornerRadius: 5,
-            draggable: true,
-            dragBoundFunc: function(pos) {
-            	if (pos.y < 40 || pos.y > stage.getHeight()-110)
-            		running= false;
-            	if (pos.x < 40 || pos.x > stage.getWidth()-110)
-            		running= false;
-                return {
-                  x: pos.x,
-                  y: pos.y
-                };
-              }
-		});
-        Player.prototype.constructor = Player;
-	};
 	
 	function Background(){
 		this.squareOut = new Kinetic.Rect({
-	            fill: 'black',
-	            x : 0,
-	            y : 0,
-	            width: stage.getWidth()-20,
-	            height: stage.getHeight()-20,
-	            cornerRadius: 10,
-	            shadowColor: 'black',
-	            shadowBlur: 10,
-	            shadowOffset: 10,
-	            shadowOpacity: 0.5
+            fill: 'black',
+            x : 0,
+            y : 0,
+            width: (stage.getWidth()*0.7),
+            height: (stage.getWidth()*0.7)-15,
+            cornerRadius: 10,
+            shadowColor: 'black',
+            shadowBlur: 10,
+            shadowOffset: 10,
+            shadowOpacity: 0.5
 		});
 		this.squareIn = new Kinetic.Rect({
-	            fill: 'white',
-	            x : 40,
-	            y : 40,
-	            width: stage.getWidth()-(50*2),
-	            height: stage.getHeight()-(50*2),
-	            cornerRadius: 5
+            fill: 'white',
+            x : 40,
+            y : 40,
+            width: this.squareOut.getWidth()-(40*2),
+            height: this.squareOut.getHeight()-(40*2),
+            cornerRadius: 5
 		});
 		this.group = new Kinetic.Group();
 		this.group.add(this.squareOut);
 		this.group.add(this.squareIn);
-	}
-	Background.prototype.constructor = Background;
-	
-	function getRandomSize(){
-		var aux = {x: null, y:null};
-		for (var i in aux){
-			range = 100 - 30; 
-		   	aleat = Math.random() * range; 
-		   	aleat = Math.round(aleat);
-		   	aux[i] = parseInt(10) + aleat;
-		}
-	   	return aux;
-	}
-	function getRandomPos(background, size){
-		var aux = {x: null, y:null};
-		for (var i in aux){
-			do{
-				range = (stage.getWidth()) - 50; 
-			   	aleat = Math.random() * range; 
-			   	aleat = Math.round(aleat);
-			   	aux[i] = parseInt(50) + aleat;
-			   	
-			}while((aux[i]+size[i])>background.getWidth() ||
-					((aux[i]>stage.getWidth()/2-25 && aux[i]<stage.getWidth()/2+25) || 
-					 (aux[i]+size[i]>stage.getWidth()/2-25 && aux[i]+size[i]<stage.getWidth()/2+25) ||
-				 	 (aux[i]>stage.getWidth()/2-25 && aux[i]+size[i]<stage.getWidth()/2+25))
-			);
-			
-		}
-		if(((aux.x>200 && aux.x<250) || 
-			(aux.x+size.x>200 && aux.x+size.x<250)) &&
-			((aux.y>200 && aux.y<250) || 
-					(aux.y+size.y>200 && aux.y+size.y<250)))
-			console.log("dentro");
 		
-	   	return aux;
+		this.backgroundLayer = new Kinetic.Layer();
+		this.backgroundLayer.add(this.group);
+		stage.add(this.backgroundLayer);
 	}
 	
-	function getRandomDir(){
-		var aux = {x: null, y:null};
-		for (var i in aux){
-			do{
-			range = 1 - (-1); 
-		   	aleat = Math.random() * range; 
-		   	aleat = Math.round(aleat);
-		   	aux[i] = parseInt(-1) + aleat;
-			}while(aux[i]==0);
-		}
-	   	return aux;
-	}
-	
-	function Opponent(pos, size, dir){
+	function Player(background){
 		this.square = new Kinetic.Rect({
+            fill: 'red',
+            x : background.squareOut.getWidth()/2-25,
+            y : background.squareOut.getHeight()/2-25,
+            width: 50,
+            height: 50,
+//          stroke: 'black',
+//			strokeWidth: 4,
+			cornerRadius: 5,
+            draggable: true,
+            dragBoundFunc: function(pos) {
+                return {
+                  x: pos.x,
+                  y: pos.y
+                };
+            },
+            id: 'player'
+		});
+		this.playerLayer = new Kinetic.Layer();
+		this.playerLayer.add(this.square);
+		stage.add(this.playerLayer);
+	};
+	
+	function Opponents(background){
+		this.nOpponents = 4;
+		this.opponentLayer = stage.find('#player')[0].getLayer();
+		this.opponents = new Array();
+		for (var i=0;i<this.nOpponents; i++){
+			var op = new Opponent(background);
+			this.opponentLayer.add(op.opponent);
+			this.opponents.push(op);
+		};
+        stage.add(this.opponentLayer);
+	};
+	
+	function Opponent(background){	
+		var size = this.getRandomSize();
+		var pos = this.getRandomPos(background, size);
+		var dir = this.getRandomDir();
+		this.opponent = new Kinetic.Rect({
 			x: pos.x,
 			y: pos.y,
 			width: size.x,
 			height: size.y,
-			fill: opponentColor,
-			stroke: 'black',
-			strokeWidth: 4,
+			fill: 'blue',
+//			stroke: 'black',
+//			strokeWidth: 4,
 			cornerRadius: 5
 		});
 		this.speed = parseInt($("#opponentSpeed").val());
         this.direction = { x: dir.x, y: dir.y };
 	}
-	Opponent.prototype.constructor = Opponent;
 	
-			
-	function animOpponents() {
-		layer = opponents[0].square.getLayer();
-		if (running == true){
-			requestAnimationFrame(animOpponents);
-	
-			for (var i in opponents){
-				vo = opponents[i];
-				
-				var top_x = vo.square.getX();
-				var top_y = vo.square.getY();
-				var bottom_x = vo.square.getX()+vo.square.getWidth();
-				var bottom_y = vo.square.getY()+vo.square.getHeight();
-				
-				//Rebote en las paredes verticales
-				if (top_x < 0 ||
-						bottom_x > background.squareOut.getWidth()) 
-					vo.direction.x *= -1;
-				
-				//Rebote en las paredes horizontales
-				if (top_y < 0 ||
-						bottom_y > background.squareOut.getHeight()) 
-					vo.direction.y *= -1;
-				
-				//Choque
-				if(top_y < (player.square.getY() + player.square.getHeight()) && bottom_y > player.square.getY() && top_x < (player.square.getX() + player.square.getWidth()) && bottom_x > player.square.getX())
-					reset();
-				
-				vo.square.setX(vo.square.getX()+(vo.speed*vo.direction.x));
-				vo.square.setY(vo.square.getY()+(vo.speed*vo.direction.y));
-				layer.draw();
-			}
+	Opponent.prototype.getRandomSize = function(){
+		var aux = {x: null, y:null};
+		for (var i in aux){
+			var range = 100 - 30; 
+		   	var aleat = Math.random() * range; 
+		   	aleat = Math.round(aleat);
+		   	aux[i] = parseInt(10) + aleat;
 		}
-		else{
-			reset();
+	   	return aux;
+	};
+	
+	Opponent.prototype.getRandomPos = function(background, size){
+		var aux = {x: null, y:null};
+		for (var i in aux){
+			do{
+				var range = (background.squareOut.getWidth()) - 50; 
+			   	var aleat = Math.random() * range; 
+			   	aleat = Math.round(aleat);
+			   	aux[i] = parseInt(50) + aleat;
+			   	
+			}while((aux[i]+size[i])>(background.squareOut.getWidth()-15) ||
+					((aux[i]>background.squareOut.getWidth()/2-25 && aux[i]<background.squareOut.getWidth()/2+25) || 
+					 (aux[i]+size[i]>background.squareOut.getWidth()/2-25 && aux[i]+size[i]<background.squareOut.getWidth()/2+25) ||
+				 	 (aux[i]>background.squareOut.getWidth()/2-25 && aux[i]+size[i]<background.squareOut.getWidth()/2+25))
+			);
+			
+		}
+	   	return aux;
+	};
+	
+	Opponent.prototype.getRandomDir = function(){
+		var aux = {x: null, y:null};
+		for (var i in aux){
+			do{
+			var range = 1 - (-1); 
+		   	var aleat = Math.random() * range; 
+		   	aleat = Math.round(aleat);
+		   	aux[i] = parseInt(-1) + aleat;
+			}while(aux[i]==0);
+		}
+	   	return aux;
+	};
+	
+	function Texts(){
+        this.time = "00:00:000";
+        
+	    this.textScore = new Kinetic.Text({
+	    	x:stage.getWidth()-200,
+            y:stage.getHeight()-300,
+            text: 'Tiempo: '+ this.time,
+			fontSize: 22,
+			fontFamily: 'Calibri',
+			fontStyle: 'bold',
+			fill: 'black',
+		});
+        
+        this.scoreLayer = stage.find('#player')[0].getLayer();
+        this.scoreLayer.add(this.textScore);
+	}
+	
+	
+	function Chrono(){
+		this.start = 0;
+		this.chronoTime = 0;
+	};
+	
+	Chrono.prototype.chronoStart = function(){
+		this.start = new Date();
+	};
+	Chrono.prototype.chronoStartCount = function(){
+		var end = new Date();
+		var diff = end - this.start;
+		diff = new Date(diff);
+		var msec = diff.getMilliseconds();
+		var sec = diff.getSeconds();
+		var min = diff.getMinutes();
+		var hr = diff.getHours()-1;
+		if (min < 10){
+			min = "0" + min;
+		}
+		if (sec < 10){
+			sec = "0" + sec;
+		}
+		if(msec < 10){
+			msec = "00" +msec;
+		}
+		else if(msec < 100){
+			msec = "0" +msec;
+		}
+
+		this.chronoTime = (hr + ":" + min + ":" + sec + ":" + msec);
+	};
+	
+	Chrono.prototype.chronoReset = function(){
+		this.start = new Date();
+	};
+	
+	function Game(background, player, opponents, menu){
+		this.gBackground = background;
+		this.newPlayer(player);
+		this.newOpponents(opponents);
+		this.gTexts = new Texts();
+		this.gMenu = menu;
+		this.gChrono = new Chrono();
+		
+		stage.draw();
+		this.pauseState = false;
+		
+		this.gMenu.mainMenu.on('mouseup touchend',$.proxy(this, "startGame"));
+		this.gMenu.pause.on('mousedown touchstart',$.proxy(this, "clickPause"));
+		this.gMenu.full.on('mousedown touchstart',$.proxy(this, "toggleFullScreen"));
+		this.gMenu.restart.on('mousedown touchstart',$.proxy(this, "restartGame"));
+	};
+	
+	Game.prototype.newPlayer = function(player) {
+		if (!player)
+			this.gPlayer = new Player(this.gBackground);
+		else
+			this.gPlayer = player;
+		
+		this.gPlayer.square.on('dragstart', $.proxy(function(){
+    		if (!this.idAnim){
+        		this.startAnimation();
+        		this.gChrono.chronoStart();
+    		}
+	    },this));
+	};
+	
+	Game.prototype.newOpponents = function(opponents) {
+		if (!opponents)
+			this.gOpponents = new Opponents(this.gBackground);
+		else
+			this.gOpponents = opponents;
+	};
+	
+	Game.prototype.startGame = function(){
+		this.gMenu.box.setOpacity(0.8);
+        this.gMenu.mainMenu.setScale(1);
+        setTimeout($.proxy(function(){
+        	this.gMenu.mainMenu.hide();
+        	this.gMenu.backBoxTween.play();
+    	}, this), 100);
+        this.gMenu.menuLayer.draw();
+	};
+	
+	Game.prototype.startAnimation = function() {
+		this.idAnim = requestAnimationFrame(this.startAnimation.bind(this));
+		this.gChrono.chronoStartCount();
+		this.updateScore();
+		this.opponentsCollision();
+		this.playerCollision();
+		this.gOpponents.opponentLayer.draw();
+	};
+	
+	Game.prototype.updateScore= function(){
+		this.gTexts.textScore.setText('Tiempo: '+ this.gChrono.chronoTime);
+	};
+	
+	Game.prototype.stopAnimation = function(){
+		cancelAnimationFrame(this.idAnim);
+		this.gChrono.chronoReset();
+		this.idAnim = null;
+	};
+	
+	Game.prototype.playerCollision = function() {
+		var top_x = this.gPlayer.square.getX();
+		var top_y = this.gPlayer.square.getY();
+		var bottom_x = this.gPlayer.square.getX()+this.gPlayer.square.getWidth();
+		var bottom_y = this.gPlayer.square.getY()+this.gPlayer.square.getHeight();
+		
+		if (top_y < 40 || bottom_y > this.gBackground.squareIn.getHeight()+40)
+			this.reset();
+		else if (top_x < 40 || bottom_x > this.gBackground.squareIn.getWidth()+40)
+			this.reset();
+	};
+	
+	Game.prototype.opponentsCollision = function() {
+		for (var i=0; i<this.gOpponents.nOpponents; i++){
+			var vo = this.gOpponents.opponents[i];
+
+			var top_x = vo.opponent.getX();
+			var top_y = vo.opponent.getY();
+			var bottom_x = vo.opponent.getX()+vo.opponent.getWidth();
+			var bottom_y = vo.opponent.getY()+vo.opponent.getHeight();
+			
+			//Rebote en las paredes verticales
+			if (top_x < 0 ||
+					bottom_x > this.gBackground.squareOut.getWidth()) 
+				vo.direction.x *= -1;
+			
+			//Rebote en las paredes horizontales
+			if (top_y < 0 ||
+					bottom_y > this.gBackground.squareOut.getHeight()) 
+				vo.direction.y *= -1;
+			
+			//Choque
+			if(top_y < (this.gPlayer.square.getY() + this.gPlayer.square.getHeight()) && bottom_y > this.gPlayer.square.getY() && top_x < (this.gPlayer.square.getX() + this.gPlayer.square.getWidth()) && bottom_x > this.gPlayer.square.getX())
+				this.reset();
+			
+			vo.opponent.setX(vo.opponent.getX()+(vo.speed*vo.direction.x));
+			vo.opponent.setY(vo.opponent.getY()+(vo.speed*vo.direction.y));
+			
 		}
     };
 	
-    function reset(){
-    	running = false;
-    	foregroundLayer = opponents[0].square.getLayer();
-    	opponents = new Array();
-		foregroundLayer.destroyChildren();
+    Game.prototype.reset = function(){
+    	this.stopAnimation();
+    	this.gPlayer.playerLayer.destroyChildren();
+    	this.newPlayer();
+    	this.newOpponents();
+    	this.gPlayer.playerLayer.add(this.gTexts.textScore);
+    	stage.draw();
+    };
+	
+    Game.prototype.clickPause= function(){
+		if (this.pauseState){
+			this.resumeGame();
+			this.pauseState = false;
+		}
+		else{
+			this.pauseGame();
+			this.pauseState = true;
+		}
 		
-		for (var i=0;i<nOpponents; i++){
-			var size = getRandomSize();
-			var pos = getRandomPos(background.squareIn, size);
-			var dir = getRandomDir();
-			var opponent = new Opponent(pos,size,dir);
-			opponents.push(opponent);
-			foregroundLayer.add(opponent.square);
-		};
-		
-		player = new Player();
-		player.square.on('dragstart', function() {
-			if (running == false){
-				running = true;
-				animOpponents();
+	};
+	
+	Game.prototype.pauseGame = function(){
+		this.stopAnimation();
+		this.gMenu.clickPause();
+	};
+	
+	Game.prototype.resumeGame = function(){
+		this.gMenu.clickPause();
+		setTimeout($.proxy(function(){
+			this.startAnimation();
+		},this),1000);
+	};
+	
+	Game.prototype.toggleFullScreen = function(){
+		var elem=$("#container")[0];
+		if (isMobile()){
+			$("#container").width('100%');
+            $("#container").height('100%');
+			$("#container").width($(window).width());
+            $("#container").height( $(window).height());
+            
+			$("#container").css("top",-$("#container").position().top+'px');
+			//this.resizeWindow();
+		}
+		else{
+			if (!screenfull.isFullscreen){
+				this.oldWidth = $("#container").width();
+				this.oldHeight = $("#container").height();
+				$("#container").width('100%');
+	            $("#container").height('100%');
 			}
-	    });
-		foregroundLayer.add(player.square);
-		
-		foregroundLayer.draw();
-    }
+			else{
+				$("#container").width(this.oldWidth);
+			    $("#container").height(this.oldHeight);
+			}
+			screenfull.toggle(elem);
+		}
+	};
+	
+	Game.prototype.restartGame = function(){
+		location.reload();
+	};
+	
+	
 	
 	$(function(){
 	    initStage();
@@ -259,45 +413,45 @@ $(document).ready(function(){
 			stage.draw();
 		});
 	    
-	    $("#selectColorOpponent").ColorPickerSliders({
-	        flat: true,
-	        swatches: false,
-	        color: '#0000FF',
-	        order: {
-	            rgb: 1,
-	            preview: 2
-	        },
-	        labels: {
-	            rgbred: 'Rojo',
-	            rgbgreen: 'Verde',
-	            rgbblue: 'Azul'
-	        },
-	        onchange: function(container, color) {
-	        	opponentColor = color.tiny.toRgbString();
-	        	for (var i in opponents)
-	        		opponents[i].square.setFill(opponentColor);
-				stage.draw();
-	        }
-	    });
-	    
-	    $("#selectColorPlayer").ColorPickerSliders({
-	        flat: true,
-	        swatches: false,
-	        color: '#FF0000',
-	        order: {
-	            rgb: 1,
-	            preview: 2
-	        },
-	        labels: {
-	            rgbred: 'Rojo',
-	            rgbgreen: 'Verde',
-	            rgbblue: 'Azul'
-	        },
-	        onchange: function(container, color) {
-	        	playerColor = color.tiny.toRgbString();
-	        	player.square.setFill(playerColor);
-				stage.draw();
-	        }
-	    });
+//	    $("#selectColorOpponent").ColorPickerSliders({
+//	        flat: true,
+//	        swatches: false,
+//	        color: '#0000FF',
+//	        order: {
+//	            rgb: 1,
+//	            preview: 2
+//	        },
+//	        labels: {
+//	            rgbred: 'Rojo',
+//	            rgbgreen: 'Verde',
+//	            rgbblue: 'Azul'
+//	        },
+//	        onchange: function(container, color) {
+//	        	opponentColor = color.tiny.toRgbString();
+//	        	for (var i in opponents)
+//	        		opponents[i].square.setFill(opponentColor);
+//				stage.draw();
+//	        }
+//	    });
+//	    
+//	    $("#selectColorPlayer").ColorPickerSliders({
+//	        flat: true,
+//	        swatches: false,
+//	        color: '#FF0000',
+//	        order: {
+//	            rgb: 1,
+//	            preview: 2
+//	        },
+//	        labels: {
+//	            rgbred: 'Rojo',
+//	            rgbgreen: 'Verde',
+//	            rgbblue: 'Azul'
+//	        },
+//	        onchange: function(container, color) {
+//	        	playerColor = color.tiny.toRgbString();
+//	        	player.square.setFill(playerColor);
+//				stage.draw();
+//	        }
+//	    });
 	});
 });
