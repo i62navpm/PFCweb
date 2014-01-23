@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
 <title>Juegos HTML5</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Inicio Juegos HTML5">
-	<meta name="author" content="Manuel Navarro Pérez">
+	<meta name="author" content="Manuel Navarro PÃ©rez">
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/skitter.styles.css" rel="stylesheet">
@@ -21,10 +21,14 @@
 	<script type="text/javascript" src="js/jquery.baraja.js"></script>
 	<script type="text/javascript" src="js/liteaccordion.jquery.js"></script>
 	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
-	<script type="text/javascript" src="js/menu.js"></script>
-	<script type="text/javascript" src="js/modifyUser.js"></script>
+	
+	<!-- <script type="text/javascript" src="js/menu.js"></script>
+	<script type="text/javascript" src="js/modifyUser.js"></script> -->
 	<script type="text/javascript" src="js/index.js"></script>
-	<script type="text/javascript" src="js/registerUser.js"></script>
+	
+	<!-- <script type="text/javascript" src="js/registerUser.js"></script> -->
+	
+	
 	
 	
 	<style type="text/css">
@@ -80,8 +84,8 @@
 				<input type="email" class="form-control input-sm" id="inputEmail" placeholder="Introduzca correo" required>
 			</div>
 			<div class="form-group" id=enterPassword>
-				<label class="sr-only" for="inputPassword">Contraseña</label>
-				<input type="password" class="form-control input-sm" id="inputPassword" placeholder="Contraseña" required>
+				<label class="sr-only" for="inputPassword">ContraseÃ±a</label>
+				<input type="password" class="form-control input-sm" id="inputPassword" placeholder="ContraseÃ±a" required>
 			</div>
 			<button type="button"  id="enter" class="btn btn-success btn-sm">Entrar</button>
 		</form>
@@ -97,7 +101,7 @@
 	      	</li>
 		</ul>
 	</nav>
-	
+	<script language="javascript" type="text/javascript" src="http://quickribbon.com/ribbon/2014/01/9216a1bd2984fe13fca507d7ee339a41.js"></script><noscript><a href="http://quickribbon.com/">Quickribbon</a></noscript>
 	<div class="alert alert-danger" id="error">
         <h4>Error!</h4>
         <p id="errorText"></p>
@@ -105,8 +109,37 @@
 	
 	
 	<div class="jumbotron">
-		<div class="container" id="stage1" style="visibility:hidden">
-	  		<div class="row" >
+		<div class="container" id="stage1" >
+			<div class="row">
+	  			<div class="baraja-demo col-md-12" id="baraja" style="padding-left:0">
+					<ul id="baraja-el" class="baraja-container">
+					    <li id="pong">
+					        <img src="images/miniPong.jpg" alt="image1"/>
+					        <h4>Ping-Pong</h4>
+					        <p>Se trata de un juego similar al â€œPongâ€, basado en el deporte de tenis de mesa.</p>
+					    </li>
+					    <li id="tetris">
+					        <img src="images/miniTetris.jpg" alt="image2"/>
+					        <h4>Tetris</h4>
+					        <p>Basado en el juego clÃ¡sico â€œTetrisâ€, en el que hay que encajar diferentes figuras geomÃ©tricas que irÃ¡n apareciendo en el transcurso del juego.</p>
+					    </li>
+					    <li id="dragMe">
+					        <img src="images/miniDragme.jpg" alt="image3"/>
+					        <h4>Drag Me</h4>
+					        <p>Mueve el bloque central evitando chocar con el resto de figuras que se encuentran en movimiento y sin salirte del Ã¡rea central.</p>
+					    </li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+	  			<div class="col-md-12 text-center" id="button" style="margin-top:25px;">
+	  			<button type="button" class="btn btn-primary btn-lg" id="playButton">JUGAR</button>
+	  			</div>
+  			</div>
+		
+		
+		
+	  		<!-- <div class="row" >
 	  			<div class="col-md-7" style="padding-top:25px">
 	  			<div class="box_skitter box_skitter_large">
 	  				<ul>
@@ -129,7 +162,7 @@
 	  			<div class="col-md-5">
 		  			<div class="panel panel-primary" id="register">
 				    	<div class="panel-heading">
-				        	<h3>¿Eres nuevo? <small style="color:white"> Regístrate</small></h3>
+				        	<h3>Â¿Eres nuevo? <small style="color:white"> RegÃ­strate</small></h3>
 			        	</div>	
 			        	<div class="panel-body">
 							<form role="form">
@@ -138,16 +171,16 @@
 							    <input type="text" class="form-control input-sm" id="registerName" placeholder="Nombre completo">
 							  </div>
 							  <div class="form-group" id="formRegisterAdress">
-							    <label class="sr-only" for="registerAdress">Dirección</label>
-							  	<input type="text" class="form-control input-sm" id="registerAdress" placeholder="Dirección">
+							    <label class="sr-only" for="registerAdress">DirecciÃ³n</label>
+							  	<input type="text" class="form-control input-sm" id="registerAdress" placeholder="DirecciÃ³n">
 							  </div>
 							  <div class="form-group" id="formRegisterEmail">
 							    <label class="sr-only" for="registerEmail">Correo</label>
-							    <input type="email" class="form-control input-sm" id="registerEmail" placeholder="Correo electrónico">
+							    <input type="email" class="form-control input-sm" id="registerEmail" placeholder="Correo electrÃ³nico">
 							  </div>
 							  <div class="form-group" id="formRegisterPassword">
-							    <label class="sr-only" for="registerPassword">Contraseña</label>
-							  	<input type="password" class="form-control input-sm" id="registerPassword" placeholder="Contraseña">
+							    <label class="sr-only" for="registerPassword">ContraseÃ±a</label>
+							  	<input type="password" class="form-control input-sm" id="registerPassword" placeholder="ContraseÃ±a">
 							  </div>
 							  <div class="panel-footer">
 							  <button type="button"  id="registerButton"  class="btn btn-warning btn-lg center-block">Registrarte</button>
@@ -156,7 +189,7 @@
 				    	</div>
 				    </div>
 	  			</div>
-	  		</div>
+	  		</div> -->
 		</div>
 		<div class="container" id="stage2">
 		</div>
@@ -178,21 +211,21 @@
 				    </div>
 				  </div>
 				  <div class="form-group" id="formModifyAdress">
-				    <label for="modifyAdress" class="col-sm-3 control-label">Dirección:</label>
+				    <label for="modifyAdress" class="col-sm-3 control-label">DirecciÃ³n:</label>
 				  	<div class="col-sm-9">
-				  		<input type="text" class="form-control input-sm" id="modifyAdress" placeholder="Dirección">
+				  		<input type="text" class="form-control input-sm" id="modifyAdress" placeholder="DirecciÃ³n">
 			  		</div>
 				  </div>
 				  <div class="form-group" id="formModifyEmail">
 				    <label for="modifyEmail" class="col-sm-3 control-label">Correo:</label>
 				    <div class="col-sm-9">
-				    	<input type="email" class="form-control input-sm" id="modifyEmail" placeholder="Correo electrónico">
+				    	<input type="email" class="form-control input-sm" id="modifyEmail" placeholder="Correo electrÃ³nico">
 			    	</div>
 				  </div>
 				  <div class="form-group" id="formModifyPassword">
-				    <label for="modifyPassword" class="col-sm-3 control-label">Contraseña:</label>
+				    <label for="modifyPassword" class="col-sm-3 control-label">ContraseÃ±a:</label>
 				  	<div class="col-sm-9">
-				  		<input type="password" class="form-control input-sm" id="modifyPassword" placeholder="Contraseña">
+				  		<input type="password" class="form-control input-sm" id="modifyPassword" placeholder="ContraseÃ±a">
 			  		</div>
 				  </div>
 		  	  </form>
@@ -209,7 +242,7 @@
 	</div>
 	
 	<footer>
-		<p class="navbar-text">Universidad de Córdoba 2013</p>
+		<p class="navbar-text">Universidad de CÃ³rdoba 2013</p>
 	</footer>
 </body>
 </html>

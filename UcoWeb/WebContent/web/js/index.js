@@ -3,11 +3,52 @@ $(document).ready(function(){
 	function Index(){
 		$("#error").hide();
 		$("#userId").hide();
-		$("#inputEmail").focusout($.proxy(this, "focusOutEmail"));
-		$("#inputPassword").focusout($.proxy(this, "focusOutPassword"));
-		this.menu = new UserMenu();	
-		this.modifyDialog = new ModifyUser();
+		//$("#inputEmail").focusout($.proxy(this, "focusOutEmail"));
+		//$("#inputPassword").focusout($.proxy(this, "focusOutPassword"));
+		
+		
+		//Para borrar
+		$('#playButton').prop('disabled', true);
+		$("#baraja-el").click($.proxy(this, "gameClick"));
+		this.closedDeck = false;
+		this.baraja = $('#baraja-el').baraja();
+		this.baraja.fan( {
+			speed : 500,
+			easing : 'ease-out',
+			range : 90,
+			direction : 'left',
+			origin : { x : 75, y : 100 },
+			center : true
+		});
+		
+		//this.menu = new UserMenu();	
+		//this.modifyDialog = new ModifyUser();
 	}
+	
+	//Borrar este método
+	Index.prototype.gameClick = function(event) {
+		var target = $( event.target );
+		var game = target.parent().attr("id");
+		
+		this.closedDeck = !this.closedDeck;
+		
+		if(this.closedDeck){	
+			this.openGame(game);
+			$('#playButton').prop('disabled', false);
+		}
+		else
+			$('#playButton').prop('disabled', true);
+	};
+	//Borrar este método
+	Index.prototype.openGame = function(game){
+		if (game=="pong")
+			$("#playButton").attr("onclick", "window.location.href='pong.html'");
+		else if(game=="tetris")
+			$("#playButton").attr("onclick", "window.location.href='tetris.html'");
+		else if(game=="dragMe")
+			$("#playButton").attr("onclick", "window.location.href='dragMe.html'");
+		
+	};
 	
 	Index.prototype.focusOutEmail = function(){
 		if(this.validEmail()){
@@ -270,6 +311,6 @@ $(document).ready(function(){
 	
 	$(function(){
 		objIndex = new Index();
-		objIndex.checkSession();
+		//objIndex.checkSession();
 	});
 });
