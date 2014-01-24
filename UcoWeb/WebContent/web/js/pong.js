@@ -210,7 +210,7 @@ $(document).ready(function(){
 		this.pointLevelUp = 10;
 		this.count = 0;
 		this.turn = "right";
-		this.zones = $("#numberZone").val();
+		this.zones = 5;
 		this.mode = "CPU";
 		
 		this.eventsGame();

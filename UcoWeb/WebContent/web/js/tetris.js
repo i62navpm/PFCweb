@@ -450,9 +450,9 @@ $(document).ready(function(){
 		this.gMenu.pause.on('mousedown touchstart',$.proxy(this, "clickPause"));
 		this.gMenu.full.on('mousedown touchstart',$.proxy(this, "toggleFullScreen"));
 		this.gMenu.restart.on('mousedown touchstart',$.proxy(this, "restartGame"));
-		this.gBackground.background.on('touchmove',$.proxy(this, "movePieceTouch"));
-		this.gBackground.background.on('tap',$.proxy(this, "rotatePieceTouch"));
-		this.gBackground.background.on('touchend',$.proxy(this, "onTouchEnd"));
+		this.gForeground.foregroundLayer.on('touchmove',$.proxy(this, "movePieceTouch"));
+		this.gForeground.foregroundLayer.on('tap',$.proxy(this, "rotatePieceTouch"));
+		this.gForeground.foregroundLayer.on('touchend',$.proxy(this, "onTouchEnd"));
 	};
 	
 	Game.prototype.startGame = function(){
