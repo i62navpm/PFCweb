@@ -9,6 +9,8 @@
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="jquery-colorpickersliders/jquery.colorpickersliders.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/ion.rangeSlider.css">
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css">
 	
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
@@ -16,6 +18,8 @@
 	
 	<script type="text/javascript" src="jquery-colorpickersliders/tinycolor.js"></script>
 	<script type="text/javascript" src="jquery-colorpickersliders/jquery.colorpickersliders.js"></script>
+	<script type="text/javascript" src="js/ion.rangeSlider.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.touchspin.js"></script>
 	<script type="text/javascript" src="js/detectmobilebrowser.js"></script>
 	<script type="text/javascript" src="js/screenfull.min.js"></script>
 	<script type="text/javascript" src="js/initMenu.js"></script>
@@ -26,16 +30,31 @@
 	<div class="container">
 		<h1>Drag-Me HTML5</h1>
 		<div class="row">
-			<div class="col-md-9 col-md-offset-1 col-xs-12" id="container"></div>
+			<div class="col-md-9 col-md-offset-2 col-xs-12" id="container"></div>
 		</div>
 		<div class="row" style="margin-top:15px">
-			<div class="col-md-6 col-md-offset-3 alert alert-success hidden-xs hidden-sm">
+			<div class="col-md-4" style="margin-top:15px">
+				<div class="col-md-9 col-md-offset-2 btn-group" data-toggle="buttons" >
+					<label class="btn btn-primary active" for="easy">
+						<input id = "easy" type="radio" value="easy">Fácil
+					</label>
+					<label class="btn btn-primary" for="normal">
+						<input id = "normal" type="radio" value="normal">Normal
+					</label>
+					<label class="btn btn-primary" for="hard">
+						<input id = "hard" type="radio" value="hard">Difícil
+					</label>
+				</div>
+			</div>
+			
+			<div class="col-md-8 alert alert-success hidden-xs hidden-sm">
 			  <h4>Instrucciones</h4>
 				<div class="col-md-12">  
 				  <h5>Para PC:</h5>
 				  <ul>
-					  <li>Empezar / pausar el juego: pulsa en el cuadro central.</li>
-					  <li>Mover cuadro: pulsa y arrastra el cuadro central.</li> 
+					  <li>Empezar el juego: Pulsa y arrastra el cuadro central.</li>
+					  <li>Pausar el juego: Haz click sobre el botón de pausa.</li>
+					  <li>Mover cuadro: Pulsa y arrastra el cuadro central.</li>
 				  </ul>
 			  	</div>
 			</div>
@@ -44,7 +63,8 @@
 				<div class="col-md-12">  
 				  <h5>Para Móvil/Tablet:</h5>
 				  <ul>
-					  <li>Empezar / pausar el juego: pulsa en el cuadro central.</li>
+					  <li>Empezar el juego: Pulsa y arrastra el cuadro central.</li>
+					  <li>Pausar el juego: Pulsa sobre el botón de pausa.</li>
 					  <li>Mover cuadro: pulsa y arrastra el cuadro central.</li> 
 				  </ul>
 			  	</div>
@@ -55,13 +75,15 @@
 			<div class="col-md-4">
 				<div class="thumbnail">
 					<h3>Configuración de Tablero</h3>
-
-					<label for="backgroundOutColor">Color de cuadro exterior</label>
-					<input class="form-control" id="backgroundOutColor" type="color">
-				
+					
 					<label for="backgroundInColor">Color de cuadro interior</label>
-					<input class="form-control" id="backgroundInColor" type="color" value="#ffffff">
-
+					<input type="button" class="form-control" id="backgroundInColor" value="#ffffff">
+					
+					<label for="backgroundOutColor">Color de cuadro exterior</label>
+					<input type="button" class="form-control" id="backgroundOutColor" value="#000000">
+					
+					<label for="textColor">Color de texto</label>
+					<input type="button" class="form-control" id="textColor" value="#000000">
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -72,7 +94,7 @@
 					<span id="selectColorOpponent"></span>
 					
 					<label for="opponentSpeed">Velocidad oponentes</label>
-					<input class="form-control" id="opponentSpeed" type="number" min="1" value ="2"/>
+					<input class="form-control" id="opponentSpeed" type="text" value=5/>
 					
 				</div>
 			</div>
@@ -81,6 +103,10 @@
 					<h3>Configuración de jugador</h3>
 					<label for="selectColorPlayer">Color de jugador</label>
 					<span id="selectColorPlayer"></span>
+					
+					<label for="playerSize">Tamaño del jugador:</label>
+					<input class="form-control" id="playerSize" type="text" value="1"/>
+					
 				</div>
 			</div>
 		</div>

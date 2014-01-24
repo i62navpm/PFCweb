@@ -398,7 +398,6 @@ $(document).ready(function(){
 			this.gTexts.level += 1;
 			this.levelUp();
 		}
-			
 	};
 	
 	Game.prototype.kickPlayer = function(){
@@ -674,7 +673,8 @@ $(document).ready(function(){
 		});
 		
 	    $("#leftSpeed, #rightSpeed, #ballSpeed, #numberZone").TouchSpin({
-	        initval: 5,
+	    	min:1,
+	    	initval: 5,
 	        buttondown_class: "btn btn-danger",
 	        buttonup_class: "btn btn-primary",
 	    });

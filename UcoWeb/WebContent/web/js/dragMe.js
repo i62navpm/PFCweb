@@ -200,14 +200,14 @@ $(document).ready(function(){
 		var diff = end - this.start;
 		diff = new Date(diff);
 		var msec = diff.getMilliseconds();
-		var sec = diff.getSeconds();
+		this.sec = diff.getSeconds();
 		var min = diff.getMinutes();
 		var hr = diff.getHours()-1;
 		if (min < 10){
 			min = "0" + min;
 		}
-		if (sec < 10){
-			sec = "0" + sec;
+		if (this.sec < 10){
+			this.sec = "0" + this.sec;
 		}
 		if(msec < 10){
 			msec = "00" +msec;
@@ -216,7 +216,7 @@ $(document).ready(function(){
 			msec = "0" +msec;
 		}
 
-		this.chronoTime = (hr + ":" + min + ":" + sec + ":" + msec);
+		this.chronoTime = (hr + ":" + min + ":" + this.sec + ":" + msec);
 	};
 	
 	Chrono.prototype.chronoReset = function(){
@@ -230,7 +230,10 @@ $(document).ready(function(){
 		this.gTexts = new Texts();
 		this.gMenu = menu;
 		this.gChrono = new Chrono();
-		
+		this.difficult = "easy";
+		this.dictDifficult = {easy:{speedFactor:2,timeToUp:4},normal:{speedFactor:2,timeToUp:3},hard:{speedFactor:2,timeToUp:2}};
+		this.lookTime = true;
+		this.eventsGame();
 		stage.draw();
 		this.pauseState = false;
 		
@@ -275,9 +278,25 @@ $(document).ready(function(){
 		this.idAnim = requestAnimationFrame(this.startAnimation.bind(this));
 		this.gChrono.chronoStartCount();
 		this.updateScore();
+		this.checkIfLevelUp();
 		this.opponentsCollision();
 		this.playerCollision();
 		this.gOpponents.opponentLayer.draw();
+	};
+	
+	Game.prototype.checkIfLevelUp = function(){
+		
+		if(this.lookTime && this.gChrono.sec!= 0 && this.gChrono.sec%this.dictDifficult[this.difficult].timeToUp == 0){
+			this.levelUp();
+			this.lookTime = false;
+			
+		}else if(this.gChrono.sec%this.dictDifficult[this.difficult].timeToUp != 0)
+			this.lookTime = true;
+	};
+	
+	Game.prototype.levelUp = function(){
+		for (i in this.gOpponents.opponents)
+			this.gOpponents.opponents[i].speed += this.dictDifficult[this.difficult].speedFactor;
 	};
 	
 	Game.prototype.updateScore= function(){
@@ -394,64 +413,137 @@ $(document).ready(function(){
 		location.reload();
 	};
 	
-	
+	Game.prototype.eventsGame = function(){
+		$(".btn-group").on("click", $.proxy(function(){
+    		this.difficult = $(event.target).find('input').val();
+	    },this));
+		
+		$("#backgroundOutColor").ColorPickerSliders({
+	    	previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    onchange: $.proxy(function(container, color){
+		    	this.gBackground.squareOut.setFill(color.tiny.toRgbString());
+		    	stage.draw();
+		    	},this)
+	    });
+
+	    $("#backgroundInColor").ColorPickerSliders({
+	    	previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    labels: {
+		        rgbred: 'Rojo',
+		        rgbgreen: 'Verde',
+		        rgbblue: 'Azul'
+		    },
+		    onchange: $.proxy(function(container, color){
+	            this.gBackground.squareIn.setFill(color.tiny.toRgbString());
+	            stage.draw();
+		    	},this)
+	    });
+	    
+	    $("#textColor").ColorPickerSliders({
+	    	previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    labels: {
+		        rgbred: 'Rojo',
+		        rgbgreen: 'Verde',
+		        rgbblue: 'Azul'
+		    },
+		    onchange: $.proxy(function(container, color){
+	            this.gTexts.textScore.setFill(color.tiny.toRgbString());
+	            stage.draw();
+		    	},this)
+	    });
+	    $("#selectColorOpponent").ColorPickerSliders({
+	        flat: true,
+	        swatches: false,
+	        color: '#0000FF',
+	        order: {
+	            rgb: 1,
+	            preview: 2
+	        },
+	        labels: {
+	            rgbred: 'Rojo',
+	            rgbgreen: 'Verde',
+	            rgbblue: 'Azul'
+	        },
+	        onchange: $.proxy(function(container, color){
+	        	opponentColor = color.tiny.toRgbString();
+	        	for (i in this.gOpponents.opponents)
+	        		this.gOpponents.opponents[i].opponent.setFill(opponentColor);
+				stage.draw();
+	        },this)
+	    });
+	    
+	    $("#selectColorPlayer").ColorPickerSliders({
+	        flat: true,
+	        swatches: false,
+	        color: '#FF0000',
+	        order: {
+	            rgb: 1,
+	            preview: 2
+	        },
+	        labels: {
+	            rgbred: 'Rojo',
+	            rgbgreen: 'Verde',
+	            rgbblue: 'Azul'
+	        },
+	        onchange: $.proxy(function(container, color){
+	        	this.gPlayer.square.setFill(color.tiny.toRgbString());
+				stage.draw();
+	        },this)
+	    });
+	    
+	    $("#opponentSpeed").TouchSpin({
+	    	min:1,
+	    	initval: 5,
+	        buttondown_class: "btn btn-danger",
+	        buttonup_class: "btn btn-primary",
+	    });
+		
+	    $("#opponentSpeed" ).change($.proxy(function(e){
+	    	for (i in this.gOpponents.opponents)
+        		this.gOpponents.opponents[i].speed = parseInt(e.target.value); 
+		},this));
+	    
+	    $("#playerSize").ionRangeSlider({
+			hasGrid: true,
+			min: 0,
+			max: 2,
+			step: 0.25,
+			disable: true,
+			onChange: $.proxy(function(obj){
+//				var width = this.gBackground.squareOut.getWidth()/2-25;
+//				var height = this.gBackground.squareOut.getHeight()/2-25;
+//				this.gPlayer.square.setWidth(width*obj.fromNumber);
+//				this.gPlayer.square.setHeight(height*obj.fromNumber);
+//				stage.draw();
+		    },this),
+		});
+	};
 	
 	$(function(){
 	    initStage();
-	    
-	    $("#opponentSpeed" ).change(function() {
-	    	for (var i in opponents)
-        		opponents[i].speed = parseInt(this.value);
-		});
-	    
-	    $("#backgroundOutColor" ).change(function() {
-			background.squareOut.setFill(this.value);
-			stage.draw();
-		});
-	    $("#backgroundInColor" ).change(function() {
-			background.squareIn.setFill(this.value);
-			stage.draw();
-		});
-	    
-//	    $("#selectColorOpponent").ColorPickerSliders({
-//	        flat: true,
-//	        swatches: false,
-//	        color: '#0000FF',
-//	        order: {
-//	            rgb: 1,
-//	            preview: 2
-//	        },
-//	        labels: {
-//	            rgbred: 'Rojo',
-//	            rgbgreen: 'Verde',
-//	            rgbblue: 'Azul'
-//	        },
-//	        onchange: function(container, color) {
-//	        	opponentColor = color.tiny.toRgbString();
-//	        	for (var i in opponents)
-//	        		opponents[i].square.setFill(opponentColor);
-//				stage.draw();
-//	        }
-//	    });
-//	    
-//	    $("#selectColorPlayer").ColorPickerSliders({
-//	        flat: true,
-//	        swatches: false,
-//	        color: '#FF0000',
-//	        order: {
-//	            rgb: 1,
-//	            preview: 2
-//	        },
-//	        labels: {
-//	            rgbred: 'Rojo',
-//	            rgbgreen: 'Verde',
-//	            rgbblue: 'Azul'
-//	        },
-//	        onchange: function(container, color) {
-//	        	playerColor = color.tiny.toRgbString();
-//	        	player.square.setFill(playerColor);
-//				stage.draw();
-//	        }
-//	    });
 	});
 });

@@ -32,8 +32,9 @@ $(document).ready(function(){
 		    height: $("#rowNumber").val() * parseFloat($("#container").css("width"))*0.5/$("#colNumber").val()
 		});
 		
-		var foreground = new Foreground();
+		
 		var background = new Background();
+		var foreground = new Foreground();
 		var menu = new initMenu(stage);
 		menu.text.setText("Tetris HTML5\n\n\nPulse aquí para empezar a jugar");
 		new Game(background, foreground,menu);
@@ -155,7 +156,7 @@ $(document).ready(function(){
 		});
 		
 		this.nextPieceLayer = stage.find('#foreground')[0].getLayer();
-		
+		this.nextPieceLayer.add(this.background);
 		for (var i = 0; i < 4; i++){
 			this.matrix[i] = [];
 			for (var j = 0; j < 4; j++) {
@@ -172,8 +173,6 @@ $(document).ready(function(){
 		        this.nextPieceLayer.add(this.matrix[i][j]);
 			}
 		};
-		
-		this.nextPieceLayer.add(this.background);
 	}
 	
 	function Piece(foreground){
@@ -191,8 +190,8 @@ $(document).ready(function(){
 		this.skyline = this.pForeground.rows-1;
 		this.stack = new Array(1);
 		this.mode = '1color';
-		
-		this.eventsGame();
+		this.firstColor = 'red';
+		this.secondColor = 'red';
 		//Piece _|_
 		this.xPiece[1]= new Array(0, 1, 0, -1);
 		this.yPiece[1]= new Array(0, 0, 1, 0);
@@ -241,12 +240,12 @@ $(document).ready(function(){
 			var X=2+dx[i];
 			var Y=2+dy[i];
 			if (this.mode == '1color')
-				this.pNextPiece.matrix[Y][X].setFill("red");
+				this.pNextPiece.matrix[Y][X].setFill(this.firstColor);
 			else
 				if(i%2==0)
-					this.pNextPiece.matrix[Y][X].setFill("red");
+					this.pNextPiece.matrix[Y][X].setFill(this.firstColor);
 				else
-					this.pNextPiece.matrix[Y][X].setFill("green");
+					this.pNextPiece.matrix[Y][X].setFill(this.secondColor);
 		 }
 	};
 	
@@ -361,14 +360,14 @@ $(document).ready(function(){
 		for (var i=0;i<this.nSquares;i++) {
 			var X=this.curX+this.dx[i];
 			var Y=this.curY+this.dy[i];
-//			if (0<=Y && Y<this.pForeground.cols || 0<=X && X<this.pForeground.rows) 
+
 			if (this.mode == '1color')
-				this.pForeground.matrix[Y][X].setFill("red");
+				this.pForeground.matrix[Y][X].setFill(this.firstColor);
 			else
 				if(i%2==0)
-					this.pForeground.matrix[Y][X].setFill("red");
+					this.pForeground.matrix[Y][X].setFill(this.firstColor);
 				else
-					this.pForeground.matrix[Y][X].setFill("green");
+					this.pForeground.matrix[Y][X].setFill(this.secondColor);
 		 }
 		this.pForeground.foregroundLayer.draw();
 	};
@@ -411,12 +410,6 @@ $(document).ready(function(){
 		return ret;
 	};
 	
-	Piece.prototype.eventsGame= function(){
-		$(".btn-primary").on("click", $.proxy(function(){
-            this.mode = $(event.target).find('input').val();
-	    },this));
-	};
-	
 	function Texts(){
     	this.level = 0;
         this.points = 0;
@@ -451,6 +444,7 @@ $(document).ready(function(){
 		this.count = 0;
 		
 		this.gPiece.pushStack();
+		this.eventsGame();
 		stage.draw();
 		this.gMenu.mainMenu.on('mouseup touchend',$.proxy(this, "startGame"));
 		this.gMenu.pause.on('mousedown touchstart',$.proxy(this, "clickPause"));
@@ -670,6 +664,128 @@ $(document).ready(function(){
         };
 	};
     
+	Game.prototype.eventsGame= function(){
+		$(".btn-primary").on("click", $.proxy(function(){
+            var val = $(event.target).find('input').val();
+            if (val == "1color" || val == "2colors")
+            	this.gPiece.mode = $(event.target).find('input').val();
+            else
+            	this.difficult = val;
+	    },this));
+		
+		$('#backgroundColor').ColorPickerSliders({
+		    previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    onchange: $.proxy(function(container, color){
+		    		this.gBackground.background.setFill(color.tiny.toRgbString());
+		    		this.gPiece.pNextPiece.background.setFill(color.tiny.toRgbString());
+		    		stage.draw();
+		    		},this)
+		});
+		
+		$('#lineColor').ColorPickerSliders({
+		    previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    onchange: $.proxy(function(container, color){
+		    	this.gPiece.pNextPiece.background.setStroke(color.tiny.toRgbString());
+		    	this.gBackground.background.setStroke(color.tiny.toRgbString());
+	            stage.draw();
+	    		},this)
+		});
+	    
+		$('#textColor').ColorPickerSliders({
+		    previewontriggerelement: true,
+		    flat: false,
+		    color: '#cf966f',
+		    customswatches: false,
+		    swatches: ['red', 'green', 'blue'],
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    onchange: $.proxy(function(container, color){
+		    		this.gTexts.textScore.setFill(color.tiny.toRgbString());
+		    		stage.draw();
+		    		},this)
+		});
+		
+		$("#selectFirstColor").ColorPickerSliders({
+		    flat: true,
+		    swatches: false,
+		    color: '#FF0000',
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    labels: {
+		        rgbred: 'Rojo',
+		        rgbgreen: 'Verde',
+		        rgbblue: 'Azul'
+		    },
+		    onchange: $.proxy(function(container, color){
+	            this.gPiece.firstColor = color.tiny.toRgbString();
+		    	},this)
+	    });
+		    
+	    $("#selectSecondColor").ColorPickerSliders({
+		    flat: true,
+		    swatches: false,
+		    color: '#00FF00',
+		    order: {
+		        rgb: 1,
+		        preview: 2
+		    },
+		    labels: {
+		        rgbred: 'Rojo',
+		        rgbgreen: 'Verde',
+		        rgbblue: 'Azul'
+		    },
+		    onchange: $.proxy(function(container, color){
+		    	this.gPiece.secondColor = color.tiny.toRgbString();
+		    },this)
+		});
+	    
+	    $("#pieceSpeed").ionRangeSlider({
+			hasGrid: true,
+			onChange: $.proxy(function(obj){
+		        this.gravity=(1000-(obj.fromNumber*99));
+		    },this),
+		});
+	    
+	    $("#colNumber").ionRangeSlider({
+			hasGrid: true,
+			min: 5,
+			max: 30,
+			disable: true,
+			onChange: $.proxy(function(obj){
+		        
+		    },this),
+		});
+	    $("#rowNumber").ionRangeSlider({
+			hasGrid: true,
+			min: 5,
+			max: 30,
+			disable: true,
+			onChange: $.proxy(function(obj){
+		        
+		    },this),
+		});
+	};
+	
 	$(function(){
 	    initStage();
 //	    $("#fallSpeed" ).change(function() {

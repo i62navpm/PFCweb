@@ -8,10 +8,18 @@
 	<meta name="author" content="Manuel Navarro Pérez">
 
 	<link href="css/bootstrap.css" rel="stylesheet">
-	
+	<link href="jquery-colorpickersliders/jquery.colorpickersliders.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/ion.rangeSlider.css">
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css">
+    
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/kinetic-v4.7.2.js"></script>
+	
+	<script type="text/javascript" src="jquery-colorpickersliders/tinycolor.js"></script>
+	<script type="text/javascript" src="jquery-colorpickersliders/jquery.colorpickersliders.js"></script>
+	<script type="text/javascript" src="js/ion.rangeSlider.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.touchspin.js"></script>
 	<script type="text/javascript" src="js/detectmobilebrowser.js"></script>
 	<script type="text/javascript" src="js/screenfull.min.js"></script>
 	<script type="text/javascript" src="js/initMenu.js"></script>
@@ -22,18 +30,35 @@
 	<div class="container">
 		<h1>Tetris HTML5</h1>
 		<div class="row">
-			<div class="col-md-9 col-md-offset-1 col-xs-12" id="container"></div>
+			<div class="col-md-10 col-md-offset-1 col-xs-12" id="container" style="padding:0"></div>
 		</div>
-		<div class="row" style="margin-top:15px">
-			<div class="col-md-3 col-md-offset-2 btn-group" data-toggle="buttons" >
-			  	<label class="btn btn-primary active" for="1color">
-					<input id = "1color" type="radio" value="1color">1 Color
-			  	</label>
-				<label class="btn btn-primary" for="2colors">
-					<input id="2colors" type="radio" value="2colors">2 Colores
-				</label>
+		<div class="row">
+			<div class="col-md-4" style="margin-top:15px">
+				<div class="row">
+					<div class="col-md-9 col-md-offset-2 btn-group" data-toggle="buttons" >
+					  	<label class="btn btn-primary active" for="1color">
+							<input id = "1color" type="radio" value="1color">1 Color
+					  	</label>
+						<label class="btn btn-primary" for="2colors">
+							<input id="2colors" type="radio" value="2colors">2 Colores
+						</label>
+					</div>
+				</div>
+				<div class="row" style="margin-top:15px">
+					<div class="col-md-9 col-md-offset-2 btn-group" data-toggle="buttons" >
+						<label class="btn btn-primary active" for="easy">
+							<input id = "easy" type="radio" value="easy">Fácil
+						</label>
+						<label class="btn btn-primary" for="normal">
+							<input id = "normal" type="radio" value="normal">Normal
+						</label>
+						<label class="btn btn-primary" for="hard">
+							<input id = "hard" type="radio" value="hard">Difícil
+						</label>
+					</div>
+				</div>
 			</div>
-			<div class="col-md-5 alert alert-success hidden-xs hidden-sm">
+			<div class="col-md-8 alert alert-success hidden-xs hidden-sm">
 			  <h4>Instrucciones</h4>
 				<div class="col-md-12">  
 				  <h5>Para PC:</h5>
@@ -50,7 +75,7 @@
 				  </ul>
 			  	</div>
 			</div>
-			<div class="col-md-6 col-md-offset-3 alert alert-success hidden-md">
+			<div class="col-md-8 alert alert-success hidden-md">
 			  <h4>Instrucciones</h4>
 				<div class="col-md-12">  
 				  <h5>Para Móvil/Tablet:</h5>
@@ -65,27 +90,73 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-md-4 col-md-offset-2">
+			<div class="col-md-6">
 				<div class="thumbnail">
 					<h3>Configuración de Tablero</h3>
-
-					<label for="colNumber">Número de columnas</label>
-					<input class="form-control" id="colNumber" type="number" min="7" value ="10"/>
-					
-					<label for="rowNumber">Número de filas</label>
-					<input class="form-control" id="rowNumber" type="number" min="7" value ="15"/>
-
+					<div class="row">
+						<div class="col-md-6">
+							<label for="backgroundColor">Color de fondo</label>
+							<input type="button" class="form-control" id="backgroundColor" value="#ffffff">
+						
+							<label for="lineColor">Color de líneas</label>
+							<input type="button" class="form-control" id="lineColor" value="#000000">
+							
+							<label for="textColor">Color de texto</label>
+							<input type="button" class="form-control" id="textColor" value="#000000">
+						</div>
+						<div class="col-md-6">
+							<label for="colNumber">Número de columnas</label>
+							<input class="form-control" id="colNumber" type="text" value="10"/>
+							
+							<label for="rowNumber">Número de filas</label>
+							<input class="form-control" id="rowNumber" type="text" value="15"/>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<div class="thumbnail">
 					<h3>Configuración de Piezas</h3>
-					<label for="fallSpeed">Gravedad de piezas</label>
-					<input class="form-control" id="fallSpeed" type="number" min="1" max="10" value ="5"/>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="thumbnail">
+								<label for="selectColorLeft">Primer color</label>
+								<span id="selectFirstColor"></span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="thumbnail">
+								<label for="selectColorRight">Segundo color</label>
+								<span id="selectSecondColor"></span>
+							</div>
+						</div>
+					
+						<div class="col-md-6">
+							<label for="pieceSpeed">Velocidad de las piezas:</label>
+							<input class="form-control" id="pieceSpeed" type="text" value="1;10"/>
+						</div>
+					</div>
 					
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	</div>
 </body>
