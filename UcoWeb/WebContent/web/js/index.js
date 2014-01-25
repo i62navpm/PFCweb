@@ -25,7 +25,7 @@ $(document).ready(function(){
 		//this.modifyDialog = new ModifyUser();
 	}
 	
-	//Borrar este mÈtodo
+	//Borrar este m√©todo
 	Index.prototype.gameClick = function(event) {
 		var target = $( event.target );
 		var game = target.parent().attr("id");
@@ -39,7 +39,7 @@ $(document).ready(function(){
 		else
 			$('#playButton').prop('disabled', true);
 	};
-	//Borrar este mÈtodo
+	//Borrar este m√©todo
 	Index.prototype.openGame = function(game){
 		if (game=="pong")
 			$("#playButton").attr("onclick", "window.location.href='pong.html'");
@@ -292,7 +292,7 @@ $(document).ready(function(){
 		if($("#inputPassword").val() == ""){
 	        $("#inputPassword").focus();
 	        $("#enterPassword.form-group").addClass("has-error");
-	        $("#errorText").text("Debe introducir una contraseÒa.");
+	        $("#errorText").text("Debe introducir una contrase√±a.");
 	        $('#error').show(500);
 	        return false;
 	    }
@@ -302,7 +302,7 @@ $(document).ready(function(){
 	        
 			$("#error").removeClass("alert-danger");
 			$("#error").addClass("alert-warning");
-			$("#errorText").text("Introduzca una contraseÒa de m·s de 6 caracteres.");
+			$("#errorText").text("Introduzca una contrase√±a de m√°s de 6 caracteres.");
 			$('#error').show(500);
 	        return false;
 	    }
