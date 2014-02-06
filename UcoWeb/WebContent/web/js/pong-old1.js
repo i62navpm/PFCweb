@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	/*preuba final*/
+	var variable = 0;
 	var fps = 60;
 	window.requestAnimationFrame = (function(){
 		return window.requestAnimationFrame ||
