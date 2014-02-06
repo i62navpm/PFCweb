@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	/*preuba final*/
+	/*preuba final PC*/
 	var variable = 0;
 	var fps = 60;
 	window.requestAnimationFrame = (function(){
