@@ -1,6 +1,4 @@
 $(document).ready(function(){
-	var aux = 0;
-	var aux2 = 2;
 	var fps = 60;
 	window.requestAnimationFrame = (function(){
 		return window.requestAnimationFrame ||
