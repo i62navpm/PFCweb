@@ -4,6 +4,7 @@ $(document).ready(function(){
 	aux = 5;
 	aux = 5;
 	aux = 5;
+	aux = 10;
 	var fps = 60;
 	window.requestAnimationFrame = (function(){
 		return window.requestAnimationFrame ||
