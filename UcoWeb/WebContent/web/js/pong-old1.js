@@ -13,7 +13,7 @@ $(document).ready(function(){
 			window.setTimeout(callback, 1000 / fps);
         };
 	})();
-	
+	var vamos;
 	var stage = null;
 	var game = null;
 	var greyBack = null;
