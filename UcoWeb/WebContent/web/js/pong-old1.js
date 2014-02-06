@@ -1,5 +1,7 @@
 $(document).ready(function(){
-	
+	/*Usando git*/
+	var aux = 0;
+	a
 	var fps = 60;
 	window.requestAnimationFrame = (function(){
 		return window.requestAnimationFrame ||
