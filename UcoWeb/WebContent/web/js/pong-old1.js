@@ -1,5 +1,9 @@
 $(document).ready(function(){
-	/*preuba final PC*/
+	/*preuba final Portátil*/
+	var aux2 = 0;
+	var aux = 99;
+	var otra = 100;
+	
 	var variable = 0;
 	var fps = 60;
 	window.requestAnimationFrame = (function(){
