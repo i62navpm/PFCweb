@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	var fps = 60;
+	var a = 100;
+	var b =100;
 	window.requestAnimationFrame = (function(){
 		return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
