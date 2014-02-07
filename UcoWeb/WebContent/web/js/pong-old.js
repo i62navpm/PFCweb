@@ -3,7 +3,6 @@ $(document).ready(function(){
 	 * Se ajusta el tamaño del div que contiene el canvas
 	 * para que la altura sea la mitad de la altura
 	*/
-    var a =100;
 	$("#container").css("height",Math.round(parseFloat($("#container").css("width"))/2/100)*100);
 	$("#container").css("width",Math.round(parseFloat($("#container").css("width"))/100)*100);
 	var W = parseFloat($("#container").css("width"));
