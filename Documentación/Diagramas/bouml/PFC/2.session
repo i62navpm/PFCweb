@@ -1,0 +1,15 @@
+window_sizes 1024 712 240 720 512 82
+diagrams
+  active  classdiagram_ref 162946 // Diagrama de clases de DragMe
+    778 556 100 4 0 0
+  classdiagram_ref 149762 // Diagrama de clases individuales
+    618 444 100 4 0 0
+end
+show_stereotypes
+selected classdiagram_ref 162946 // Diagrama de clases de DragMe
+open
+  usecaseview_ref 128002 // Casos de uso
+  class_ref 156674 // DragMeGame
+  class_ref 156418 // Player
+end
+end

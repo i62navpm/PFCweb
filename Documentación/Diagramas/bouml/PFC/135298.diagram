@@ -1,0 +1,86 @@
+format 76
+
+note 128002 "Sistema"
+  xyzwh 230.5 7 2005 59 35
+classinstance 128130 class_ref 134914 // BackEnd
+  name ""   xyz 306.5 59 2000 life_line_z 2000
+classinstance 128258 class_ref 134658 // Usuario
+  name ""   xyz 17.5 59 2000 life_line_z 2000
+classinstance 128386 class_ref 134786 // FrontEnd
+  name ""   xyz 155.5 59 2000 life_line_z 2000
+durationcanvas 128514 classinstance_ref 128130 // :BackEnd
+  xyzwh 329 142.5 2010 11 36
+end
+durationcanvas 128642 classinstance_ref 128258 // :Usuario
+  xyzwh 33 128.5 2010 11 185
+  overlappingdurationcanvas 129410
+    xyzwh 39 185 2020 11 25
+  end
+  overlappingdurationcanvas 130434
+    xyzwh 39 282 2020 11 25
+  end
+end
+durationcanvas 128770 classinstance_ref 128386 // :FrontEnd
+  xyzwh 178 129.5 2010 11 73
+  overlappingdurationcanvas 129154
+    xyzwh 184 164 2020 11 32
+  end
+end
+durationcanvas 129666 classinstance_ref 128386 // :FrontEnd
+  xyzwh 178 228 2010 11 65
+  overlappingdurationcanvas 130178
+    xyzwh 184 261 2020 11 25
+  end
+end
+durationcanvas 129922 classinstance_ref 128130 // :BackEnd
+  xyzwh 329 241 2010 11 31
+end
+msg 128898 synchronous
+  from durationcanvas_ref 128770
+  to durationcanvas_ref 128514
+  yz 143.5 2015 explicitmsg "Identificador del usuario"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 203.5 129.5
+msg 129026 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 128770
+  yz 130.5 2015 explicitmsg "Solicitud de datos"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 73.5 115.5
+msg 129282 synchronous
+  from durationcanvas_ref 128514
+  to durationcanvas_ref 129154
+  yz 165 2025 explicitmsg "Datos del usuario"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 220 151
+msg 129538 synchronous
+  from durationcanvas_ref 129154
+  to durationcanvas_ref 129410
+  yz 185 2025 explicitmsg "Datos del usuario"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 75 171
+msg 129794 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 129666
+  yz 228 2025 explicitmsg "Datos modificados"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 67 214
+msg 130050 synchronous
+  from durationcanvas_ref 129666
+  to durationcanvas_ref 129922
+  yz 241 2030 explicitmsg "Datos modificados"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 215 227
+msg 130306 synchronous
+  from durationcanvas_ref 129922
+  to durationcanvas_ref 130178
+  yz 261 2025 explicitmsg "Resultado"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 238 247
+msg 130562 synchronous
+  from durationcanvas_ref 129666
+  to durationcanvas_ref 130434
+  yz 282 2025 explicitmsg "Resultado"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 90 268
+end

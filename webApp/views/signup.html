@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" ng-app>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Registro</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+	<script src="http://code.angularjs.org/1.2.12/angular.min.js"></script>
+
+	<style>
+		body 		{ padding-top:80px; }
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<div class="col-sm-6 col-sm-offset-3">
+		<% if (message.length > 0) { %>
+		<div class="alert alert-danger">
+            <strong>
+				¡Error!
+			</strong>
+			<%= message %>
+		</div>
+		<% } %>
+
+		<h1><span class="fa fa-sign-in"></span> Registro</h1>
+
+		<form name="form" action="/signup" method="post" novalidate>
+			<div class="form-group" ng-class="{'has-error': form.name.$invalid && !form.name.$pristine}">
+				<!-- <label>Nombre completo</label> -->
+				<input type="text" class="form-control" name="name" ng-model="user.name" placeholder="Nombre" required>
+				<p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">El nombre es obligatorio.</p>
+				
+			</div>
+			<div class="form-group" ng-class="{'has-error': form.email.$invalid && !form.email.$pristine}">
+	            <!-- <label>Email</label> -->
+	            <input type="email" class="form-control" name="email" ng-model="user.email" placeholder="Correo electrónico" required>
+	            <p ng-show="form.email.$invalid && !form.email.$pristine" class="help-block">Intrudocue un correo válido.</p>
+        
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group" ng-class="{'has-error': form.password.$invalid && !form.password.$pristine}">
+						<!-- <label>Contraseña</label> -->
+						<input type="password" class="form-control" name="password" ng-model="user.password" placeholder="Contraseña" ng-minlength='6' required>
+						<p ng-show="form.password.$error.minlength" class="help-block">Contraseña demasiado corta.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<button name="button" value="local" type="submit" class="btn btn-warning btn-lg" ng-disabled="form.$invalid">Registrate</button>
+				</div>
+				<div class="col-sm-9 text-right">
+					<button name="button" value="facebook" type="submit" class="btn btn-primary" onclick="$('form').get(0).setAttribute('action', '/auth');"><span class="fa fa-facebook"></span> Facebook</button>
+					<button name="button" value="twitter" type="submit" class="btn btn-info" onclick="$('form').get(0).setAttribute('action', '/auth');"><span class="fa fa-twitter"></span> Twitter</button>
+					<button name="button" value="google" type="submit" class="btn btn-danger" onclick="$('form').get(0).setAttribute('action', '/auth');"><span class="fa fa-google-plus"></span> Google+</button>
+				</div>
+			</div>
+		</form>		
+		
+		<hr>
+		<div class="text-center">
+			<p>¿Ya tienes una cuenta? <a href="/login">Entra</a>.</p>
+			<p>Vuelve a <a href="/">Inicio</a>.</p>
+		</div>
+	</div>
+
+</div>	
+</body>
+</html>

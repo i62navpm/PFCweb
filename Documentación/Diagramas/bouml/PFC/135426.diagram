@@ -1,0 +1,32 @@
+format 76
+
+note 128002 "Sistema"
+  xyzwh 235.5 9 2005 59 35
+classinstance 128130 class_ref 134786 // FrontEnd
+  name ""   xyz 160.5 67 2000 life_line_z 2000
+classinstance 128258 class_ref 134658 // Usuario
+  name ""   xyz 22.5 67 2000 life_line_z 2000
+classinstance 128386 class_ref 134914 // BackEnd
+  name ""   xyz 311.5 67 2000 life_line_z 2000
+durationcanvas 128514 classinstance_ref 128386 // :BackEnd
+  xyzwh 334 143 2010 11 27
+end
+durationcanvas 128642 classinstance_ref 128130 // :FrontEnd
+  xyzwh 183 130 2010 11 34
+end
+durationcanvas 128898 classinstance_ref 128258 // :Usuario
+  xyzwh 38 128 2010 11 25
+end
+msg 129794 asynchronous
+  from durationcanvas_ref 128898
+  to durationcanvas_ref 128642
+  yz 130 2015 explicitmsg "Hoja de configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 63 118
+msg 129922 asynchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 128514
+  yz 144 2015 explicitmsg "Hoja de configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 208 129
+end

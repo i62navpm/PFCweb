@@ -1,0 +1,42 @@
+format 76
+
+subject 128002 ""
+  xyzwh 140 13 2000 217 351
+textcanvas 128130 "Caso de uso 0:
+Sistema"
+  xyzwh 281 23 2000 73 28
+classcanvas 128258 class_ref 128002 // Paciente
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 17 121 2000
+end
+classcanvas 128386 class_ref 128130 // Especialista
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 443 121 2005
+end
+usecasecanvas 128514 usecase_ref 128002 // Gestión de usuarios
+  xyzwh 216 65 3005 64 32 label_xy 200 97
+end
+usecasecanvas 128642 usecase_ref 128130 // Gestión de juegos
+  xyzwh 216 136 3005 64 32 label_xy 205 168
+end
+usecasecanvas 128770 usecase_ref 128258 // Gestión de pantallas
+  xyzwh 216 208 3005 64 32 label_xy 199 240
+end
+usecasecanvas 128898 usecase_ref 128386 // Intercambio de mensajes
+  xyzwh 216 279 3005 64 32 label_xy 190 311
+end
+line 129026 ----
+  from ref 128258 z 3006 to ref 128514
+line 129154 ----
+  from ref 128258 z 3006 to ref 128642
+line 129282 ----
+  from ref 128258 z 3006 to ref 128770
+line 129794 ----
+  from ref 128258 z 3006 to ref 128898
+line 130050 ----
+  from ref 128386 z 3006 to ref 128642
+line 130178 ----
+  from ref 128386 z 3006 to ref 128898
+line 130306 ----
+  from ref 128386 z 3006 to ref 128514
+end

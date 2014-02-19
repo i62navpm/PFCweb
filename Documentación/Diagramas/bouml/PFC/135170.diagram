@@ -1,0 +1,32 @@
+format 76
+
+classinstance 128002 class_ref 134786 // FrontEnd
+  name ""   xyz 109 59 2000 life_line_z 2000
+classinstance 128130 class_ref 134658 // Usuario
+  name ""   xyz 8 59 2000 life_line_z 2000
+note 128258 "Sistema"
+  xyzwh 160 9.5 2005 59 35
+classinstance 128386 class_ref 134914 // BackEnd
+  name ""   xyz 215 59 2000 life_line_z 2000
+durationcanvas 128514 classinstance_ref 128130 // :Usuario
+  xyzwh 24 129.5 2010 11 25
+end
+durationcanvas 128770 classinstance_ref 128386 // :BackEnd
+  xyzwh 238 143.5 2010 11 25
+end
+durationcanvas 129026 classinstance_ref 128002 // :FrontEnd
+  xyzwh 132 130.5 2010 11 25
+end
+msg 129154 asynchronous
+  from durationcanvas_ref 129026
+  to durationcanvas_ref 128770
+  yz 143.5 2015 explicitmsg "Evento"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 174 128.5
+msg 129410 asynchronous
+  from durationcanvas_ref 128514
+  to durationcanvas_ref 129026
+  yz 130.5 2015 explicitmsg "Evento"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 71 115.5
+end

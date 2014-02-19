@@ -1,0 +1,49 @@
+format 76
+
+textcanvas 129154 "Caso de uso 4:
+Intercambio de mensajes"
+  xyzwh 374 36.5 2000 122 29
+classcanvas 129282 class_ref 128002 // Paciente
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 14 58.5 2000
+end
+classcanvas 129410 class_ref 128130 // Especialista
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 6 170.5 2000
+end
+subject 129666 ""
+  xyzwh 123.5 16 0 378 256
+usecasecanvas 130818 usecase_ref 129282 // Gestión de solicitudes de seguimiento
+  xyzwh 194 54 3005 64 32 label_xy 136 86
+end
+usecasecanvas 130946 usecase_ref 129410 // Gestión de sugerencias de juego
+  xyzwh 194 125 3005 64 32 label_xy 147 157
+end
+usecasecanvas 131074 usecase_ref 129538 // Envío de comentarios
+  xyzwh 194 198 3005 64 32 label_xy 174 230
+end
+usecasecanvas 132098 usecase_ref 129666 // Registro de usuario
+  xyzwh 409 125 3005 64 32 label_xy 394 157
+end
+line 131202 ----
+  from ref 129282 z 3006 to ref 130818
+line 131330 ----
+  from ref 129282 z 3006 to ref 130946
+line 131458 ----
+  from ref 129282 z 3006 to ref 131074
+line 131586 ----
+  from ref 129410 z 3006 to ref 130818
+line 131714 ----
+  from ref 129410 z 3006 to ref 130946
+line 131970 ----
+  from ref 129410 z 3006 to ref 131074
+simplerelationcanvas 132226 simplerelation_ref 128514
+  from ref 130818 z 3006 stereotype "<<include>>" xyz 303 108.5 3000 to ref 132098
+end
+simplerelationcanvas 132354 simplerelation_ref 128642
+  from ref 130946 z 3006 stereotype "<<include>>" xyz 303 140 3000 to ref 132098
+end
+simplerelationcanvas 132610 simplerelation_ref 128770
+  from ref 131074 z 3006 stereotype "<<include>>" xyz 304.5 178 3000 to ref 132098
+end
+end

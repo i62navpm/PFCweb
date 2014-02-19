@@ -1,0 +1,50 @@
+format 76
+
+note 128002 "Sistema"
+  xyzwh 234.5 10.5 2005 59 35
+classinstance 128130 class_ref 134786 // FrontEnd
+  name ""   xyz 162.5 55 2000 life_line_z 2000
+classinstance 128258 class_ref 134914 // BackEnd
+  name ""   xyz 313.5 55 2000 life_line_z 2000
+classinstance 128386 class_ref 128002 // Paciente
+  name ""   xyz 22.5 55 2000 life_line_z 2000
+durationcanvas 128514 classinstance_ref 128130 // :FrontEnd
+  xyzwh 185 113.5 2010 11 78
+  overlappingdurationcanvas 129154
+    xyzwh 191 153 2020 11 32
+  end
+end
+durationcanvas 128642 classinstance_ref 128386 // :Paciente
+  xyzwh 40 111.5 2010 11 94
+  overlappingdurationcanvas 129410
+    xyzwh 46 174 2020 11 25
+  end
+end
+durationcanvas 128770 classinstance_ref 128258 // :BackEnd
+  xyzwh 336 126.5 2010 11 38
+end
+msg 128898 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 128514
+  yz 113.5 2015 explicitmsg "Seleccionar juego"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 65 101.5
+msg 129026 synchronous
+  from durationcanvas_ref 128514
+  to durationcanvas_ref 128770
+  yz 127.5 2015 explicitmsg "Petición de configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 210 112.5
+msg 129282 synchronous
+  from durationcanvas_ref 128770
+  to durationcanvas_ref 129154
+  yz 153 2025 explicitmsg "Configuración de juego"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 214 139
+msg 129538 synchronous
+  from durationcanvas_ref 129154
+  to durationcanvas_ref 129410
+  yz 174 2030 explicitmsg "Juego configurado"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 79 160
+end

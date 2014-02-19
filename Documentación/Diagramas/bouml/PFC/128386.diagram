@@ -1,0 +1,23 @@
+format 76
+
+textcanvas 128130 "Caso de uso 3:
+Gestión de pantallas"
+  xyzwh 213.5 27 2000 107 29
+subject 128386 ""
+  xyzwh 114 18 0 208 198
+classcanvas 128642 class_ref 128002 // Paciente
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 14.5 56.5 2000
+end
+usecasecanvas 129538 usecase_ref 128258 // Gestión de pantallas
+  xyzwh 185 73 3005 64 32 label_xy 168 105
+end
+usecasecanvas 129794 usecase_ref 129666 // Registro de usuario
+  xyzwh 185 156 3005 64 32 label_xy 170 188
+end
+line 129666 ----
+  from ref 128642 z 3006 to ref 129538
+simplerelationcanvas 129922 simplerelation_ref 128386
+  from ref 129538 z 3006 stereotype "<<include>>" xyz 218 129 3000 to ref 129794
+end
+end

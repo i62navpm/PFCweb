@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <title>Terapia Visual</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" >
+       
+        <style type="text/css">
+
+        @import url('http://fonts.googleapis.com/css?family=Open+Sans:200,300,400,600');
+
+        html,
+        body {
+          height: 100%;
+          width: 100%;
+          font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+        }
+
+        .row { margin: 0; padding: 0 }
+
+        h1 {
+          font-size:40px; 
+        }
+
+
+
+
+        .scroll-down a, .scroll-top a {
+           color:#ffffff;
+        }
+
+        .scroll-down {
+           position:fixed;
+           bottom:20%;
+           right:0%;
+           color:#f9f9f9;
+           background-color:#11cc45;
+        }
+
+        .scroll-top {
+          background-color:#11cc45;
+        }
+
+        .header .btn-lg {
+           font-size:28px;
+           border-color:#eeeeee;
+           padding:15px;
+           background-color:transparent;
+           color:#ffffff;
+        }
+
+        .header .btn-lg:hover {
+           background-color:#eeeeee;
+           color:#777777;
+        }
+
+        .navbar a {
+          color:#fff;
+        }
+
+        .navbar-bold.affix {
+          background-color:#11cc45;
+        }
+
+        .navbar-bold {
+          background-color:#11cc45;
+          font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+        }
+
+        .navbar-bold li a:hover {
+          background-color:#00bb34;
+        }
+
+        .navbar-bold li.active {
+          background-color:#00bb34;
+        }
+
+        .vert {
+          vertical-align: middle;
+          width:100%;
+          padding-top:4%;
+          padding-bottom: 20%;
+        }
+
+        .header h1 {
+          font-size:80px;
+          -webkit-text-stroke: 1px rgba(0,0,0,0.1);
+          color:#431a6d;
+          color:#fff;
+          margin-left:-5px;
+          margin-bottom:5px;
+          font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+        }
+
+        .header .lead {
+          color:#eeeeee;
+          font-size:25px;
+        }
+
+        .header {
+          padding-top: 90px;
+          background: #11cc45 url('public/img/pt_squares_lg.png') repeat center center fixed;
+        }
+
+        .blurb {
+          padding: 120px 0;
+          background-color:#fefefe;
+        }
+
+        .blurb .panel {
+          background-color:transparent;
+        }
+
+
+        .featurette {
+          background: #545455;
+          padding: 50px 0;
+          color: #ffffff;
+        }
+
+        .featurette-item {
+          margin-bottom: 15px;
+        }
+
+        .featurette-item > i {
+          border: 3px solid #ffffff;
+          border-radius: 50%;
+          display: inline-block;
+          font-size: 56px;
+          width: 140px;
+          height: 140px;
+          line-height: 136px;
+          vertical-align: middle; 
+          text-align: center;
+        }
+
+        .featurette-item > span {
+          border: 3px solid #ffffff;
+          border-radius: 50%;
+          display: inline-block;
+          font-size: 56px;
+          width: 140px;
+          height: 140px;
+          line-height: 136px;
+          vertical-align: middle; 
+          text-align: center;
+        }
+
+        .featurette-item > span:hover {
+          font-size: 68px;
+        }
+
+        .fa-ban{
+          vertical-align: middle; 
+          text-align: center;
+          line-height: 136px;
+        }
+
+        .featurette-item > i:hover {
+          font-size: 68px;
+        }
+
+
+        footer {
+          padding: 100px 0;
+        }
+
+
+        </style>
+    </head>
+    
+
+    
+    <body>
+        
+        
+<div class="navbar navbar-fixed-top navbar-bold" data-spy="affix" data-offset-top="1000">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">Inicio</a>
+      <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="#sec1">Introducción</a></li>
+        <li><a href="#sec2">Juegos</a></li>
+        <li><a href="#sec3">Características</a></li>
+        <li><a href="#sec4">Herramientas</a></li>
+      </ul>
+    </div>
+   </div>
+</div>
+
+<div class="row">
+<div class="header vert">
+  <div class="container">
+    <h1>Terapia Visual</h1>
+      <p class="lead">Juegos Web Interactivos para Entrenamiento Visual</p>
+      <div>&nbsp;</div>
+      <a href="#registro" class="btn btn-default btn-lg">¡Comenzar!</a>
+  </div>
+</div>
+</div>
+
+<div id="sec1" class="blurb">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1>Universidad de Córdoba</h1>
+        <p class="lead">Esucela Polítécnica Superior</p>
+        <hr>
+        <p class="lead">Ingeniería informática</p>
+        <p>Proyecto fin de carrera</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="featurette" id="sec2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1>Juegos</h1>
+      </div>
+      <div class="col-md-12 text-center">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <div class="featurette-item">
+          <i class="fa fa-gamepad"></i>
+          <h4>Pong</h4>
+          <p>Juego similar al clásico “Pong”, basado en el deporte de tenis de mesa..</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="featurette-item">
+          <i class="fa fa-puzzle-piece"></i>
+          <h4>Tetris</h4>
+          <p>Basado en el juego “Tetris”, adaptado para el entrenamiento visual.</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="featurette-item">
+          <i class="fa fa-square"></i>
+          <h4>DragMe</h4>
+          <p>Juego de habilidad cuya función es evitar la colisión con el resto de piezas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="blurb" id="sec3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center"><h1>Características de desarrollo</h1></div>
+      <div class="col-md-12 text-center">&nbsp;</div>
+    </div>
+    <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="row">
+          <div class="col-md-2 text-center">
+            <div class="featurette-item">
+              <i class="fa fa-mobile"></i>
+              <h4>Mobile First</h4>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="featurette-item">
+              <i class="fa fa-desktop"></i>
+              <h4>Responsive Design</h4>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="featurette-item">
+              <i class="fa fa-eye"></i>
+              <h4>Adaptación de juegos</h4>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="featurette-item">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-table  fa-stack-1x"></i>
+                  <i class="fa fa-ban fa-stack-2x text-danger"></i>
+                </span>
+              <h4>NoSQL</h4>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="featurette-item">
+              <i class="fa fa-file-text"></i>
+              <h4>One Single Page</h4>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="featurette-item">
+              <i class="fa fa-square"></i>
+              <h4>MVC</h4>
+            </div>
+          </div>
+      </div>
+     </div>
+    </div>
+  </div>
+</div>
+
+<div class="featurette" id="sec4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1>Herramientas</h1>
+      </div>
+      <div class="col-md-12 text-center">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="col-md-12">
+        <img src="public/img/htmlJSCSSLogo.png" class="img-responsive" alt="Responsive image">
+        </div>
+        <div class="col-md-12" style="padding-top: 10px">
+        <img src="public/img/kineticLogo.jpg" class="img-responsive" alt="Responsive image">
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="row">
+          <div class="col-md-6">
+          <img src="public/img/nodeLogo.png" class="img-responsive img-thumbnail" alt="Responsive image">
+          </div>
+          <div class="col-md-6">
+          <img src="public/img/angularLogo.png" class="img-responsive" alt="Responsive image">
+          </div>
+        </div>
+        <div class="row" style="padding-top:10px">
+          <div class="col-md-6">
+            <div class="col-md-12" style="padding:10px 0">
+              <img src="public/img/mongoLogo.png" class="img-responsive img-thumbnail" alt="Responsive image">
+            </div>
+            <div class="col-md-8 col-md-offset-2">
+              <img src="public/img/bootstrapLogo.png" class="img-responsive" alt="Responsive image">
+            </div>
+          </div>
+          <div class="col-md-6">
+          <img src="public/img/bowerLogo.png" class="img-responsive" alt="Responsive image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="blurb" id="registro" style="padding:50px">  
+  <hr>
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-2">
+         <div class="panel panel-default">
+         <div class="panel-heading text-center"><h2><i class="fa fa-sign-in"></i> Entra</h2></div>
+         <div class="panel-body text-center">
+          <form style="display: inline" action="/login" method="get">
+            <button class="btn btn-lg btn-primary btn-block">Entrar</button> 
+          </form>
+          </div>
+         </div>
+ 	</div>
+    <div class="col-sm-4">
+         <div class="panel panel-default">
+         <div class="panel-heading text-center"><h2><i class="fa fa-pencil-square-o"></i> Apúntate</h2></div>
+         <div class="panel-body text-center">
+          <form style="display: inline" action="/signup" method="get">
+            <button class="btn btn-lg btn-primary btn-block">Registrarte</button> 
+          </form>
+           
+          </div>
+         </div>
+ 	</div>
+  </div>
+</div>
+
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 text-center">
+        <hr>
+        <p><a href="http://www.uco.es"><i class="fa fa-home"></i> Universidad de Córdoba</a><br> 2014</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<ul class="nav pull-right scroll-down">
+  <li><a href="#" title="Scroll down"><i class="fa fa-chevron-down fa-3x"></i></a></li>
+</ul>
+<ul class="nav pull-right scroll-top">
+  <li><a href="#" title="Scroll to top"><i class="fa fa-chevron-up fa-3x"></i></a></li>
+</ul>
+
+        
+<script type='text/javascript'>
+        
+$(document).ready(function() {
+        
+  $('.scroll-top').click(function(){
+    $('html').animate({scrollTop:0},1000);
+  })
+  $('.scroll-down').click(function(){
+    $('html').animate({scrollTop:$(window).scrollTop()+$(window).height()},1000);
+  })
+  $('body').scrollspy({ target: '#navbar' })
+  });
+        
+</script>
+        
+    </body>
+</html>

@@ -1,0 +1,54 @@
+format 76
+
+classinstance 128002 class_ref 134914 // BackEnd
+  name ""   xyz 418 62 2000 life_line_z 2000
+note 128130 "Sistema"
+  xyzwh 347 14 2005 59 35
+classinstance 128258 class_ref 134786 // FrontEnd
+  name ""   xyz 267 62 2000 life_line_z 2000
+classinstance 128386 class_ref 128002 // Paciente
+  name ""   xyz 18 63 2000 life_line_z 2000
+classinstance 130178 class_ref 128130 // Especialista
+  name ""   xyz 125 63 2000 life_line_z 2000
+note 130306 "Usuarios"
+  xyzwh 71.5 14.5 2005 59 35
+durationcanvas 130434 classinstance_ref 130178 // :Especialista
+  xyzwh 151 132 2010 11 25
+end
+durationcanvas 130562 classinstance_ref 128258 // :FrontEnd
+  xyzwh 290 132 2010 11 26
+end
+durationcanvas 130818 classinstance_ref 128002 // :BackEnd
+  xyzwh 441 138 2010 11 77
+  overlappingdurationcanvas 131330
+    xyzwh 447 182 2020 11 28
+  end
+end
+durationcanvas 131074 classinstance_ref 128386 // :Paciente
+  xyzwh 36 176 2010 11 34
+end
+msg 130690 asynchronous
+  from durationcanvas_ref 130434
+  to durationcanvas_ref 130562
+  yz 132 2015 explicitmsg "Seguimiento de usuario"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 170 119
+msg 130946 asynchronous
+  from durationcanvas_ref 130562
+  to durationcanvas_ref 130818
+  yz 138 2020 explicitmsg "Seguimiento de usuario"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 315 124
+msg 131202 synchronous
+  from durationcanvas_ref 130818
+  to durationcanvas_ref 131074
+  yz 177 2025 explicitmsg "Solicitud de seguimiento"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 172 165
+msg 131458 synchronous
+  from durationcanvas_ref 131074
+  to durationcanvas_ref 131330
+  yz 199 2025 explicitmsg "Respuesta"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 201 188
+end
