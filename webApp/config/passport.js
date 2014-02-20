@@ -45,6 +45,7 @@ module.exports = function(passport) {
         // asynchronous
         process.nextTick(function() {
             User.findOne({ 'local.email' :  email }, function(err, user) {
+                
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
@@ -53,7 +54,7 @@ module.exports = function(passport) {
                 if (!user)
                     return done(null, false, req.flash('loginMessage', 'Usuario no encontrado.'));
 
-                if (!user.validPassword(password))
+                if (!user.validPassword(user.generateHash(password)))
                     return done(null, false, req.flash('loginMessage', 'Contraseña incorrecta.'));
 
                 // all is well, return user
@@ -92,7 +93,7 @@ module.exports = function(passport) {
                         var newUser            = new User();
 
                         newUser.local.email    = email;
-                        newUser.local.password = newUser.generateHash(password);
+                        newUser.local.password = User.generateHash(password);
                         newUser.local.userName = req.body.name;
 
                         newUser.save(function(err) {
@@ -108,7 +109,7 @@ module.exports = function(passport) {
 
                 var user            = req.user;
                 user.local.email    = email;
-                user.local.password = user.generateHash(password);
+                user.local.password = User.generateHash(password);
                 user.local.userName = req.body.name;
 
                 user.save(function(err) {

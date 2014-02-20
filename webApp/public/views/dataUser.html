@@ -57,17 +57,18 @@
 					<div class="col-md-6">
 						<div class="form-group" ng-class="{'has-error': (form.password.$invalid && !form.password.$pristine) || (form.password.$pristine && !form.oldPassword.$pristine)}">
 							<label>Nueva contraseña: </label>
-							<input type="password" class="form-control" name="password" ng-model="password" placeholder="Contraseña" ng-minlength='6'>
+							<input type="password" class="form-control" name="password" ng-model="password" placeholder="Contraseña" ng-minlength='6' ng-required="oldPassword ">
 							<p ng-show="form.password.$error.minlength" class="help-block">Contraseña demasiado corta.</p>
 							<p ng-show="form.password.$pristine && !form.oldPassword.$pristine" class="help-block">Introduzca una nueva contraseña.</p>
 						</div>
 					</div>	
 					<div class="col-md-6">
-						<div class="form-group" ng-class="{'has-error': (form.oldPassword.$invalid && !form.oldPassword.$pristine) || (form.oldPassword.$pristine && !form.password.$pristine)}">
+						<div class="form-group" ng-class="{'has-error': (form.oldPassword.$invalid && !form.oldPassword.$pristine) || (user.local.password && !form.password.$pristine && form.oldPassword.$pristine) || (errorMsg)}">
 							<label>Contraseña anterior: </label>
-							<input type="password" class="form-control" name="oldPassword" ng-model="oldPassword" placeholder="Contraseña" ng-minlength='6'>
+							<input type="password" class="form-control" name="oldPassword" ng-model="oldPassword" placeholder="Contraseña" ng-minlength='6' ng-required="user.local.password && password">
 							<p ng-show="form.oldPassword.$error.minlength" class="help-block">Contraseña demasiado corta.</p>
-							<p ng-show="form.oldPassword.$pristine && !form.password.$pristine" class="help-block">Introduzca la contraseña anterior.</p>
+							<p ng-show="user.local.password && !form.password.$pristine && form.oldPassword.$pristine" class="help-block">Introduzca la contraseña anterior.</p>
+							<p ng-show='errorMsg' class="help-block">{{errorMsg}}</p>
 						</div>
 					</div>	
 				</div>

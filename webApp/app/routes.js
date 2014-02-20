@@ -32,8 +32,72 @@ module.exports = function(app, passport) {
 
 	app.put('/profile/:id', isLoggedIn, function(req, res) {
 		console.log(req.params.id);
-		console.log(req.body);
-		res.send({messaage: "prueba de texto"});
+		console.log(req.body)
+		User.findById(req.params.id, function(err, user) {
+			if (req.body.password){
+				//Se adjunta contraseña
+				if (user.local.password){
+					//Si existe se cambia
+					var password = user.generateHash(req.body.oldPassword);
+
+
+					if (user.validPassword(password)){
+						//validado
+						//console.log("La contraseña sí coincide.")
+						var keys = (Object.keys(req.body));
+						for(var i in keys){
+							if (keys[i] != 'oldPassword')
+								user.local[keys[i]] = req.body[keys[i]];
+							if (keys[i] == 'password')
+								user.local[keys[i]] = user.generateHash(req.body[keys[i]]);
+						}
+							
+						user.save(function (err) {
+						  if (err)
+						  	res.send({message: "Error al guardar."})
+						});			
+
+						res.send(user);
+					}
+					else{
+						//console.log("La contraseña NO coincide.")
+						res.send({message: "La contraseña no coincide con la anterior."})
+					}
+				}
+				else{
+					//Si no existe contraseña se crea
+					//console.log("no tiene");
+					var keys = (Object.keys(req.body));
+						for(var i in keys){
+							if (keys[i] != 'oldPassword')
+								user.local[keys[i]] = req.body[keys[i]];
+							if (keys[i] == 'password')
+								user.local[keys[i]] = user.generateHash(req.body[keys[i]]);
+						}
+							
+						user.save(function (err) {
+						  if (err)
+						  	res.send({message: "Error al guardar."})
+						});			
+
+						res.send(user);
+				}
+			}
+			else{
+				//Cambia todo menos contraseña
+				var keys = (Object.keys(req.body));
+				for(var i in keys)
+					user.local[keys[i]] = req.body[keys[i]];
+					
+				user.save(function (err) {
+				  if (err)
+				  	res.send({message: "Error al guardar."})
+				});			
+
+				res.send(user);
+			}
+			
+		});
 	});
 
 	// LOGOUT ==============================
