@@ -1,18 +1,39 @@
+var User       = require('../app/models/user');
+
 module.exports = function(app, passport) {
 
 // normal routes ===============================================================
 
 	// show the home page (will also have our login links)
 	app.get('/', function(req, res) {
-		res.render('index.html');
+		res.render('index.html/');
 	});
 
 	// PROFILE SECTION =========================
 
 	app.get('/profile', isLoggedIn, function(req, res) {
 		res.render('jugador.html', {
-			user : req.user
+			userID : req.user.id
 		});
+	});
+
+	app.get('/profile/:id', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+            if (err)
+                res.send({message: "Se ha producido un error"});
+            // if no user is found, return the message
+            if (!user)
+                res.send({message: "Usuario no encontrado"});
+
+            else
+            	res.json(user);
+        });
+	});
+
+	app.put('/profile/:id', isLoggedIn, function(req, res) {
+		console.log(req.params.id);
+		console.log(req.body);
+		res.send({messaage: "prueba de texto"});
 	});
 
 	// LOGOUT ==============================
@@ -60,7 +81,6 @@ module.exports = function(app, passport) {
 				res.redirect('/auth/twitter');
 			else if(req.body.button == 'google')
 				res.redirect('/auth/google');
-
 			res.end();
 		});
 	// facebook -------------------------------

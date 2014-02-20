@@ -4,11 +4,6 @@
 <script type="text/javascript" src="public/js/libs/tinycolor.js"></script>
 <script type="text/javascript" src="public/js/libs/jquery.colorpickersliders.js"></script>
 
-<script src="public/js/controllers/ModalPongCtrl.js"></script>
-<script src="public/js/controllers/ModalTetrisCtrl.js"></script>
-<script src="public/js/controllers/ModalDragMeCtrl.js"></script>
-
-
 <style type="text/css">	
 	.well .thumbnail{
 		-webkit-box-shadow: 0 8px 6px -6px black;
@@ -23,7 +18,7 @@
   		
 		<div class="row">
 	  		
-	  		<div class="well well-sm" ng-controller="ModalPongCtrl">
+	  		<div class="well well-sm">
 	  			<h3 class="media-heading">Pong</h3>
 	    		<div class="row">
 		    		<div class="col-md-7">
@@ -87,7 +82,7 @@
 		    		</div>
 		    		<div class="col-md-5">
 		    			<div class="thumbnail" ng-init="confTetris='Fácil'">
-		    				<div class="caption" ng-controller="ModalTetrisCtrl">
+		    				<div class="caption">
 		    					<h4 class="media-heading">Configuración: </h4>
 		    					<div class="btn-group" style="padding-top:10px; padding-bottom:5px">
 									<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-plus-square"></span></button>
@@ -128,7 +123,7 @@
 		    		</div>
 		    		<div class="col-md-5">
 		    			<div class="thumbnail" ng-init="confDragMe='Fácil'">
-		    				<div class="caption" ng-controller="ModalDragMeCtrl">
+		    				<div class="caption">
 		    					<h4 class="media-heading">Configuración: </h4>
 		    					<div class="btn-group" style="padding-top:10px; padding-bottom:5px">
 									<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-plus-square"></span></button>
@@ -320,7 +315,7 @@
         <button class="btn btn-primary" ng-click="ok()" ng-disabled="form.$invalid">OK</button>
     </div>
     
-    <script type="text/javascript" src="public/js/libs/initModalPong.js" ></script>
+    // <script type="text/javascript" src="public/js/libs/initModalPong.js" ></script>
 </script>
 
 <script type="text/ng-template" id="modalTetrisContent.html">

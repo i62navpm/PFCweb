@@ -1,0 +1,84 @@
+<style type="text/css">
+	.jumbotron p{
+		font-size: 15px;
+	}
+</style>
+<div class="row">
+<div class="col-md-12">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-user"></i> Datos personales</h3>
+		</div>
+		<div class="panel-body">
+			<form name="form" novalidate>
+	        	<div class="row">
+	        		<div class="col-md-6">
+			        	<div class="form-group" ng-class="{'has-error': form.nif.$invalid && !form.nif.$pristine}">
+							<label>NIF: </label>
+							<input type="text" class="form-control" name="nif" ng-model="user.local.nif" ng-init="nif='50611649b'"ng-pattern="/[0-9]{8}[A-Za-z]/" placeholder="NIF" ng-minlength="9" maxlength="9">
+							<p ng-show="form.nif.$invalid && !form.nif.$pristine" class="help-block">Introduzca un NIF válido 00000000X.</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Id.: </label>
+							<input class="form-control" name="id" ng-model="userID" ng-disabled="true">
+						</div>
+
+					</div>
+				</div>
+		        <div class="form-group" ng-class="{'has-error': form.name.$invalid && !form.name.$pristine}">
+					<label>Nombre: </label>
+					<input type="text" class="form-control" name="name" ng-model="user.local.userName" placeholder="Nombre" required>
+					<p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">El nombre es obligatorio.</p>
+				</div>
+				<div class="form-group" ng-class="{'has-error': form.address.$invalid && !form.address.$pristine}">
+					<label>Dirección: </label>
+					<input type="text" class="form-control" name="address" ng-model="user.local.address" placeholder="Dirección" value="casa">
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group" ng-class="{'has-error': form.email.$invalid && !form.email.$pristine}">
+				            <label>Email</label>
+				            <input type="email" class="form-control" name="email" ng-model="user.local.email" placeholder="Correo electrónico" required>
+				            <p ng-show="form.email.$invalid && !form.email.$pristine" class="help-block">Introduce un correo válido.</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group" ng-class="{'has-error': form.phone.$invalid && !form.phone.$pristine}">
+							<label>Teléfono: </label>
+							<input type="text" class="form-control" name="phone" ng-model="user.local.phone" ng-pattern="/[0-9]{9}/" placeholder="Teléfono" ng-minlength="9" maxlength="9">
+							<p ng-show="form.phone.$invalid && !form.phone.$pristine" class="help-block">Introduzca un teléfono válido XXXXXXXXX.</p>
+						</div>
+					</div>
+				</div>
+			
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group" ng-class="{'has-error': (form.password.$invalid && !form.password.$pristine) || (form.password.$pristine && !form.oldPassword.$pristine)}">
+							<label>Nueva contraseña: </label>
+							<input type="password" class="form-control" name="password" ng-model="password" placeholder="Contraseña" ng-minlength='6'>
+							<p ng-show="form.password.$error.minlength" class="help-block">Contraseña demasiado corta.</p>
+							<p ng-show="form.password.$pristine && !form.oldPassword.$pristine" class="help-block">Introduzca una nueva contraseña.</p>
+						</div>
+					</div>	
+					<div class="col-md-6">
+						<div class="form-group" ng-class="{'has-error': (form.oldPassword.$invalid && !form.oldPassword.$pristine) || (form.oldPassword.$pristine && !form.password.$pristine)}">
+							<label>Contraseña anterior: </label>
+							<input type="password" class="form-control" name="oldPassword" ng-model="oldPassword" placeholder="Contraseña" ng-minlength='6'>
+							<p ng-show="form.oldPassword.$error.minlength" class="help-block">Contraseña demasiado corta.</p>
+							<p ng-show="form.oldPassword.$pristine && !form.password.$pristine" class="help-block">Introduzca la contraseña anterior.</p>
+						</div>
+					</div>	
+				</div>
+			
+	    </div>
+	    <div class="modal-footer">
+	        <button name="button" ng-click="submit()" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Guardar</button>
+	        <button class="btn btn-default">Cancelar</button>
+	    </div>	
+	    </form>
+		</div>
+	</div>
+</div>
+</div>

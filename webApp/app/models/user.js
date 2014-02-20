@@ -9,26 +9,23 @@ var userSchema = mongoose.Schema({
         userName     : String,
         email        : String,
         password     : String,
-        dateIn       : { type: Date, default: Date.now },
-        userType         : String
+        nif          : String,
+        telephone    : Number,
+        address      : String,
+        dateIn       : { type: Date, default: Date.now }
     },
     facebook         : {
         id           : String,
-        token        : String,
-        email        : String,
-        name         : String
+        token        : String
     },
     twitter          : {
         id           : String,
         token        : String,
-        displayName  : String,
-        username     : String
+        displayName  : String
     },
     google           : {
         id           : String,
-        token        : String,
-        email        : String,
-        name         : String
+        token        : String
     }
 
 });

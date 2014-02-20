@@ -17,10 +17,11 @@
 	
 	<script src="public/js/config.js"></script>
 	<script src="public/js/controllers/app.js"></script>
-	<script src="public/js/controllers/controller.js"></script>
+	
+	<script src="public/js/controllers/mainController.js"></script>
+	<script src="public/js/controllers/dataController.js"></script>
 	<script src="public/js/controllers/controller2.js"></script>
-	<script src="public/js/controllers/ModalDataCtrl.js"></script>
-	<script src="public/js/controllers/ModalSocialCtrl.js"></script>
+
 	
 	
 	<style type="text/css">
@@ -71,8 +72,8 @@
 	}
 	</style>
 </head>
-<body>
 
+<body ng-controller="mainController" ng-init="userID='<%=userID %>'; init();">
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -89,15 +90,16 @@
 	        	<li class="dropdown">
 	        		<a class="dropdown-toggle" role="button" data-toggle="dropdown" href=""><i class="fa fa-user"></i> Usuario <span class="caret"></span></a>
 	        		<ul class="dropdown-menu" role="menu">
-	        			<li ng-controller="ModalDataCtrl"><a href="" ng-click="open()"><i class="fa fa-wrench"></i> Cambiar datos</a></li>
-	        			<li ng-controller="ModalSocialCtrl"><a href="" ng-click="open()"><i class="fa fa-group"></i> Redes sociales</a></li>
+	        			<li><a href="#data" ><i class="fa fa-wrench"></i> Cambiar datos</a></li>
+	        			<li><a href="#social"><i class="fa fa-group"></i> Redes sociales</a></li>
 	        		</ul>
 	        	</li>
-	        	<li><a href="#"><i class="fa fa-sign-out"></i>Logout</a></li>
+	        	<li><a href="/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
 	      	</ul>
 	    </div>
 	</div>
 </nav>
+
 
 <div class="container">
 <div class="col-md-3">
@@ -114,117 +116,5 @@
 	</div>
 </div>
 </div>
-
-<script type="text/ng-template" id="modalDataContent.html">
-    <div class="modal-header">
-        <h3>Datos personales</h3>
-    </div>
-    <div class="modal-body">
-        <!-- <form name="form" action="/signup" method="post" novalidate> -->
-        <form name="form" novalidate>
-        	<div class="row">
-	        	<div class="form-group col-md-6" ng-class="{'has-error': form.nif.$invalid && !form.nif.$pristine}">
-					<label>NIF: </label>
-					<input type="text" class="form-control" name="nif" ng-model="user.nif" ng-pattern="/[0-9]{8}[A-Za-z]/" placeholder="NIF" ng-minlength="9" maxlength="9">
-					<p ng-show="form.nif.$invalid && !form.nif.$pristine" class="help-block">Introduzca un NIF válido 00000000X.</p>
-				</div>
-			</div>
-	        <div class="form-group" ng-class="{'has-error': form.name.$invalid && !form.name.$pristine}">
-				<label>Nombre: </label>
-				<input type="text" class="form-control" name="name" ng-model="user.name" placeholder="Nombre" required>
-				<p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">El nombre es obligatorio.</p>
-			</div>
-			<div class="form-group" ng-class="{'has-error': form.address.$invalid && !form.address.$pristine}">
-				<label>Dirección: </label>
-				<input type="text" class="form-control" name="address" ng-model="user.address" placeholder="Dirección">
-			</div>
-			<div class="row">
-				<div class="col-md-8">
-					<div class="form-group" ng-class="{'has-error': form.email.$invalid && !form.email.$pristine}">
-			            <label>Email</label>
-			            <input type="email" class="form-control" name="email" ng-model="user.email" placeholder="Correo electrónico" required>
-			            <p ng-show="form.email.$invalid && !form.email.$pristine" class="help-block">Intrudocue un correo válido.</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="form-group" ng-class="{'has-error': form.phone.$invalid && !form.phone.$pristine}">
-						<label>Teléfono: </label>
-						<input type="text" class="form-control" name="phone" ng-model="user.phone" ng-pattern="/[0-9]{9}/" placeholder="Teléfono" ng-minlength="9" maxlength="9">
-						<p ng-show="form.phone.$invalid && !form.phone.$pristine" class="help-block">Introduzca un Teléfono válido XXXXXXXXX.</p>
-					</div>
-				</div>
-			</div>
-		</form>
-		<form>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group" ng-class="{'has-error': form.password.$invalid && !form.password.$pristine}">
-						<label>Nueva contraseña: </label>
-						<input type="password" class="form-control" name="password" ng-model="user.password" placeholder="Contraseña" ng-minlength='6' value="añsdfasdf">
-						<p ng-show="form.password.$error.minlength" class="help-block">Contraseña demasiado corta.</p>
-					</div>
-				</div>	
-				<div class="col-md-6">
-					<div class="form-group" ng-class="{'has-error': form.oldPassword.$invalid && !form.oldPassword.$pristine}">
-						<label>Contraseña anterior: </label>
-						<input type="password" class="form-control" name="oldPassword" ng-model="user.oldPassword" placeholder="Contraseña" ng-minlength='6'>
-						<p ng-show="form.oldPassword.$error.minlength" class="help-block">Contraseña demasiado corta.</p>
-					</div>
-				</div>	
-			</div>
-		</form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">Guardar</button>
-        <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
-    </div>
-</script>
-
-<script type="text/ng-template" id="modalSocialContent.html">
-    <div class="modal-header">
-        <h3>Vincular redes sociales</h3>
-    </div>
-    <div class="modal-body">
-       <ul class="nav nav-pills nav-stacked">
-		  	
-		  	<li class="row text-center">
-				<div class="col-md-2 col-md-offset-4">
-		  		<a href="https://es-es.facebook.com/"><i class="fa fa-facebook-square fa-3x fa-fw"></i>Facebook</a>
-		  		</div>
-		  		<div class="btn-group col-md-3">
-		        	<button type="button" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'Left'">On</button>
-		        	<button type="button" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'Middle'">Off</button>
-			  	</div>
-			  	
-		  	</li>
-		  	  	<hr>
-		  	<li class="row text-center">
-				<div class="col-md-2 col-md-offset-4">
-		  		<a href="https://twitter.com/"><i class="fa fa-twitter-square fa-3x fa-fw"></i>Twitter</a>
-		  		</div>
-		  		<div class="btn-group col-md-3">
-		        	<button type="button" class="btn btn-primary" ng-model="radioTwitter" btn-radio="'Left'">On</button>
-		        	<button type="button" class="btn btn-primary" ng-model="radioTwitter" btn-radio="'Middle'">Off</button>
-			  	</div>
-			
-		  	</li>
-		  	  	<hr>
-		  	<li class="row text-center">
-				<div class="col-md-2 col-md-offset-4">
-		  		<a href="https://plus.google.com/?hl=es"><i class="fa fa-google-plus-square fa-3x fa-fw"></i>Google +</a>
-		  		</div>
-		  		<div class="btn-group col-md-3">
-		        	<button type="button" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'Left'">On</button>
-		        	<button type="button" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'Middle'">Off</button>
-			  	</div>
-			  	<hr>
-		  	</li>
-		</ul>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-    </div>
-</script>
-
 </body>
 </html>
