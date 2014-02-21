@@ -11,10 +11,8 @@ var webApp = angular.module('webApp', ['ngRoute','webApp.controllers','ui.bootst
                 templateUrl : '../public/views/games.html',
                 
             })
-
             .when('/score', {
                 templateUrl : '../public/views/score.html',
-                
             })
 
             // route for the about page
@@ -23,9 +21,17 @@ var webApp = angular.module('webApp', ['ngRoute','webApp.controllers','ui.bootst
                 controller  : 'dataController'
             })
 
+            .when('/pongNewConfig', {
+                templateUrl : '../public/views/pongNewConfig.html',
+            })
+
+            .when('/pongConfig', {
+                templateUrl : '../public/views/pongConfig.html',
+            })
+
             // route for the contact page
             .when('/social', {
                 templateUrl : '../public/views/social.html',
-                controller  : 'mainController2'
+                controller  : 'socialController'
             });
     });

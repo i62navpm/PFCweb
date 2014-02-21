@@ -1,0 +1,102 @@
+<div class="row">
+<div class="col-md-12">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-wrench"></i> Nueva configuración de Pong</h3>
+		</div>
+    <div class="panel-body">
+		<form name="form" novalidate>
+			<div class="form-group " ng-class="{'has-error': form.name.$invalid && !form.name.$pristine}">
+				<label>Nombre de configuración: </label>
+				<input type="text" class="form-control" name="name" ng-model="confName" placeholder="Nombre" required>
+				<p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">El nombre es obligatorio.</p>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de Tablero</h4>
+
+						<div class="col-md-12">
+							<label for="backgroundColorPong">Color de fondo:</label>
+						</div>
+						<div class="col-md-12">
+							<input colorpicker class="form-control" id="backgroundColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundColorPong" ng-init="backgroundColorPong= '#ffffff'" style="background-color:{{backgroundColorPong}}"/>
+						</div>
+					
+						<div class="col-md-12">
+							<label for="lineColorPong">Color de líneas:</label>
+						</div>
+						<div class="col-md-12">
+							<input colorpicker class="form-control" id="lineColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="lineColorPong" ng-init="lineColorPong= '#000000'" style="background-color:{{lineColorPong}}"/>
+						</div>
+					
+						<div class="col-md-12">
+							<label for="raquetColorPong">Color de raquetas:</label>
+						</div>
+						<div class="col-md-12">
+							<input colorpicker class="form-control" id="raquetColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="raquetColorPong" ng-init="raquetColorPong= '#000000'" style="background-color:{{raquetColorPong}}"/>
+						</div>
+					
+						<div class="col-md-12">
+							<label for="textColorPong">Color de texto:</label>
+						</div>
+						<div class="col-md-12">
+							<input colorpicker class="form-control" id="textColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="textColorPong" ng-init="textColorPong= '#000000'" style="background-color:{{textColorPong}}"/>
+						</div>
+						
+
+						<label for="numberZonePong">Número de franjas:</label>
+						<input class="form-control" id="numberZonePong" type="text" value=5/>		
+					</div>
+				</div>	
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de piezas</h4>
+						
+						<label for="leftSpeedPong">Velocidad raqueta izquierda:</label>
+						<input class="form-control" id="leftSpeedPong" type="text" value=5/>
+						
+						<label for="rightSpeedPong">Velocidad raqueta derecha:</label>
+						<input class="form-control" id="rightSpeedPong" type="text" value=5/>
+						
+						<label for="ballSpeedPong">Velocidad de la pelota:</label>
+						<input class="form-control" id="ballSpeedPong" type="text" value=5/>
+
+						<label for="raquetWidthPong">Anchura raqueta:</label>
+						<input class="form-control" id="raquetWidthPong" type="text"/>
+						
+						<label for="raquetHeightPong">Altura raqueta:</label>
+						<input class="form-control" id="raquetHeightPong" type="text"/>
+						
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de dificultad</h4>
+						
+						<label for="leftSpeedPong">Velocidad raqueta izquierda:</label>
+						<input class="form-control" id="leftSpeedPong" type="text" value=5/>
+						
+						<label for="rightSpeedPong">Velocidad raqueta derecha:</label>
+						<input class="form-control" id="rightSpeedPong" type="text" value=5/>
+						
+						<label for="ballSpeedPong">Velocidad de la pelota:</label>
+						<input class="form-control" id="ballSpeedPong" type="text" value=5/>
+
+						<label for="raquetWidthPong">Anchura raqueta:</label>
+						<input class="form-control" id="raquetWidthPong" type="text"/>
+						
+						<label for="raquetHeightPong">Altura raqueta:</label>
+						<input class="form-control" id="raquetHeightPong" type="text"/>
+						
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+		        <button name="button" ng-click="submit()" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Guardar</button>
+		        <a class="btn btn-default" href="#">Cancelar</a>
+	    	</div>		
+		</form>
+	</div>
+

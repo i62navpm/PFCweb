@@ -1,5 +1,4 @@
 
-{{user}}
 <div class="row">
 <div class="col-md-12">
 	<div class="panel panel-primary">
@@ -13,8 +12,9 @@
 			  		<a href="https://es-es.facebook.com/"><i class="fa fa-facebook-square fa-3x fa-fw"></i>Facebook</a>
 			  		</div>
 			  		<div class="btn-group col-md-3">
-			        	<button type="button" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'Left'">On</button>
-			        	<button type="button" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'Middle'">Off</button>
+			        	<a href="/connect/facebook" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'on'">On</a>
+			        	<a href="/unlink/facebook" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'off'">Off</a>
+			        	{{user.facebook}}
 				  	</div>
 				  	
 			  	</li>
@@ -24,8 +24,9 @@
 			  		<a href="https://twitter.com/"><i class="fa fa-twitter-square fa-3x fa-fw"></i>Twitter</a>
 			  		</div>
 			  		<div class="btn-group col-md-3">
-			        	<button type="button" class="btn btn-primary" ng-model="radioTwitter" btn-radio="'Left'">On</button>
-			        	<button type="button" class="btn btn-primary" ng-model="radioTwitter" btn-radio="'Middle'">Off</button>
+			        	<button type="button" class="btn btn-primary" ng-model="radioTwitter" ng-click="activateTwitter()" btn-radio="'on'">On</button>
+			        	<button type="button" class="btn btn-primary" ng-model="radioTwitter" ng-click="desactivateTwitter()" btn-radio="'off'">Off</button>
+			        	{{user.twitter}}
 				  	</div>
 				
 			  	</li>
@@ -35,8 +36,8 @@
 			  		<a href="https://plus.google.com/?hl=es"><i class="fa fa-google-plus-square fa-3x fa-fw"></i>Google +</a>
 			  		</div>
 			  		<div class="btn-group col-md-3">
-			        	<button type="button" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'Left'">On</button>
-			        	<button type="button" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'Middle'">Off</button>
+			        	<button type="button" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'on'">On</button>
+			        	<button type="button" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'off'">Off</button>
 				  	</div>
 				  	<hr>
 			  	</li>

@@ -27,9 +27,8 @@ webApp.controller('dataController', function ($scope, $http, $log, $location) {
 		  	$log.log(data.message);
 		  }
 		  else{
-		  	$scope.user = data;
+		  	$scope.init();
 		  	$location.path('/').replace();
-
 		  }
 
 		}).
