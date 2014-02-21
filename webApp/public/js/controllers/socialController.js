@@ -2,18 +2,23 @@
 var webApp = angular.module('webApp.controllers');
  
 webApp.controller('socialController', function ($scope, $http, $log, $location) {
-	if($scope.user.facebook.token)
-		$scope.radioFacebook = 'on';
-	else
-		$scope.radioFacebook = 'off';
-	if($scope.user.twitter)
-		$scope.radioTwitter = 'on';
-	else
-		$scope.radioTwitter = 'off';
-	if($scope.user.google)
-		$scope.radioGoogle = 'on';
-	else
-		$scope.radioGoogle = 'off';
+	
+	try{
+		if($scope.user.facebook.token)
+			$scope.radioFacebook = 'on';
+		else
+			$scope.radioFacebook = 'off';
+		if($scope.user.twitter.token)
+			$scope.radioTwitter = 'on';
+		else
+			$scope.radioTwitter = 'off';
+		if($scope.user.google.token)
+			$scope.radioGoogle = 'on';
+		else
+			$scope.radioGoogle = 'off';
+	}catch(err){
+		$scope.messageSocial = "El servicio no se ha podido cambiar, inténtelo de nuevo"
+	}
 
 
 	$scope.activateFacebook = function(){

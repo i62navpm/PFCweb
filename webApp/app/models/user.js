@@ -16,16 +16,16 @@ var userSchema = mongoose.Schema({
         dateIn       : { type: Date, default: Date.now }
     },
     facebook         : {
-        id           : String,
+        id           : { type: String, default: null },
         token        : String
     },
     twitter          : {
-        id           : String,
+        id           : { type: String, default: null },
         token        : String,
         displayName  : String
     },
     google           : {
-        id           : String,
+        id           : { type: String, default: null },
         token        : String
     }
 

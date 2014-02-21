@@ -150,46 +150,52 @@ module.exports = function(app, passport) {
 	// facebook -------------------------------
 
 		// send to facebook to do the authentication
-		// app.post('/auth/facebook', function(req, res) {
-		// 	console.log(req.body);
-		// 	passport.authenticate('facebook', { scope : 'email' });
-		// 	res.end();
-			
-		// });
-		// app.post('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-
-		app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+		var dir = null;
+		app.get('/auth/facebook', function(req,res,next){
+			dir='/profile';
+			passport.authenticate('facebook', { scope : 'email' })(req,res,next)
+		});
 		// handle the callback after facebook has authenticated the user
-		app.get('/auth/facebook/callback',
+		app.get('/auth/facebook/callback',function(req,res,next){
+			
 			passport.authenticate('facebook', {
-				successRedirect : '/profile',
+				successRedirect : dir,
 				failureRedirect : '/'
-			}));
+			})(req,res,next);
+		});
 
 	// twitter --------------------------------
 
 		// send to twitter to do the authentication
-		app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
+		app.get('/auth/twitter', function(req,res,next){
+			dir='/profile';
+			passport.authenticate('twitter', { scope : 'email' })(req,res,next);
+		});
 
 		// handle the callback after twitter has authenticated the user
-		app.get('/auth/twitter/callback',
+		app.get('/auth/twitter/callback',function(req,res,next){
 			passport.authenticate('twitter', {
-				successRedirect : '/profile',
+				successRedirect : dir,
 				failureRedirect : '/'
-			}));
+			})(req,res,next);
+		});
 
 
 	// google ---------------------------------
 
 		// send to google to do the authentication
-		app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+		app.get('/auth/google', function(req,res,next){
+			dir='/profile';
+			passport.authenticate('google', { scope : ['profile', 'email'] })(req,res,next);
+		});
 
 		// the callback after google has authenticated the user
-		app.get('/auth/google/callback',
+		app.get('/auth/google/callback',function(req,res,next){
 			passport.authenticate('google', {
-				successRedirect : '/profile',
+				successRedirect : dir,
 				failureRedirect : '/'
-			}));
+			})(req,res,next);
+		});
 
 // =============================================================================
 // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
@@ -208,7 +214,15 @@ module.exports = function(app, passport) {
 	// facebook -------------------------------
 
 		// send to facebook to do the authentication
-		app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
+		app.get('/connect/facebook', function(req,res,next){
+			dir = '/profile';
+			passport.authorize('facebook', { scope : 'email' })(req,res,next);
+		});
+
+		app.get('/register/facebook', function(req,res,next){
+			dir = '/profile#/social';
+			passport.authorize('facebook', { scope : 'email' })(req,res,next);
+		});
 
 		// handle the callback after facebook has authorized the user
 		app.get('/connect/facebook/callback',
@@ -220,7 +234,15 @@ module.exports = function(app, passport) {
 	// twitter --------------------------------
 
 		// send to twitter to do the authentication
-		app.get('/connect/twitter', passport.authorize('twitter', { scope : 'email' }));
+		app.get('/connect/twitter', function(req,res,next){
+			dir = '/profile';
+			passport.authorize('twitter', { scope : 'email' })(req,res,next);
+		});
+
+		app.get('/register/twitter', function(req,res,next){
+			dir = '/profile#/social';
+			passport.authorize('twitter', { scope : 'email' })(req,res,next);
+		});
 
 		// handle the callback after twitter has authorized the user
 		app.get('/connect/twitter/callback',
@@ -233,7 +255,15 @@ module.exports = function(app, passport) {
 	// google ---------------------------------
 
 		// send to google to do the authentication
-		app.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
+		app.get('/connect/google', function(req,res,next){
+			dir = '/profile';
+			passport.authorize('google', { scope : ['profile', 'email'] })(req,res,next);
+		});
+
+		app.get('/register/google', function(req,res,next){
+			dir = '/profile#/social';
+			passport.authorize('google', { scope : ['profile', 'email'] })(req,res,next);
+		});
 
 		// the callback after google has authorized the user
 		app.get('/connect/google/callback',
@@ -264,7 +294,7 @@ module.exports = function(app, passport) {
 		var user            = req.user;
 		user.facebook.token = undefined;
 		user.save(function(err) {
-			res.redirect('/profile');
+			res.redirect('/profile#/social');
 		});
 	});
 
@@ -273,7 +303,7 @@ module.exports = function(app, passport) {
 		var user           = req.user;
 		user.twitter.token = undefined;
 		user.save(function(err) {
-			res.redirect('/profile');
+			res.redirect('/profile#/social');
 		});
 	});
 
@@ -282,7 +312,7 @@ module.exports = function(app, passport) {
 		var user          = req.user;
 		user.google.token = undefined;
 		user.save(function(err) {
-			res.redirect('/profile');
+			res.redirect('/profile#/social');
 		});
 	});
 

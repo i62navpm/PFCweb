@@ -1,10 +1,17 @@
-
+<style type="text/css">
+	.jumbotron p{
+		font-size: 15px;
+	}
+</style>
 <div class="row">
 <div class="col-md-12">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title"><i class="fa fa-user"></i> Vincular redes sociales</h3>
 		</div>
+		<div class="alert alert-danger" ng-show="messageSocial">
+				<strong>Error, </strong>{{messageSocial}}
+		</div>	
 		<div class="panel-body">
 			<ul class="nav nav-pills nav-stacked">
 			  	<li class="row text-center">
@@ -12,9 +19,8 @@
 			  		<a href="https://es-es.facebook.com/"><i class="fa fa-facebook-square fa-3x fa-fw"></i>Facebook</a>
 			  		</div>
 			  		<div class="btn-group col-md-3">
-			        	<a href="/connect/facebook" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'on'">On</a>
+			        	<a href="/register/facebook" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'on'">On</a>
 			        	<a href="/unlink/facebook" class="btn btn-primary" ng-model="radioFacebook" btn-radio="'off'">Off</a>
-			        	{{user.facebook}}
 				  	</div>
 				  	
 			  	</li>
@@ -24,9 +30,9 @@
 			  		<a href="https://twitter.com/"><i class="fa fa-twitter-square fa-3x fa-fw"></i>Twitter</a>
 			  		</div>
 			  		<div class="btn-group col-md-3">
-			        	<button type="button" class="btn btn-primary" ng-model="radioTwitter" ng-click="activateTwitter()" btn-radio="'on'">On</button>
-			        	<button type="button" class="btn btn-primary" ng-model="radioTwitter" ng-click="desactivateTwitter()" btn-radio="'off'">Off</button>
-			        	{{user.twitter}}
+			        	<a href="/register/twitter" class="btn btn-primary" ng-model="radioTwitter" btn-radio="'on'">On</a>
+			        	<a href="/unlink/twitter" class="btn btn-primary" ng-model="radioTwitter" btn-radio="'off'">Off</a>
+			        	
 				  	</div>
 				
 			  	</li>
@@ -36,16 +42,16 @@
 			  		<a href="https://plus.google.com/?hl=es"><i class="fa fa-google-plus-square fa-3x fa-fw"></i>Google +</a>
 			  		</div>
 			  		<div class="btn-group col-md-3">
-			        	<button type="button" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'on'">On</button>
-			        	<button type="button" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'off'">Off</button>
+			        	<a href="/register/google" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'on'">On</a>
+			        	<a href="/unlink/google" class="btn btn-primary" ng-model="radioGoogle" btn-radio="'off'">Off</a>
+			        	
 				  	</div>
 				  	<hr>
 			  	</li>
 			</ul>
 	    </div>
 	    <div class="modal-footer">
-	        <button class="btn btn-primary" ng-click="ok()">Guardar</button>
-	        <button class="btn btn-default">Cancelar</button>
+	        <a href="#" class="btn btn-default">Salir</a>
 	    </div>	
 		</div>
 	</div>
