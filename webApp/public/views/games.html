@@ -29,8 +29,8 @@
 			            	<div class="col-md-5">
 		        				<span class="label label-primary">Conf: {{confPong}}</span>
 		        				<p></p>
-		        				<span class="label label-primary" style="background-color:{{colorLeft}}">Ojo izquierdo</span>
-		        				<span class="label label-primary" style="background-color:{{colorRight}}">Ojo derecho</span>
+		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
+		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
 			                	<p><a href="#" class="btn btn-xs btn-warning" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
 			            	</div>
 			    		</div>
@@ -74,8 +74,8 @@
 			            	<div class="col-md-5">
 		        				<span class="label label-primary">Conf: {{confTetris}}</span>
 		        				<p></p>
-		        				<span class="label label-primary" style="background-color:{{colorLeft}}">Ojo izquierdo</span>
-		        				<span class="label label-primary" style="background-color:{{colorRight}}">Ojo derecho</span>
+		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
+		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
 			                	<p><a href="#" class="btn btn-xs btn-warning" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
 			            	</div>
 			    		</div>
@@ -154,32 +154,40 @@
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-desktop"></i> Calibración de pantalla</h3>
 			</div>
-			<div class="panel-body">
-			    <div class="row">
-					<div class="form-group col-md-6">
-						<div class="thumbnail">
-							<h4 class="text-center">Calibración de ojo izquierdo</h4>
-							<span id="selectColorLeft"></span>
-							<input ng-model="colorLeft" id="eyeLeft" style="visibility:hidden"/>
+			<form name="form" novalidate>
+				<div class="panel-body">
+				    <div class="row">
+						<div class="form-group col-md-6">
+							<div class="thumbnail">
+								<h4 class="text-center">Calibración de ojo izquierdo</h4>
+								<span id="selectColorLeft"></span>
+								<input ng-model="user.calibration.eyeLeft" id="eyeLeft" style='visibility:hidden'/>
+							</div>
 						</div>
-					</div>
-					<div class="form-group col-md-6">
-						<div class="thumbnail">
-							<h4 class="text-center">Calibración de ojo derecho</h4>
-							<span id="selectColorRight" ></span>
-							<input ng-model="colorRight" id="eyeRight" style="visibility:hidden"/>
-						</div>
-					</div>		
-				</div>	
-			</div>
+						<div class="form-group col-md-6">
+							<div class="thumbnail">
+								<h4 class="text-center">Calibración de ojo derecho</h4>
+								<span id="selectColorRight" ></span>
+								<input ng-model="user.calibration.eyeRight" id="eyeRight" style='visibility:hidden'/>
+							</div>
+						</div>		
+					</div>	
+					<div class="modal-footer" sytle='margin-top=0px'>
+				        <button name="button" ng-click="submitCalibration()" class="btn btn-primary">Guardar</button>
+				    </div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
+$( document ).ready(function() {
+	
+	
     $("#selectColorLeft").ColorPickerSliders({
 	    flat: true,
 	    swatches: false,
-	    color: '#FF0000',
+	    color: angular.element(document.getElementById('eyeRight')).scope().user.calibration.eyeLeft,
 	    order: {
 	        rgb: 1,
 	        preview: 2
@@ -198,7 +206,7 @@
 	$("#selectColorRight").ColorPickerSliders({
 	    flat: true,
 	    swatches: false,
-	    color: '#00FF00',
+	    color: angular.element(document.getElementById('eyeRight')).scope().user.calibration.eyeRight,
 	    order: {
 	        rgb: 1,
 	        preview: 2
@@ -213,6 +221,7 @@
             $('#eyeRight').trigger('input');
     	}
     });
+});
 </script>
 
 <script type="text/ng-template" id="modalTetrisContent.html">

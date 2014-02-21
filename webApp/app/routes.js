@@ -57,7 +57,7 @@ module.exports = function(app, passport) {
 						  	res.send({message: "Error al guardar."})
 						});			
 
-						res.send(user);
+						res.send(true);
 					}
 					else{
 						//console.log("La contraseña NO coincide.")
@@ -80,7 +80,7 @@ module.exports = function(app, passport) {
 						  	res.send({message: "Error al guardar."})
 						});			
 
-						res.send(user);
+						res.send(true);
 				}
 			}
 			else{
@@ -94,8 +94,28 @@ module.exports = function(app, passport) {
 				  	res.send({message: "Error al guardar."})
 				});			
 
-				res.send(user);
+				res.send(true);
 			}
+			
+		});
+	});
+
+	app.put('/calibration/:id', isLoggedIn, function(req, res) {
+		console.log(req.params.id);
+		console.log(req.body)
+		User.findById(req.params.id, function(err, user) {
+			var keys = (Object.keys(req.body));
+			console.log("OJOIZ"+req.body.eyeLeft);
+			console.log("OJODE"+req.body.eyeRight);
+
+			user.calibration.eyeLeft = req.body.eyeLeft;
+			user.calibration.eyeRight = req.body.eyeRight;
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al guardar."})
+			});			
+
+			res.send(true);
 			
 		});
 	});

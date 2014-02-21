@@ -27,6 +27,10 @@ var userSchema = mongoose.Schema({
     google           : {
         id           : { type: String, default: null },
         token        : String
+    },
+    calibration      : {
+        eyeLeft      : { type: String, default: '#ff0000' },
+        eyeRight     : { type: String, default: '#00ff00' },
     }
 
 });
