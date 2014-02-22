@@ -1,5 +1,3 @@
-
-
 <div class="row">
 <div class="col-md-12">
 	<div class="panel panel-primary">
@@ -23,33 +21,33 @@
 							<label for="backgroundColorPong">Color de fondo:</label>
 						</div>
 						<div class="col-md-12">
-							<input colorpicker class="form-control" id="backgroundColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundColorPong" ng-init="backgroundColorPong= '#ffffff'" style="background-color:{{backgroundColorPong}}"/>
+							<input colorpicker class="form-control" id="backgroundColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundColorPong" ng-init="backgroundColorPong= '#ffffff'" style="background-color:{{backgroundColorPong}}" required/>
 						</div>
 					
 						<div class="col-md-12">
 							<label for="lineColorPong">Color de líneas:</label>
 						</div>
 						<div class="col-md-12">
-							<input colorpicker class="form-control" id="lineColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="lineColorPong" ng-init="lineColorPong= '#000000'" style="background-color:{{lineColorPong}}"/>
+							<input colorpicker class="form-control" id="lineColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="lineColorPong" ng-init="lineColorPong= '#000000'" style="background-color:{{lineColorPong}}" required/>
 						</div>
 					
 						<div class="col-md-12">
 							<label for="raquetColorPong">Color de raquetas:</label>
 						</div>
 						<div class="col-md-12">
-							<input colorpicker class="form-control" id="raquetColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="raquetColorPong" ng-init="raquetColorPong= '#000000'" style="background-color:{{raquetColorPong}}"/>
+							<input colorpicker class="form-control" id="raquetColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="raquetColorPong" ng-init="raquetColorPong= '#000000'" style="background-color:{{raquetColorPong}}" required/>
 						</div>
 					
 						<div class="col-md-12">
 							<label for="textColorPong">Color de texto:</label>
 						</div>
 						<div class="col-md-12">
-							<input colorpicker class="form-control" id="textColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="textColorPong" ng-init="textColorPong= '#000000'" style="background-color:{{textColorPong}}"/>
+							<input colorpicker class="form-control" id="textColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="textColorPong" ng-init="textColorPong= '#000000'" style="background-color:{{textColorPong}}" required/>
 						</div>
 						
 
 						<label for="numberZonePong">Número de franjas:</label>
-						<input class="form-control" id="numberZonePong" ng-model="numberZonePong" ng-init="numberZonePong='5'" type="text"/>		
+						<input class="form-control" id="numberZonePong" ng-model="numberZonePong" ng-init="numberZonePong='5'" type="text" required/>		
 					</div>
 				</div>	
 				<div class="form-group col-md-4">
@@ -57,19 +55,19 @@
 						<h4 class="text-center">Configuración de piezas</h4>
 						
 						<label for="leftSpeedPong">Velocidad raqueta izquierda:</label>
-						<input class="form-control" id="leftSpeedPong" ng-model="leftSpeedPong" ng-init="leftSpeedPong='5'" type="text"/>
+						<input class="form-control" id="leftSpeedPong" ng-model="leftSpeedPong" ng-init="leftSpeedPong='5'" type="text" required/>
 						
 						<label for="rightSpeedPong">Velocidad inicial de raqueta derecha:</label>
-						<input class="form-control" id="rightSpeedPong" ng-model="rightSpeedPong" ng-init="rightSpeedPong='5'" type="text"/>
+						<input class="form-control" id="rightSpeedPong" ng-model="rightSpeedPong" ng-init="rightSpeedPong='5'" type="text" required/>
 						
 						<label for="ballSpeedPong">Velocidad inicial de la pelota:</label>
-						<input class="form-control" id="ballSpeedPong" ng-model="ballSpeedPong" ng-init="ballSpeedPong='5'" type="text"/>
+						<input class="form-control" id="ballSpeedPong" ng-model="ballSpeedPong" ng-init="ballSpeedPong='5'" type="text" required/>
 
 						<label for="raquetWidthPong">Anchura raqueta:</label>
-						<input class="form-control" id="raquetWidthPong" ng-model="raquetWidthPong" ng-init="raquetWidthPong='10'" type="text"/>
+						<input class="form-control" id="raquetWidthPong" ng-model="raquetWidthPong" ng-init="raquetWidthPong='10'" type="text" required/>
 						
 						<label for="raquetHeightPong">Altura raqueta:</label>
-						<input class="form-control" id="raquetHeightPong" ng-model="raquetHeightPong" ng-init="raquetHeightPong='80'" type="text"/>
+						<input class="form-control" id="raquetHeightPong" ng-model="raquetHeightPong" ng-init="raquetHeightPong='80'" type="text" required/>
 					
 					</div>
 				</div>
@@ -78,19 +76,16 @@
 						<h4 class="text-center">Configuración de dificultad</h4>
 						
 						<label for="goalsPong">Número de goles para terminar:</label>
-						<input class="form-control" id="goalsPong" ng-model="goalsPong" ng-init="goalsPong='5'" type="text"/>
+						<input class="form-control" id="goalsPong" ng-model="goalsPong" ng-init="goalsPong='5'" type="text" required/>
 
 						<label for="pointsPong">Puntos para subir de nivel:</label>
-						<input class="form-control" id="pointsPong" ng-model="pointsPong" ng-init="pointsPong='10'" type="text"/>
+						<input class="form-control" id="pointsPong" ng-model="pointsPong" ng-init="pointsPong='10'" type="text" required/>
 
 						<label for="incBallSpeedPong">Incremento de la velocidad de la pelota:</label>
-						<input class="form-control" id="incBallSpeedPong" ng-model="incBallSpeedPong" ng-init="incBallSpeedPong='1'" type="text"/>
+						<input class="form-control" id="incBallSpeedPong" ng-model="incBallSpeedPong" ng-init="incBallSpeedPong='1'" type="text" required/>
 
 						<label for="incOpSpeedPong">Incremento de la velocidad del oponente:</label>
-						<input class="form-control" id="incOpSpeedPong" ng-model="incOpSpeedPong" ng-init="incOpSpeedPong='0.5'" type="text"/>
-
-						
-						
+						<input class="form-control" id="incOpSpeedPong" ng-model="incOpSpeedPong" ng-init="incOpSpeedPong='0.5'" type="text" required/>
 					</div>
 				</div>
 			</div>

@@ -15,33 +15,33 @@
 							<label for="backgroundColorPong">Color de fondo:</label>
 						</div>
 						<div class="col-md-12">
-							<input colorpicker class="form-control" id="backgroundColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundColorPong" ng-init="backgroundColorPong= '#ffffff'" style="background-color:{{backgroundColorPong}}"/>
+							<input colorpicker class="form-control" id="backgroundColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="user.actualPong.board.backgroundColor" style="background-color:{{user.actualPong.board.backgroundColor}}" required/>
 						</div>
 					
 						<div class="col-md-12">
 							<label for="lineColorPong">Color de líneas:</label>
 						</div>
 						<div class="col-md-12">
-							<input colorpicker class="form-control" id="lineColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="lineColorPong" ng-init="lineColorPong= '#000000'" style="background-color:{{lineColorPong}}"/>
+							<input colorpicker class="form-control" id="lineColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="user.actualPong.board.lineColor" style="background-color:{{user.actualPong.board.lineColor}}" required/>
 						</div>
 					
 						<div class="col-md-12">
 							<label for="raquetColorPong">Color de raquetas:</label>
 						</div>
 						<div class="col-md-12">
-							<input colorpicker class="form-control" id="raquetColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="raquetColorPong" ng-init="raquetColorPong= '#000000'" style="background-color:{{raquetColorPong}}"/>
+							<input colorpicker class="form-control" id="raquetColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="user.actualPong.board.raquetColor" style="background-color:{{user.actualPong.board.raquetColor}}" required/>
 						</div>
 					
 						<div class="col-md-12">
 							<label for="textColorPong">Color de texto:</label>
 						</div>
 						<div class="col-md-12">
-							<input colorpicker class="form-control" id="textColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="textColorPong" ng-init="textColorPong= '#000000'" style="background-color:{{textColorPong}}"/>
+							<input colorpicker class="form-control" id="textColorPong" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="user.actualPong.board.textColor" style="background-color:{{user.actualPong.board.textColor}}" required/>
 						</div>
 						
 
 						<label for="numberZonePong">Número de franjas:</label>
-						<input class="form-control" id="numberZonePong" type="text" value=5/>		
+						<input class="form-control" id="numberZonePong" ng-model="user.actualPong.board.numberZone"  type="text" required/>		
 					</div>
 				</div>	
 				<div class="form-group col-md-4">
@@ -49,44 +49,41 @@
 						<h4 class="text-center">Configuración de piezas</h4>
 						
 						<label for="leftSpeedPong">Velocidad raqueta izquierda:</label>
-						<input class="form-control" id="leftSpeedPong" type="text" value=5/>
+						<input class="form-control" id="leftSpeedPong" ng-model="user.actualPong.pieces.leftSpeed" type="text" required/>
 						
-						<label for="rightSpeedPong">Velocidad raqueta derecha:</label>
-						<input class="form-control" id="rightSpeedPong" type="text" value=5/>
+						<label for="rightSpeedPong">Velocidad inicial de raqueta derecha:</label>
+						<input class="form-control" id="rightSpeedPong" ng-model="user.actualPong.pieces.rightSpeed" type="text" required/>
 						
-						<label for="ballSpeedPong">Velocidad de la pelota:</label>
-						<input class="form-control" id="ballSpeedPong" type="text" value=5/>
+						<label for="ballSpeedPong">Velocidad inicial de la pelota:</label>
+						<input class="form-control" id="ballSpeedPong" ng-model="user.actualPong.pieces.ballSpeed" type="text" required/>
 
 						<label for="raquetWidthPong">Anchura raqueta:</label>
-						<input class="form-control" id="raquetWidthPong" type="text"/>
+						<input class="form-control" id="raquetWidthPong" ng-model="user.actualPong.pieces.raquetWidth" type="text" required/>
 						
 						<label for="raquetHeightPong">Altura raqueta:</label>
-						<input class="form-control" id="raquetHeightPong" type="text"/>
-						
+						<input class="form-control" id="raquetHeightPong" ng-model="user.actualPong.pieces.raquetHeight" type="text" required/>
+					
 					</div>
 				</div>
 				<div class="form-group col-md-4">
 					<div class="thumbnail">
 						<h4 class="text-center">Configuración de dificultad</h4>
 						
-						<label for="leftSpeedPong">Velocidad raqueta izquierda:</label>
-						<input class="form-control" id="leftSpeedPong" type="text" value=5/>
-						
-						<label for="rightSpeedPong">Velocidad raqueta derecha:</label>
-						<input class="form-control" id="rightSpeedPong" type="text" value=5/>
-						
-						<label for="ballSpeedPong">Velocidad de la pelota:</label>
-						<input class="form-control" id="ballSpeedPong" type="text" value=5/>
+						<label for="goalsPong">Número de goles para terminar:</label>
+						<input class="form-control" id="goalsPong" ng-model="user.actualPong.difficult.goals" type="text" required/>
 
-						<label for="raquetWidthPong">Anchura raqueta:</label>
-						<input class="form-control" id="raquetWidthPong" type="text"/>
-						
-						<label for="raquetHeightPong">Altura raqueta:</label>
-						<input class="form-control" id="raquetHeightPong" type="text"/>
-						
+						<label for="pointsPong">Puntos para subir de nivel:</label>
+						<input class="form-control" id="pointsPong" ng-model="user.actualPong.difficult.points" type="text" required/>
+
+						<label for="incBallSpeedPong">Incremento de la velocidad de la pelota:</label>
+						<input class="form-control" id="incBallSpeedPong" ng-model="user.actualPong.difficult.incBallSpeed" type="text" required/>
+
+						<label for="incOpSpeedPong">Incremento de la velocidad del oponente:</label>
+						<input class="form-control" id="incOpSpeedPong" ng-model="user.actualPong.difficult.incOpSpeed" type="text" required/>
 					</div>
 				</div>
 			</div>
+			<p ng-show='errorMsg' class="help-block">{{errorMsg}}</p>
 			<div class="modal-footer">
 		        <button name="button" ng-click="submit()" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Guardar</button>
 		        <a class="btn btn-default" href="#">Cancelar</a>
@@ -94,3 +91,64 @@
 		</form>
 	</div>
 
+<script type="text/javascript">
+	$("#raquetHeightPong").TouchSpin({
+		min:1,
+		max: 200,
+    	initval: 80,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+	
+	$("#raquetWidthPong").TouchSpin({
+		min:1,
+		max: 100,
+    	initval: 10,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+    
+    $("#leftSpeedPong, #rightSpeedPong, #ballSpeedPong, #numberZonePong").TouchSpin({
+    	min:1,
+    	initval: 5,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+    });
+
+    $("#goalsPong").TouchSpin({
+		min:1,
+		max: 20,
+    	initval: 5,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+
+	$("#pointsPong").TouchSpin({
+		min:1,
+		max: 100,
+    	initval: 10,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+
+	$("#incBallSpeedPong").TouchSpin({
+		min:0,
+		max: 5,
+    	initval: 1,
+    	step: 0.25, 
+    	decimals: 2,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+
+	$("#incOpSpeedPong").TouchSpin({
+		min:0,
+		max: 5,
+    	initval: 0.5,
+    	step: 0.25, 
+    	decimals: 2,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+
+</script>

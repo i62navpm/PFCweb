@@ -111,9 +111,38 @@ module.exports = function(app, passport) {
 			});			
 
 			res.send(true);
-			
 		});
+	});
 
+	app.put('/pongConfiguration/:id', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			
+			user.pongConf.id(req.body._id).board = req.body.board;
+			user.pongConf.id(req.body._id).pieces = req.body.pieces;
+			user.pongConf.id(req.body._id).difficult = req.body.difficult;
+			
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al Modificar."})
+			});			
+
+			res.send(true);
+		});
+	});
+
+
+	app.delete('/pongConfiguration/:id/:id2', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			
+			user.pongConf.id(req.params.id2).remove();
+			
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al eliminar."})
+			});			
+
+			res.send(true);
+		});
 	});
 
 	app.put('/calibration/:id', isLoggedIn, function(req, res) {

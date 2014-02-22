@@ -1,16 +1,18 @@
 'use strict';
 var webApp = angular.module('webApp.controllers');
  
-webApp.controller('mainController', function ($scope, $http, $log, $location, $window) {
+webApp.controller('mainController', function ($scope, $http, $log, $location) {
 
-	$scope.window = $window;
 	if ($location.path() == '/_=_')
 		$location.path('/').replace();
-	
+
 	$scope.init = function () {
 		$http({method: 'GET', url: '/profile/'+$scope.userID}).
 	    	success(function(data, status, headers, config) {
 		      $scope.user = data;
+		      $scope.user.actualPong = null;
+		      $scope.user.actualTetris = null;
+		      $scope.user.actualDragMe = null;
 		    }).
 		    error(function(data, status, headers, config) {
 		      $log.error("Error al conecctar");
