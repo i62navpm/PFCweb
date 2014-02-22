@@ -100,11 +100,26 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.post('/pongConfiguration/:id', isLoggedIn, function(req, res) {
+		console.log(req.params.id);
+		console.log(req.body);
+		User.findById(req.params.id, function(err, user) {
+			user.pongConf.push(req.body);
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al guardar."})
+			});			
+
+			res.send(true);
+			
+		});
+
+	});
+
 	app.put('/calibration/:id', isLoggedIn, function(req, res) {
 		console.log(req.params.id);
 		console.log(req.body)
 		User.findById(req.params.id, function(err, user) {
-			var keys = (Object.keys(req.body));
 			console.log("OJOIZ"+req.body.eyeLeft);
 			console.log("OJODE"+req.body.eyeRight);
 

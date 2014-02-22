@@ -1,7 +1,7 @@
 'use strict';
 var webApp = angular.module('webApp.controllers');
  
-webApp.controller('pongController', function ($scope, $http, $log, $location) {
+webApp.controller('pongController', function ($scope, $http, $log) {
 
 $scope.disabled = true;
 $scope.changeOption = function () {

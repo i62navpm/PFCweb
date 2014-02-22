@@ -3,6 +3,31 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 
 
+var pongConfSchema = mongoose.Schema({
+    name    :   String,
+    board   :{
+        backgroundColor : String,
+        lineColor       : String,
+        raquetColor     : String,
+        textColor       : String,
+        numberZone      : String
+    },
+    pieces  :{
+        leftSpeed       : String,
+        rightSpeed      : String,
+        ballSpeed       : String,
+        raquetWidth     : String,
+        raquetHeight    : String
+    },
+    difficult   :{
+        goals           : String,
+        points          : String,
+        incBallSpeed    : String,
+        incOpSpeed      : String
+    }
+});
+
+
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
@@ -31,7 +56,8 @@ var userSchema = mongoose.Schema({
     calibration      : {
         eyeLeft      : { type: String, default: '#ff0000' },
         eyeRight     : { type: String, default: '#00ff00' },
-    }
+    },
+    pongConf         : [pongConfSchema]
 
 });
 

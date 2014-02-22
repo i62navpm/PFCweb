@@ -23,6 +23,7 @@ var webApp = angular.module('webApp', ['ngRoute','webApp.controllers','ui.bootst
 
             .when('/pongNewConfig', {
                 templateUrl : '../public/views/pongNewConfig.html',
+                controller  : 'pongConfigController'
             })
 
             .when('/pongConfig', {
