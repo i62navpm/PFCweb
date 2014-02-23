@@ -145,6 +145,96 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.post('/tetrisConfiguration/:id', isLoggedIn, function(req, res) {
+		console.log(req.params.id);
+		console.log(req.body);
+		User.findById(req.params.id, function(err, user) {
+			user.tetrisConf.push(req.body);
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al guardar."})
+			});			
+
+			res.send(true);
+		});
+	});
+
+	app.put('/tetrisConfiguration/:id', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			
+			user.tetrisConf.id(req.body._id).board = req.body.board;
+			user.tetrisConf.id(req.body._id).pieces = req.body.pieces;
+			user.tetrisConf.id(req.body._id).difficult = req.body.difficult;
+			
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al Modificar."})
+			});			
+
+			res.send(true);
+		});
+	});
+
+
+	app.delete('/tetrisConfiguration/:id/:id2', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			
+			user.tetrisConf.id(req.params.id2).remove();
+			
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al eliminar."})
+			});			
+
+			res.send(true);
+		});
+	});
+	
+	app.post('/dragMeConfiguration/:id', isLoggedIn, function(req, res) {
+		console.log(req.params.id);
+		console.log(req.body);
+		User.findById(req.params.id, function(err, user) {
+			user.dragMeConf.push(req.body);
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al guardar."})
+			});			
+
+			res.send(true);
+		});
+	});
+
+	app.put('/dragMeConfiguration/:id', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			
+			user.dragMeConf.id(req.body._id).board = req.body.board;
+			user.dragMeConf.id(req.body._id).pieces = req.body.pieces;
+			user.dragMeConf.id(req.body._id).difficult = req.body.difficult;
+			
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al Modificar."})
+			});			
+
+			res.send(true);
+		});
+	});
+
+
+	app.delete('/dragMeConfiguration/:id/:id2', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			
+			user.dragMeConf.id(req.params.id2).remove();
+			
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al eliminar."})
+			});			
+
+			res.send(true);
+		});
+	});
+	
 	app.put('/calibration/:id', isLoggedIn, function(req, res) {
 		console.log(req.params.id);
 		console.log(req.body)

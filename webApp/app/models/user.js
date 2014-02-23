@@ -2,6 +2,40 @@
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 
+var dragMeConfSchema = mongoose.Schema({
+    name    :   String,
+    board   :{
+        backgroundInColor   : String,
+        backgroundOutColor  : String,
+        textColor       : String,
+    },
+    pieces  :{
+        opponentSpeed   : String,
+        playerSize      : String
+    },
+    difficult   :{
+        timePieceSpeed  : String,
+        incPieceSpeed   : String
+    }
+});
+
+var tetrisConfSchema = mongoose.Schema({
+    name    :   String,
+    board   :{
+        backgroundColor : String,
+        lineColor       : String,
+        textColor       : String,
+        colNumber       : String,
+        rowNumber       : String
+    },
+    pieces  :{
+        pieceSpeed      : String
+    },
+    difficult   :{
+        points          : String,
+        incPieceSpeed   : String
+    }
+});
 
 var pongConfSchema = mongoose.Schema({
     name    :   String,
@@ -26,7 +60,6 @@ var pongConfSchema = mongoose.Schema({
         incOpSpeed      : String
     }
 });
-
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
@@ -57,7 +90,9 @@ var userSchema = mongoose.Schema({
         eyeLeft      : { type: String, default: '#ff0000' },
         eyeRight     : { type: String, default: '#00ff00' },
     },
-    pongConf         : [pongConfSchema]
+    pongConf         : [pongConfSchema],
+    tetrisConf       : [tetrisConfSchema],
+    dragMeConf       : [dragMeConfSchema],
 
 });
 

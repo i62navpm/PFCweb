@@ -1,0 +1,103 @@
+<div class="row">
+<div class="col-md-12">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-wrench"></i> Configuración de DragMe</h3>
+		</div>
+    <div class="panel-body">
+		<form name="form" novalidate>
+			<div class="row">
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de Tablero</h4>
+						<div class="row">
+							<div class="col-md-12">
+								<label for="backgroundInColorDragMe">Color de cuadro interior:</label>
+							</div>
+							<div class="col-md-12">
+								<input colorpicker class="form-control" id="backgroundInColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="user.actualDragMe.board.backgroundInColor" style="background-color:{{user.actualDragMe.board.backgroundInColor}}" required/>
+							</div>
+						
+							<div class="col-md-12">
+								<label for="backgroundOutColorDragMe">Color de cuadro exterior:</label>
+							</div>
+							<div class="col-md-12">
+								<input colorpicker class="form-control" id="backgroundOutColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="user.actualDragMe.board.backgroundOutColor" style="background-color:{{user.actualDragMe.board.backgroundOutColor}}" required/>
+							</div>
+						
+							<div class="col-md-12">
+								<label for="textColorDragMe">Color de texto:</label>
+							</div>
+							<div class="col-md-12">
+								<input colorpicker class="form-control" id="textColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="user.actualDragMe.board.textColor" style="background-color:{{user.actualDragMe.board.textColor}}" required/>
+							</div>
+						</div>
+					</div>
+				</div>	
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de piezas</h4>
+
+						<label for="opponentSpeedDragMe">Velocidad inicial de las piezas oponentes:</label>
+						<input class="form-control" id="opponentSpeedDragMe" ng-model="user.actualDragMe.pieces.opponentSpeed" type="text" required/>
+
+						<label for="playerSizeDragMe">Tamaño de la pieza del jugador:</label>
+						<input class="form-control" id="playerSizeDragMe" ng-model="user.actualDragMe.pieces.playerSize" type="text" required/>
+						
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de dificultad</h4>
+
+						<label for="timePieceSpeedDragMe">Tiempo para subir de nivel:</label>
+						<input class="form-control" id="timePieceSpeedDragMe" ng-model="user.actualDragMe.difficult.timePieceSpeed" type="text" required/>
+
+						<label for="incPieceSpeedDragMe">Incremento de la velocidad de las piezas:</label>
+						<input class="form-control" id="incPieceSpeedDragMe" ng-model="user.actualDragMe.difficult.incPieceSpeed" type="text" required/>
+
+					</div>
+				</div>
+			</div>
+			<p ng-show='errorMsg' class="help-block">{{errorMsg}}</p>
+			<div class="modal-footer">
+		        <button name="button" ng-click="submit()" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Guardar</button>
+		        <a class="btn btn-default" href="#">Cancelar</a>
+	    	</div>		
+		</form>
+	</div>
+
+<script type="text/javascript">
+	$("#opponentSpeedDragMe").TouchSpin({
+		min:1,
+		max: 50,
+    	initval: 5,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+	
+	$("#playerSizeDragMe").TouchSpin({
+		min:25,
+		max: 100,
+    	initval: 50,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+    
+    $("#timePieceSpeedDragMe").TouchSpin({
+    	min:1,
+    	max:60,
+    	initval: 2,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+    });
+
+	$("#incPieceSpeedDragMe").TouchSpin({
+		min:0,
+		max: 50,
+    	initval: 3,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+
+</script>

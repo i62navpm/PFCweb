@@ -1,0 +1,110 @@
+<div class="row">
+<div class="col-md-12">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-wrench"></i> Nueva configuración de DragMe</h3>
+		</div>
+    <div class="panel-body">
+		<form name="form" novalidate>
+			<div class="form-group " ng-class="{'has-error': form.name.$invalid && !form.name.$pristine}">
+				<label>Nombre de configuración: </label>
+				<input type="text" class="form-control" name="name" ng-model="confName" placeholder="Nombre" required>
+				<p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">El nombre es obligatorio.</p>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de Tablero</h4>
+						<div class="row">
+							<div class="col-md-12">
+								<label for="backgroundInColorDragMe">Color de cuadro interior:</label>
+							</div>
+							<div class="col-md-12">
+								<input colorpicker class="form-control" id="backgroundInColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundInColorDragMe" ng-init="backgroundInColorDragMe= '#ffffff'" style="background-color:{{backgroundInColorDragMe}}" required/>
+							</div>
+						
+							<div class="col-md-12">
+								<label for="backgroundOutColorDragMe">Color de cuadro exterior:</label>
+							</div>
+							<div class="col-md-12">
+								<input colorpicker class="form-control" id="backgroundOutColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundOutColorDragMe" ng-init="backgroundOutColorDragMe= '#000000'" style="background-color:{{backgroundOutColorDragMe}}" required/>
+							</div>
+						
+							<div class="col-md-12">
+								<label for="textColorDragMe">Color de texto:</label>
+							</div>
+							<div class="col-md-12">
+								<input colorpicker class="form-control" id="textColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="textColorDragMe" ng-init="textColorDragMe= '#000000'" style="background-color:{{textColorDragMe}}" required/>
+							</div>
+						</div>
+
+					</div>
+				</div>	
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de piezas</h4>
+						
+						<label for="opponentSpeedDragMe">Velocidad inicial de las piezas oponentes:</label>
+						<input class="form-control" id="opponentSpeedDragMe" ng-model="opponentSpeedDragMe" ng-init="opponentSpeedDragMe='5'" type="text" required/>
+						
+						<label for="playerSizeDragMe">Tamaño de la pieza del jugador:</label>
+						<input class="form-control" id="playerSizeDragMe" ng-model="playerSizeDragMe" ng-init="playerSizeDragMe='50'" type="text" required/>
+					
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de dificultad</h4>
+
+						<label for="timePieceSpeedDragMe">Tiempo para subir de nivel:</label>
+						<input class="form-control" id="timePieceSpeedDragMe" ng-model="timePieceSpeedDragMe" ng-init="timePieceSpeedDragMe='2'" type="text" required/>
+
+						<label for="incPieceSpeedDragMe">Incremento de la velocidad de las piezas:</label>
+						<input class="form-control" id="incPieceSpeedDragMe" ng-model="incPieceSpeedDragMe" ng-init="incPieceSpeedDragMe='3'" type="text" required/>
+
+					</div>
+				</div>
+			</div>
+			<p ng-show='errorMsg' class="help-block">{{errorMsg}}</p>
+			<div class="modal-footer">
+		        <button name="button" ng-click="submit()" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Guardar</button>
+		        <a class="btn btn-default" href="#">Cancelar</a>
+	    	</div>		
+		</form>
+	</div>
+
+<script type="text/javascript">
+	$("#opponentSpeedDragMe").TouchSpin({
+		min:1,
+		max: 50,
+    	initval: 5,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+	
+	$("#playerSizeDragMe").TouchSpin({
+		min:25,
+		max: 100,
+    	initval: 50,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+    
+    $("#timePieceSpeedDragMe").TouchSpin({
+    	min:1,
+    	max:60,
+    	initval: 2,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+    });
+
+	$("#incPieceSpeedDragMe").TouchSpin({
+		min:0,
+		max: 50,
+    	initval: 3,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+
+</script>

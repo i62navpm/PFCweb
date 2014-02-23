@@ -1,0 +1,121 @@
+<div class="row">
+<div class="col-md-12">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-wrench"></i> Nueva configuración de Tetris</h3>
+		</div>
+    <div class="panel-body">
+		<form name="form" novalidate>
+			<div class="form-group " ng-class="{'has-error': form.name.$invalid && !form.name.$pristine}">
+				<label>Nombre de configuración: </label>
+				<input type="text" class="form-control" name="name" ng-model="confName" placeholder="Nombre" required>
+				<p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">El nombre es obligatorio.</p>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de Tablero</h4>
+
+						<div class="col-md-12">
+							<label for="backgroundColorTetris">Color de fondo:</label>
+						</div>
+						<div class="col-md-12">
+							<input colorpicker class="form-control" id="backgroundColorTetris" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundColorTetris" ng-init="backgroundColorTetris= '#ffffff'" style="background-color:{{backgroundColorTetris}}" required/>
+						</div>
+					
+						<div class="col-md-12">
+							<label for="lineColorTetris">Color de líneas:</label>
+						</div>
+						<div class="col-md-12">
+							<input colorpicker class="form-control" id="lineColorTetris" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="lineColorTetris" ng-init="lineColorTetris= '#000000'" style="background-color:{{lineColorTetris}}" required/>
+						</div>
+					
+						<div class="col-md-12">
+							<label for="textColorTetris">Color de texto:</label>
+						</div>
+						<div class="col-md-12">
+							<input colorpicker class="form-control" id="textColorTetris" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="textColorTetris" ng-init="textColorTetris= '#000000'" style="background-color:{{textColorTetris}}" required/>
+						</div>
+
+						<label for="colNumberTetris">Número de columnas:</label>
+						<input class="form-control" id="colNumberTetris" ng-model="colNumberTetris" ng-init="colNumberTetris='10'" type="text" required/>
+						
+						<label for="rowNumberTetris">Número de filas:</label>
+						<input class="form-control" id="rowNumberTetris" ng-model="rowNumberTetris" ng-init="rowNumberTetris='15'" type="text" required/>
+
+					</div>
+				</div>	
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de piezas</h4>
+						
+						<label for="pieceSpeedTetris">Velocidad inicial de la pelota:</label>
+						<input class="form-control" id="pieceSpeedTetris" ng-model="pieceSpeedTetris" ng-init="pieceSpeedTetris='5'" type="text" required/>
+						<p class="text-info">Cuanto mayor sea este valor menor será la velocidad</p>
+					
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="thumbnail">
+						<h4 class="text-center">Configuración de dificultad</h4>
+
+						<label for="pointsTetris">Puntos para subir de nivel:</label>
+						<input class="form-control" id="pointsTetris" ng-model="pointsTetris" ng-init="pointsTetris='10'" type="text" required/>
+
+						<label for="incPieceSpeedTetris">Incremento de la velocidad de las piezas:</label>
+						<input class="form-control" id="incPieceSpeedTetris" ng-model="incPieceSpeedTetris" ng-init="incPieceSpeedTetris='10'" type="text" required/>
+
+					</div>
+				</div>
+			</div>
+			<p ng-show='errorMsg' class="help-block">{{errorMsg}}</p>
+			<div class="modal-footer">
+		        <button name="button" ng-click="submit()" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Guardar</button>
+		        <a class="btn btn-default" href="#">Cancelar</a>
+	    	</div>		
+		</form>
+	</div>
+
+<script type="text/javascript">
+	$("#colNumberTetris").TouchSpin({
+		min:5,
+		max: 20,
+    	initval: 10,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+	
+	$("#rowNumberTetris").TouchSpin({
+		min:5,
+		max: 30,
+    	initval: 15,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+    
+    $("#pieceSpeedTetris").TouchSpin({
+    	min:1,
+    	max:300,
+    	initval: 200,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+    });
+
+	$("#pointsTetris").TouchSpin({
+		min:1,
+		max: 100,
+    	initval: 10,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+
+	$("#incPieceSpeedTetris").TouchSpin({
+		min:0,
+		max: 50,
+    	initval: 10,
+        buttondown_class: "btn btn-danger",
+        buttonup_class: "btn btn-primary",
+	});
+
+</script>

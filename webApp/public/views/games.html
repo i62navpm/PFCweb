@@ -33,11 +33,11 @@
 		    					<h4 class="media-heading">Configuración: </h4>
 		    					<div class="btn-group" style="padding-top:10px; padding-bottom:5px">
 									<a href="#pongNewConfig" class="btn btn-default btn-sm"><span class="fa fa-plus-square"></span></a>
-								  	<a ng-click="deleteConfPong()" class="btn btn-default btn-sm" ng-disabled="disabled"><span class="fa fa-minus-square"></span></a>
-								  	<a href="#pongConfig"class="btn btn-default btn-sm" ng-show="!disabled"><span class="fa fa-pencil-square"></span></a>
-								  	<a href="#pongViewConfig" class="btn btn-default btn-sm" ng-show="disabled" ><span class="fa fa-search"></span></a>
+								  	<a ng-click="deleteConfPong()" class="btn btn-default btn-sm" ng-disabled="disabledPong"><span class="fa fa-minus-square"></span></a>
+								  	<a href="#pongConfig"class="btn btn-default btn-sm" ng-show="!disabledPong"><span class="fa fa-pencil-square"></span></a>
+								  	<a href="#pongViewConfig" class="btn btn-default btn-sm" ng-show="disabledPong" ><span class="fa fa-search"></span></a>
 								</div>
-								<select class="form-control" ng-model="confPong" ng-change="changeOption()">
+								<select class="form-control" ng-model="confPong" ng-change="changeOptionPong()">
 									<optgroup label="Preconfigurados">
 										<option selected="selected">Fácil</option>
 										<option>Normal</option>
@@ -59,12 +59,12 @@
 	  			<h3 class="media-heading">Tetris</h3>
 	    		<div class="row">
 		    		<div class="col-md-7">
-			    		<div class="media">
+			    		<div class="media" >
 			    			<div class="col-md-7">
 			            		<a class="thumbnail pull-left" href=""><img src="public/img/miniTetris.jpg" class="img-responsive" alt="image1"/></a>
 			            	</div>
 			            	<div class="col-md-5">
-		        				<span class="label label-primary">Conf: {{confTetris}}</span>
+		        				<span class="label label-primary">Conf: {{user.actualTetris.name}}</span>
 		        				<p></p>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
@@ -77,18 +77,23 @@
 		    				<div class="caption">
 		    					<h4 class="media-heading">Configuración: </h4>
 		    					<div class="btn-group" style="padding-top:10px; padding-bottom:5px">
-									<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-plus-square"></span></button>
-								  	<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-minus-square"></span></button>
-								  	<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-pencil-square"></span></button>
-								  	<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-search"></span></button>
+									<a href="#tetrisNewConfig" class="btn btn-default btn-sm"><span class="fa fa-plus-square"></span></a>
+								  	<a ng-click="deleteConfTetris()" class="btn btn-default btn-sm" ng-disabled="disabledTetris"><span class="fa fa-minus-square"></span></a>
+								  	<a href="#tetrisConfig"class="btn btn-default btn-sm" ng-show="!disabledTetris"><span class="fa fa-pencil-square"></span></a>
+								  	<a href="#tetrisViewConfig" class="btn btn-default btn-sm" ng-show="disabledTetris" ><span class="fa fa-search"></span></a>
 								</div>
-								<select class="form-control" ng-model="confTetris">
-									<option selected="selected">Fácil</option>
-									<option>Normal</option>
-									<option>Difícil</option>
-									<option >4</option>
-									<option>5</option>
+								<select class="form-control" ng-model="confTetris" ng-change="changeOptionTetris()">
+									<optgroup label="Preconfigurados">
+										<option selected="selected">Fácil</option>
+										<option>Normal</option>
+										<option>Difícil</option>
+									</optgroup>
+									<optgroup label="Conf. Usuario">
+										<option value={{conf._id}} ng-repeat="conf in user.tetrisConf">{{conf.name}}</option>
+									</optgroup>
 								</select>
+								{{user.tetrisConf.id}}
+
 		    				</div>
 		    			</div>
 		    		</div>
@@ -96,19 +101,18 @@
 	   		</div>
 			
 			<div class="well well-sm">
-	  			<h3 class="media-heading">Drag Me</h3>
+	  			<h3 class="media-heading">DragMe</h3>
 	    		<div class="row">
 		    		<div class="col-md-7">
-			    		<div class="media">
-
+			    		<div class="media" >
 			    			<div class="col-md-7">
 			            		<a class="thumbnail pull-left" href=""><img src="public/img/miniDragMe.jpg" class="img-responsive" alt="image1"/></a>
 			            	</div>
 			            	<div class="col-md-5">
-		        				<span class="label label-primary">Conf: {{confDragMe}}</span>
+		        				<span class="label label-primary">Conf: {{user.actualDragMe.name}}</span>
 		        				<p></p>
-		        				<span class="label label-primary" style="background-color:{{colorLeft}}">Ojo izquierdo</span>
-		        				<span class="label label-primary" style="background-color:{{colorRight}}">Ojo derecho</span>
+		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
+		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
 			                	<p><a href="#" class="btn btn-xs btn-warning" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
 			            	</div>
 			    		</div>
@@ -118,18 +122,23 @@
 		    				<div class="caption">
 		    					<h4 class="media-heading">Configuración: </h4>
 		    					<div class="btn-group" style="padding-top:10px; padding-bottom:5px">
-									<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-plus-square"></span></button>
-								  	<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-minus-square"></span></button>
-								  	<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-pencil-square"></span></button>
-								  	<button type="button" class="btn btn-default btn-sm" ng-click="open()"><span class="fa fa-search"></span></button>
+									<a href="#dragMeNewConfig" class="btn btn-default btn-sm"><span class="fa fa-plus-square"></span></a>
+								  	<a ng-click="deleteConfDragMe()" class="btn btn-default btn-sm" ng-disabled="disabledDragMe"><span class="fa fa-minus-square"></span></a>
+								  	<a href="#dragMeConfig"class="btn btn-default btn-sm" ng-show="!disabledDragMe"><span class="fa fa-pencil-square"></span></a>
+								  	<a href="#dragMeViewConfig" class="btn btn-default btn-sm" ng-show="disabledDragMe" ><span class="fa fa-search"></span></a>
 								</div>
-								<select class="form-control" ng-model="confDragMe">
-									<option selected="selected">Fácil</option>
-									<option>Normal</option>
-									<option>Difícil</option>
-									<option >4</option>
-									<option>5</option>
+								<select class="form-control" ng-model="confDragMe" ng-change="changeOptionDragMe()">
+									<optgroup label="Preconfigurados">
+										<option selected="selected">Fácil</option>
+										<option>Normal</option>
+										<option>Difícil</option>
+									</optgroup>
+									<optgroup label="Conf. Usuario">
+										<option value={{conf._id}} ng-repeat="conf in user.dragMeConf">{{conf.name}}</option>
+									</optgroup>
 								</select>
+								{{user.dragMeConf.id}}
+
 		    				</div>
 		    			</div>
 		    		</div>
