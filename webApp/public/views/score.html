@@ -9,35 +9,19 @@
 				<div class="row" style="padding:15px">
 					<div class="col-md-6">
 						<label class="control-label" for="destino">Juego: </label>
-						<select class="form-control" id="destino">
-						  	<option>1</option>
-						  	<option>2</option>
-						  	<option>3</option>
-						  	<option>4</option>
-						  	<option>5</option>
+						<select class="form-control" ng-model="selectScoreGame" id="destino" ng-change="changeGame()">
+						  	<option selected>Pong</option>
+						  	<option>Tetris</option>
+						  	<option>DragMe</option>
 						</select>
 					</div>
+
 					<div class="col-md-6">
 						<label class="control-label" for="destino">Configuración: </label>
-						<select class="form-control" id="destino">
-						  	<option>1</option>
-						  	<option>2</option>
-						  	<option>3</option>
-						  	<option>4</option>
-						  	<option>5</option>
+						<select class="form-control" ng-model="idGame" id="destino">
+						  	<option value={{conf._id}} ng-repeat="conf in actualScoreGame">{{conf.name}}</option>
 						</select>
-					</div>
-				</div>
-				<div class="row" style="padding: 0 15px">
-					<div class="col-md-6">
-						<label class="control-label" for="destino">Pantalla: </label>
-						<select class="form-control" id="destino">
-						  	<option>1</option>
-						  	<option>2</option>
-						  	<option>3</option>
-						  	<option>4</option>
-						  	<option>5</option>
-						</select>
+						{{idGame}}
 					</div>
 				</div>
 
@@ -45,9 +29,7 @@
 					<table class="table table-bordered table-hover table-striped">
 							<thead>
 								<tr class="info">
-								<th>Fecha</th>
-								<th>Puntos</th>
-								<th>Nivel</th>
+								<th ng-repeat="tit in title">{{tit}}</th>
 								</tr>
 							</thead>
 							<tbody>

@@ -14,6 +14,7 @@ var webApp = angular.module('webApp', ['ngRoute','webApp.controllers','ui.bootst
             })
             .when('/score', {
                 templateUrl : '../public/views/score.html',
+                controller  : 'scoreController'
             })
 
             // route for the about page
