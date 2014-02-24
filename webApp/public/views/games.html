@@ -62,7 +62,7 @@
 		        				<p></p>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
-			                	<p><a href="#" class="btn btn-xs btn-warning" ng-disabled="!user.actualTetris" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
+			                	<p><a href="/playTetris/{{userID}}/{{user.actualTetris._id}}" class="btn btn-xs btn-warning" ng-disabled="!user.actualTetris" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
 			            	</div>
 			    		</div>
 		    		</div>
@@ -101,7 +101,7 @@
 		        				<p></p>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
-			                	<p><a href="#" class="btn btn-xs btn-warning" ng-disabled="!user.actualDragMe" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
+			                	<p><a href="/playDragMe/{{userID}}/{{user.actualDragMe._id}}" class="btn btn-xs btn-warning" ng-disabled="!user.actualDragMe" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
 			            	</div>
 			    		</div>
 		    		</div>

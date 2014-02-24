@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" ng-app="webApp">
+<head>
+  <title>Tetris HTML5</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Juego Tetris HTML5">
+  <meta name="author" content="Manuel Navarro Pérez">
+
+  <script src="../../public/lib/jquery/dist/jquery.min.js"></script>
+  <script src="../../public/lib/angular/angular.min.js"></script>
+  <script src="../../public/lib/angular-route/angular-route.js"></script>
+  <script src="../../public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="../../public/js/libs/bootstrap-colorpicker-module.js" type="text/javascript"></script>
+  <script src="../../public/js/config.js"></script>
+  <script src="../../public/js/controllers/app.js"></script>
+  <script src="../../public/js/controllers/tetris/tetrisGameController.js"></script>
+
+  <script type="text/javascript" src="../../public/js/libs/kinetic-v4.7.2.js"></script>
+  <script type="text/javascript" src="../../public/js/libs/detectmobilebrowser.js"></script>
+  <script type="text/javascript" src="../../public/js/libs/screenfull.min.js"></script>
+  <script type="text/javascript" src="../../public/js/libs/initMenu.js"></script>
+
+
+</head>
+<script type="text/javascript">
+  var configuration = null;
+  var calibration = null;
+  var userID = null;
+</script>
+<body ng-controller="tetrisGameController" ng-init="userID='<%=userId %>'; configuration='<%=configuration %>'; calibration='<%=calibration %>'; init();" style="margin:0;padding:0">
+
+  <div id="container" style="padding:0"></div>
+    
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  configuration = JSON.parse(configuration);
+  calibration = JSON.parse(calibration);
+  configuration.board.rowNumber = parseInt(configuration.board.rowNumber);
+  configuration.board.colNumber = parseInt(configuration.board.colNumber);
+  configuration.difficult.incPieceSpeed = parseInt(configuration.difficult.incPieceSpeed);
+  configuration.difficult.points = parseInt(configuration.difficult.points);
+  configuration.pieces.pieceSpeed = parseInt(configuration.pieces.pieceSpeed);
+
+
+  console.log(configuration);
+  console.log(calibration);
+  console.log(userID);
+});
+</script>
+<script type="text/javascript" src="../../public/js/libs/tetris.js"></script>
+
+</body>
+</html>

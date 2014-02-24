@@ -146,8 +146,6 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/playPong/:id/:id2', isLoggedIn, function(req, res) {
-		
-
 		User.findById(req.params.id, function(err, user) {
 			var id = req.params.id
 			var calib = JSON.stringify(user.calibration);
@@ -205,6 +203,18 @@ module.exports = function(app, passport) {
 		});
 	});
 	
+	app.get('/playTetris/:id/:id2', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			var id = req.params.id
+			var calib = JSON.stringify(user.calibration);
+			var conf = JSON.stringify(user.tetrisConf.id(req.params.id2));
+			console.log("configuracionesTetris");
+			console.log(String(calib));
+			console.log(conf);
+			res.render('tetris.html',{ userId: id,configuration: conf, calibration: calib});
+		});
+	});
+
 	app.post('/dragMeConfiguration/:id', isLoggedIn, function(req, res) {
 		console.log(req.params.id);
 		console.log(req.body);
@@ -247,6 +257,18 @@ module.exports = function(app, passport) {
 			});			
 
 			res.send(true);
+		});
+	});
+	
+	app.get('/playDragMe/:id/:id2', isLoggedIn, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			var id = req.params.id
+			var calib = JSON.stringify(user.calibration);
+			var conf = JSON.stringify(user.dragMeConf.id(req.params.id2));
+			console.log("configuracionesDragMe");
+			console.log(String(calib));
+			console.log(conf);
+			res.render('dragMe.html',{ userId: id,configuration: conf, calibration: calib});
 		});
 	});
 	
