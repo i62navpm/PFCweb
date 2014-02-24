@@ -145,6 +145,21 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/playPong/:id/:id2', isLoggedIn, function(req, res) {
+		
+
+		User.findById(req.params.id, function(err, user) {
+			var id = req.params.id
+			var calib = JSON.stringify(user.calibration);
+			var conf = JSON.stringify(user.pongConf.id(req.params.id2));
+			console.log("configuraciones");
+			console.log(String(calib));
+			console.log(conf);
+			res.render('pong.html',{ userId: id,configuration: conf, calibration: calib});
+			
+		});
+	});
+
 	app.post('/tetrisConfiguration/:id', isLoggedIn, function(req, res) {
 		console.log(req.params.id);
 		console.log(req.body);

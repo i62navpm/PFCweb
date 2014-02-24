@@ -23,12 +23,12 @@
 		        				<p></p>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
-			                	<p><a href="#" class="btn btn-xs btn-warning" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
+			                	<p><a href="/playPong/{{userID}}/{{user.actualPong._id}}" class="btn btn-xs btn-warning" ng-disabled="!user.actualPong" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
 			            	</div>
 			    		</div>
 		    		</div>
 		    		<div class="col-md-5">
-		    			<div class="thumbnail" ng-init="confPong='Fácil'">
+		    			<div class="thumbnail">
 		    				<div class="caption">
 		    					<h4 class="media-heading">Configuración: </h4>
 		    					<div class="btn-group" style="padding-top:10px; padding-bottom:5px">
@@ -38,16 +38,10 @@
 								  	<a href="#pongViewConfig" class="btn btn-default btn-sm" ng-show="disabledPong" ><span class="fa fa-search"></span></a>
 								</div>
 								<select class="form-control" ng-model="confPong" ng-change="changeOptionPong()">
-									<optgroup label="Preconfigurados">
-										<option selected="selected">Fácil</option>
-										<option>Normal</option>
-										<option>Difícil</option>
-									</optgroup>
-									<optgroup label="Conf. Usuario">
-										<option value={{conf._id}} ng-repeat="conf in user.pongConf">{{conf.name}}</option>
-									</optgroup>
+									<option value='1'>-- Elija configuración --</option>
+									<option value={{conf._id}} ng-repeat="conf in user.pongConf">{{conf.name}}</option>
 								</select>
-								{{user.pongConf.id}}
+								{{user.actualPong.name}}
 
 		    				</div>
 		    			</div>
@@ -68,12 +62,12 @@
 		        				<p></p>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
-			                	<p><a href="#" class="btn btn-xs btn-warning" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
+			                	<p><a href="#" class="btn btn-xs btn-warning" ng-disabled="!user.actualTetris" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
 			            	</div>
 			    		</div>
 		    		</div>
 		    		<div class="col-md-5">
-		    			<div class="thumbnail" ng-init="confTetris='Fácil'">
+		    			<div class="thumbnail">
 		    				<div class="caption">
 		    					<h4 class="media-heading">Configuración: </h4>
 		    					<div class="btn-group" style="padding-top:10px; padding-bottom:5px">
@@ -83,14 +77,8 @@
 								  	<a href="#tetrisViewConfig" class="btn btn-default btn-sm" ng-show="disabledTetris" ><span class="fa fa-search"></span></a>
 								</div>
 								<select class="form-control" ng-model="confTetris" ng-change="changeOptionTetris()">
-									<optgroup label="Preconfigurados">
-										<option selected="selected">Fácil</option>
-										<option>Normal</option>
-										<option>Difícil</option>
-									</optgroup>
-									<optgroup label="Conf. Usuario">
-										<option value={{conf._id}} ng-repeat="conf in user.tetrisConf">{{conf.name}}</option>
-									</optgroup>
+									<option value='1'>-- Elija configuración --</option>
+									<option value={{conf._id}} ng-repeat="conf in user.tetrisConf">{{conf.name}}</option>
 								</select>
 								{{user.tetrisConf.id}}
 
@@ -113,12 +101,12 @@
 		        				<p></p>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeLeft}}">Ojo izquierdo</span>
 		        				<span class="label label-primary" style="background-color:{{user.calibration.eyeRight}}">Ojo derecho</span>
-			                	<p><a href="#" class="btn btn-xs btn-warning" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
+			                	<p><a href="#" class="btn btn-xs btn-warning" ng-disabled="!user.actualDragMe" style="margin-top:20px"><span class="fa fa-star"></span> Jugar</a></p>
 			            	</div>
 			    		</div>
 		    		</div>
 		    		<div class="col-md-5">
-		    			<div class="thumbnail" ng-init="confDragMe='Fácil'">
+		    			<div class="thumbnail">
 		    				<div class="caption">
 		    					<h4 class="media-heading">Configuración: </h4>
 		    					<div class="btn-group" style="padding-top:10px; padding-bottom:5px">
@@ -128,14 +116,8 @@
 								  	<a href="#dragMeViewConfig" class="btn btn-default btn-sm" ng-show="disabledDragMe" ><span class="fa fa-search"></span></a>
 								</div>
 								<select class="form-control" ng-model="confDragMe" ng-change="changeOptionDragMe()">
-									<optgroup label="Preconfigurados">
-										<option selected="selected">Fácil</option>
-										<option>Normal</option>
-										<option>Difícil</option>
-									</optgroup>
-									<optgroup label="Conf. Usuario">
-										<option value={{conf._id}} ng-repeat="conf in user.dragMeConf">{{conf.name}}</option>
-									</optgroup>
+									<option value='1'>-- Elija configuración --</option>
+									<option value={{conf._id}} ng-repeat="conf in user.dragMeConf">{{conf.name}}</option>
 								</select>
 								{{user.dragMeConf.id}}
 
@@ -162,14 +144,14 @@
 							<div class="thumbnail">
 								<h4 class="text-center">Calibración de ojo izquierdo</h4>
 								<span id="selectColorLeft"></span>
-								<input ng-model="user.calibration.eyeLeft" id="eyeLeft" style='visibility:hidden'/>
+								<input ng-model="user.actualEyeLeft" id="eyeLeft" style='visibility:hidden'/>
 							</div>
 						</div>
 						<div class="form-group col-md-6">
 							<div class="thumbnail">
 								<h4 class="text-center">Calibración de ojo derecho</h4>
 								<span id="selectColorRight" ></span>
-								<input ng-model="user.calibration.eyeRight" id="eyeRight" style='visibility:hidden'/>
+								<input ng-model="user.actualEyeRight" id="eyeRight" style='visibility:hidden'/>
 							</div>
 						</div>		
 					</div>	
@@ -183,7 +165,6 @@
 </div>
 <script type="text/javascript">
 $( document ).ready(function() {
-	
 	
     $("#selectColorLeft").ColorPickerSliders({
 	    flat: true,
@@ -223,121 +204,4 @@ $( document ).ready(function() {
     	}
     });
 });
-</script>
-
-<script type="text/ng-template" id="modalTetrisContent.html">
-    <div class="modal-header">
-        <h3>Configuración de Tetris</h3>
-    </div>
-    <div class="modal-body">
-       <form name="form" novalidate>
-	       <div class="row">
-
-				<div class="thumbnail">
-					<h4>Configuración de Tablero</h4>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="col-md-12">
-								<label for="backgroundColorTetris">Color de fondo:</label>
-							</div>
-							<div class="col-md-12">
-								<input colorpicker class="form-control" id="backgroundColorTetris" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundColorTetris" ng-init="backgroundColorTetris= '#ffffff'" style="background-color:{{backgroundColorTetris}}"/>
-							</div>
-						
-							<div class="col-md-12">
-								<label for="lineColorTetris">Color de líneas:</label>
-							</div>
-							<div class="col-md-12">
-								<input colorpicker class="form-control" id="lineColorTetris" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="lineColorTetris" ng-init="lineColorTetris= '#000000'" style="background-color:{{lineColorTetris}}"/>
-							</div>
-							
-							<div class="col-md-12">
-								<label for="textColorTetris">Color de texto:</label>
-							</div>
-							<div class="col-md-12">
-								<input colorpicker class="form-control" id="textColorTetris" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="textColorTetris" ng-init="textColorTetris= '#000000'" style="background-color:{{textColorTetris}}"/>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<label for="colNumberTetris">Número de columnas</label>
-							<input class="form-control" id="colNumberTetris" type="text"/>
-							
-							<label for="rowNumberTetris">Número de filas</label>
-							<input class="form-control" id="rowNumberTetris" type="text"/>
-						</div>
-					</div>
-				</div>
-				
-	        </div>
-			<div class="row text-center">
-				<div class="form-group">
-					<label>Nivel de dificultad: </label>
-					<div class="btn-group" ng-init="radioDifficultTetris='Easy'">
-				        <button type="button" class="btn btn-primary" ng-model="radioDifficultTetris" btn-radio="'Easy'">Fácil</button>
-				        <button type="button" class="btn btn-primary" ng-model="radioDifficultTetris" btn-radio="'Normal'">Normal</button>
-				        <button type="button" class="btn btn-primary" ng-model="radioDifficultTetris" btn-radio="'Hard'">Difícil</button>
-				    </div>
-				</div>
-			</div>
-       </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-    </div>
-
-    <script type="text/javascript" src="public/js/libs/initModalTetris.js" ></script>
-</script>
-
-<script type="text/ng-template" id="modalDragMeContent.html">
-    <div class="modal-header">
-        <h3>Configuración de Drag Me</h3>
-    </div>
-    <div class="modal-body">
-		<form name="form" novalidate>
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
-					<div class="thumbnail">
-						<h4>Configuración de Tablero</h4>
-						<div class="row">
-						
-							<div class="col-md-12">
-								<label for="backgroundInColorDragMe">Color de cuadro interior:</label>
-							</div>
-							<div class="col-md-12">
-								<input colorpicker class="form-control" id="backgroundInColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundInColorDragMe" ng-init="backgroundInColorDragMe= '#ffffff'" style="background-color:{{backgroundInColorDragMe}}"/>
-							</div>
-						
-							<div class="col-md-12">
-								<label for="backgroundOutColorDragMe">Color de cuadro exterior:</label>
-							</div>
-							<div class="col-md-12">
-								<input colorpicker class="form-control" id="backgroundOutColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="backgroundOutColorDragMe" ng-init="backgroundOutColorDragMe= '#000000'" style="background-color:{{backgroundOutColorDragMe}}"/>
-							</div>
-							
-							<div class="col-md-12">
-								<label for="textColorDragMe">Color de texto:</label>
-							</div>
-							<div class="col-md-12">
-								<input colorpicker class="form-control" id="textColorDragMe" colorpicker-position="right" colorpicker-parent="true" type="text" ng-model="textColorDragMe" ng-init="textColorDragMe= '#000000'" style="background-color:{{textColorDragMe}}"/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row text-center">
-				<div class="form-group">
-					<label>Nivel de dificultad: </label>
-					<div class="btn-group" ng-init="radioDifficultDragMe='Easy'">
-				        <button type="button" class="btn btn-primary" ng-model="radioDifficultDragMe" btn-radio="'Easy'">Fácil</button>
-				        <button type="button" class="btn btn-primary" ng-model="radioDifficultDragMe" btn-radio="'Normal'">Normal</button>
-				        <button type="button" class="btn btn-primary" ng-model="radioDifficultDragMe" btn-radio="'Hard'">Difícil</button>
-				    </div>
-				</div>
-			</div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-    </div>
-
 </script>

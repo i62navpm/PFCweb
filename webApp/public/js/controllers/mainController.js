@@ -13,6 +13,8 @@ webApp.controller('mainController', function ($scope, $http, $log, $location) {
 		      $scope.user.actualPong = null;
 		      $scope.user.actualTetris = null;
 		      $scope.user.actualDragMe = null;
+		      $scope.user.actualEyeLeft = $scope.user.calibration.eyeLeft;
+		      $scope.user.actualEyeRight = $scope.user.calibration.eyeRight;
 		    }).
 		    error(function(data, status, headers, config) {
 		      $log.error("Error al conecctar");
@@ -22,8 +24,8 @@ webApp.controller('mainController', function ($scope, $http, $log, $location) {
 	$scope.submitCalibration = function () {
 		
 		var calibration = {}
-		calibration['eyeLeft'] = $scope.user.calibration.eyeLeft;
-		calibration['eyeRight'] = $scope.user.calibration.eyeRight;
+		calibration['eyeLeft'] = $scope.user.actualEyeLeft;
+		calibration['eyeRight'] = $scope.user.actualEyeRight;
 
 	    $http.put('/calibration/'+$scope.userID, calibration).
 		success(function(data, status, headers, config) {

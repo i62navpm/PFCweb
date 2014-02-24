@@ -91,7 +91,7 @@ module.exports = function(passport) {
 
                         // create the user
                         var newUser            = new User();
-
+                        initNewUser(newUser);
                         newUser.local.email    = email;
                         newUser.local.password = User.generateHash(password);
                         newUser.local.userName = req.body.name;
@@ -164,7 +164,7 @@ module.exports = function(passport) {
                     } else {
                         // if there is no user, create them
                         var newUser            = new User();
-
+                        initNewUser(newUser);
                         newUser.facebook.id    = profile.id;
                         newUser.facebook.token = token;
                         newUser.local.userName = profile.name.givenName + ' ' + profile.name.familyName;
@@ -239,7 +239,7 @@ module.exports = function(passport) {
                     } else {
                         // if there is no user, create them
                         var newUser                 = new User();
-
+                        initNewUser(newUser);
                         newUser.twitter.id          = profile.id;
                         newUser.twitter.token       = token;
                         newUser.twitter.username    = profile.username;
@@ -314,7 +314,7 @@ module.exports = function(passport) {
                         return done(null, user);
                     } else {
                         var newUser          = new User();
-
+                        initNewUser(newUser);
                         newUser.google.id       = profile.id;
                         newUser.google.token    = token;
                         newUser.local.userName  = profile.displayName;
@@ -348,5 +348,185 @@ module.exports = function(passport) {
         });
 
     }));
+
+    initNewUser = function(user){
+        user.pongConf.push({
+            name    :   'Fácil',
+            board   :{
+                backgroundColor : '#ffffff',
+                lineColor       : '#000000',
+                raquetColor     : '#000000',
+                textColor       : '#000000',
+                numberZone      : '5'
+            },
+            pieces  :{
+                leftSpeed       : '5',
+                rightSpeed      : '5',
+                ballSpeed       : '5',
+                raquetWidth     : '10',
+                raquetHeight    : '80'
+            },
+            difficult   :{
+                goals           : '5',
+                points          : '10',
+                incBallSpeed    : '1',
+                incOpSpeed      : '0.5'
+            }
+        });
+
+        user.pongConf.push({
+            name    :   'Normal',
+            board   :{
+                backgroundColor : '#ffffff',
+                lineColor       : '#000000',
+                raquetColor     : '#000000',
+                textColor       : '#000000',
+                numberZone      : '5'
+            },
+            pieces  :{
+                leftSpeed       : '5',
+                rightSpeed      : '5',
+                ballSpeed       : '5',
+                raquetWidth     : '10',
+                raquetHeight    : '80'
+            },
+            difficult   :{
+                goals           : '5',
+                points          : '10',
+                incBallSpeed    : '2',
+                incOpSpeed      : '1'
+            }
+        });
+        user.pongConf.push({
+            name    :   'Difícil',
+            board   :{
+                backgroundColor : '#ffffff',
+                lineColor       : '#000000',
+                raquetColor     : '#000000',
+                textColor       : '#000000',
+                numberZone      : '5'
+            },
+            pieces  :{
+                leftSpeed       : '5',
+                rightSpeed      : '5',
+                ballSpeed       : '5',
+                raquetWidth     : '10',
+                raquetHeight    : '80'
+            },
+            difficult   :{
+                goals           : '5',
+                points          : '10',
+                incBallSpeed    : '3',
+                incOpSpeed      : '2.5'
+            }
+        });
+
+        user.tetrisConf.push({
+            name    :   'Fácil',
+            board   :{
+                backgroundColor : '#ffffff',
+                lineColor       : '#000000',
+                textColor       : '#000000',
+                colNumber       : '10',
+                rowNumber       : '15'
+
+            },
+            pieces  :{
+                pieceSpeed      : '200'
+            },
+            difficult   :{
+                points          : '10',
+                incPieceSpeed   : '10'
+            }
+        });
+        user.tetrisConf.push({
+            name    :   'Normal',
+            board   :{
+                backgroundColor : '#ffffff',
+                lineColor       : '#000000',
+                textColor       : '#000000',
+                colNumber       : '10',
+                rowNumber       : '15'
+
+            },
+            pieces  :{
+                pieceSpeed      : '200'
+            },
+            difficult   :{
+                points          : '10',
+                incPieceSpeed   : '20'
+            }
+        });
+        user.tetrisConf.push({
+            name    :   'Difícil',
+            board   :{
+                backgroundColor : '#ffffff',
+                lineColor       : '#000000',
+                textColor       : '#000000',
+                colNumber       : '10',
+                rowNumber       : '15'
+
+            },
+            pieces  :{
+                pieceSpeed      : '200'
+            },
+            difficult   :{
+                points          : '10',
+                incPieceSpeed   : '30'
+            }
+        });
+
+        user.dragMeConf.push({
+            name    :   'Fácil',
+            board   :{
+                backgroundInColor   : '#ffffff',
+                backgroundOutColor  : '#000000',
+                textColor       : '#000000'
+
+            },
+            pieces  :{
+                opponentSpeed   : '5',
+                playerSize      : '50'
+            },
+            difficult   :{
+                timePieceSpeed  : '2',
+                incPieceSpeed   : '4'
+            }
+        });
+        user.dragMeConf.push({
+            name    :   'Normal',
+            board   :{
+                backgroundInColor   : '#ffffff',
+                backgroundOutColor  : '#000000',
+                textColor       : '#000000'
+
+            },
+            pieces  :{
+                opponentSpeed   : '5',
+                playerSize      : '50'
+            },
+            difficult   :{
+                timePieceSpeed  : '2',
+                incPieceSpeed   : '3'
+            }
+        });
+        user.dragMeConf.push({
+            name    :   'Difícil',
+            board   :{
+                backgroundInColor   : '#ffffff',
+                backgroundOutColor  : '#000000',
+                textColor       : '#000000'
+
+            },
+            pieces  :{
+                opponentSpeed   : '5',
+                playerSize      : '50'
+            },
+            difficult   :{
+                timePieceSpeed  : '2',
+                incPieceSpeed   : '2'
+            }
+        });
+    };
 
 };
