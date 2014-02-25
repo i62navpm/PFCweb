@@ -44,21 +44,45 @@ $(document).ready(function(){
 	}
 	
 	function Background(){
-		this.background = new Kinetic.Rect({
+		this.background = new Kinetic.Group({
 		    fill: configuration.board.backgroundColor,
 		    x : 0,
 		    y : 0,
-		    stroke: configuration.board.lineColor,
-	        strokeWidth: 20,
+		    // stroke: configuration.board.lineColor,
+	     //    strokeWidth: 20,
 		    width : stage.getWidth(),
 		    height : stage.getHeight()
 		});
 		
+		this.upLine = new Kinetic.Line({
+            points: [0, 0, stage.getWidth(), 0 ],
+	        stroke: configuration.board.lineColor,
+	        strokeWidth: 20,
+	        shadowBlur: 10,
+	        shadowOffset: [0, 5],
+	        shadowOpacity: 0.5
+		});
+
+		this.downLine = new Kinetic.Line({
+            points: [0,stage.getHeight(), stage.getWidth(), stage.getHeight()],
+	        stroke: configuration.board.lineColor,
+	        strokeWidth: 20,
+	        shadowBlur: 10,
+	        shadowOffset: [0, -5],
+	        shadowOpacity: 0.5
+		});
+
+		this.background.add(this.upLine);
+		this.background.add(this.downLine);
+
 		this.middleLine = new Kinetic.Line({
             points: [stage.getWidth()/2, 0, stage.getWidth()/2, stage.getHeight()],
 	        stroke: configuration.board.lineColor,
 	        strokeWidth: 6,
 	        dashArray: [35, 20],
+	        shadowBlur: 10,
+	        shadowOffset: [5, 5],
+	        shadowOpacity: 0.5
         
 		});
 		
@@ -93,6 +117,11 @@ $(document).ready(function(){
 		    y : stage.getHeight()/2-(configuration.pieces.raquetHeight/2),
 		    width: configuration.pieces.raquetWidth,
 		    height: configuration.pieces.raquetHeight,
+		    shadowColor: 'black',
+	        shadowBlur: 10,
+	        shadowOffset: [10, 10],
+	        shadowOpacity: 0.2,
+        
 		    draggable: true,
 		    dragBoundFunc: function(pos) {
 		    	return {
@@ -141,6 +170,9 @@ $(document).ready(function(){
             y : stage.getHeight()/2-(configuration.pieces.raquetHeight/2),
 		    width: configuration.pieces.raquetWidth,
 		    height: configuration.pieces.raquetHeight,
+		    shadowBlur: 10,
+	        shadowOffset: [10, 10],
+	        shadowOpacity: 0.2,
 		    id: "opponent"
 	    });
 		this.speed = configuration.pieces.rightSpeed;
@@ -164,6 +196,9 @@ $(document).ready(function(){
 			fontFamily: 'Courier',
 			fontStyle: 'bold',
 			fill: configuration.board.textColor,
+			shadowBlur: 10,
+	        shadowOffset: [5, 5],
+	        shadowOpacity: 0.5,
 			id: 'playerScore'
 		});
 		    
@@ -174,6 +209,9 @@ $(document).ready(function(){
 			fontSize: 60,
 			fontFamily: 'Courier',
 			fontStyle: 'bold',
+			shadowBlur: 10,
+	        shadowOffset: [5, 5],
+	        shadowOpacity: 0.5,
 			fill: configuration.board.textColor,
 		});
 		    
@@ -183,6 +221,9 @@ $(document).ready(function(){
 			fontSize: 12,
 			fontFamily: 'Calibri',
 			fontStyle: 'bold',
+			shadowBlur: 10,
+	        shadowOffset: [5, 5],
+	        shadowOpacity: 0.5,
 			fill: configuration.board.textColor,
 		});
 	    
@@ -231,12 +272,30 @@ $(document).ready(function(){
 		
 		this.gMenu.mainMenu.on('mouseup touchend',$.proxy(this, "startGame"));
 		this.gMenu.pause.on('mousedown touchstart',$.proxy(this, "clickPause"));
+		this.gMenu.winMsg.on('mousedown touchstart',$.proxy(this, "clickWinMsg"));
+		this.gMenu.looseMsg.on('mousedown touchstart',$.proxy(this, "clickLooseMsg"));
 		this.gMenu.full.on('mousedown touchstart',$.proxy(this, "toggleFullScreen"));
 		this.gMenu.restart.on('mousedown touchstart',$.proxy(this, "restartGame"));
 		this.gBackground.background.on('touchmove',$.proxy(this, "movePlayerTouch"));
 		$(window).resize($.proxy(this, "resizeWindow"));
 	}
 	
+	Game.prototype.clickWinMsg = function(){
+        this.updateScore();
+		this.gMenu.winMsg.hide();
+		this.gMenu.pause.show();
+		this.gMenu.menuLayer.draw();
+		this.startGame();
+	};
+
+	Game.prototype.clickLooseMsg = function(){
+		this.updateScore();
+		this.gMenu.looseMsg.hide();
+		this.gMenu.pause.show();
+		this.gMenu.menuLayer.draw();
+		this.startGame();
+	};
+
 	Game.prototype.levelUp = function(){
 		this.gBall.speed += this.dictDifficult[this.difficult].speedBall;
 		this.gOpponent.speed += this.dictDifficult[this.difficult].speedOpponent;
@@ -352,17 +411,17 @@ $(document).ready(function(){
 		
 //		if (top_x < 10 || bottom_x > stage.getWidth()-10) 
 //			this.gBall.direction.x *= -1;
-		if (top_x < 10){
+		if (bottom_x < 0){
 			this.kickPlayer();
 			this.turn = "right";
 			this.gBall.direction.x *= -1;
 		}
-		else if(bottom_x > stage.getWidth()-10){
+		else if(top_x > stage.getWidth()){
 			this.kickOpponent();
 			this.turn = "left";
 			this.gBall.direction.x *= -1;
 		}
-		else if (top_y < 10 ||bottom_y > stage.getHeight()-10) 
+		else if (top_y < 20 ||bottom_y > stage.getHeight()-20) 
 			this.gBall.direction.y *= -1;
 		else if(this.turn == "left" && top_y < (this.gPlayer.player.getY() + this.gPlayer.player.getHeight()) && bottom_y > this.gPlayer.player.getY() && top_x < (this.gPlayer.player.getX() + this.gPlayer.player.getWidth())&& bottom_x > this.gPlayer.player.getX()){
 			this.gBall.direction.x = this.gBall.direction.x * (-1);
@@ -406,6 +465,8 @@ $(document).ready(function(){
     	
         this.gBall.ball.setX(this.gPlayer.player.getX()+this.gPlayer.player.getWidth()+this.gBall.ball.getRadius()-this.gBall.speed);
         this.gBall.ball.setY(posY);
+
+        this.checkIfFinish();
         this.gBall.ballLayer.draw();
 	};
 	
@@ -421,9 +482,53 @@ $(document).ready(function(){
     	
         this.gBall.ball.setX(this.gOpponent.opponent.getX()-this.gBall.ball.getRadius()+this.gBall.speed);
         this.gBall.ball.setY(posY);
+
+        this.checkIfFinish();
         this.gBall.ballLayer.draw();
 	};
 	
+	Game.prototype.checkIfFinish = function(){
+        
+		if((this.gTexts.pScore == this.goalsLimit) || (this.gTexts.oScore == this.goalsLimit)){
+	        if(this.gTexts.oScore == this.goalsLimit){
+	        	this.gMenu.pause.hide();
+				this.gMenu.looseMsg.show();
+	        	this.stopAnimation();
+	        	this.gBall.ball.setX(stage.getWidth()/2.-this.gBall.speed);
+	        	this.gBall.ball.setY(stage.getHeight()/2.+this.gBall.speed);
+	        };
+
+	        if(this.gTexts.pScore == this.goalsLimit){
+	        	this.gMenu.pause.hide();
+	        	this.gMenu.winMsg.show();
+	        	this.stopAnimation();
+	        	this.gBall.ball.setX(stage.getWidth()/2.+this.gBall.speed);
+	        	this.gBall.ball.setY(stage.getHeight()/2.-this.gBall.speed);
+	        };
+	        
+	        var data =  {userId : userID,
+	        			confId : configuration._id,
+	        			score  : {points: this.gTexts.points,
+		    					level: this.gTexts.level,
+		    					opponentScore: this.gTexts.oScore,
+		    					playerScore: this.gTexts.pScore}
+		    			};
+	    	
+	    	$.post( "/pongScore", data );
+
+	        
+	        this.gTexts.level = 0;
+	        this.gTexts.points = 0;
+	    	this.gTexts.pScore = 0;
+	        this.gTexts.oScore = 0;
+
+	        this.gPlayer.player.setY(stage.getHeight()/2-this.gPlayer.player.getHeight()/2);
+	        this.gOpponent.opponent.setY(stage.getHeight()/2-this.gPlayer.player.getHeight()/2);
+	        
+	        stage.draw();
+	    };
+	};
+
 	Game.prototype.stopMoveBall = function(){
 		cancelAnimationFrame(this.idBall);
 	};
@@ -461,7 +566,22 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.restartGame = function(){
-		location.reload();
+		//location.reload();
+		this.gMenu.clickPause();
+		this.pauseState = false;
+		this.gMenu.mainMenu.show();
+		this.gMenu.menuLayer.draw();
+
+		this.gTexts.level = 0;
+        this.gTexts.points = 0;
+    	this.gTexts.pScore = 0;
+        this.gTexts.oScore = 0;
+		this.gBall.ball.setX(stage.getWidth()/2);
+		this.gBall.ball.setY(stage.getHeight()/2);
+		this.gPlayer.player.setY(stage.getHeight()/2 - this.gPlayer.player.getHeight()/2);
+		this.gOpponent.opponent.setY(stage.getHeight()/2 - this.gPlayer.player.getHeight()/2);
+		this.updateScore();
+		this.gBall.ballLayer.draw();
 	};
 	
 	Game.prototype.KeyboardController = function(keys, repeat){
@@ -516,7 +636,7 @@ $(document).ready(function(){
         stage.setHeight(newH);
 		
         this.gBackground.background.setWidth(newW);
-        this.gBackground.background.setHeight(newH);
+        this.gBackground.downLine.setPoints([0,newH, newW, newH]);
         this.gBackground.middleLine.setPoints([newW/2, 0, newW/2, newH]);
 		this.gOpponent.opponent.setX(stage.getWidth()-80);
 

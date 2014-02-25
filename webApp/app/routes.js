@@ -158,6 +158,19 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.post('/pongScore', isLoggedIn, function(req, res) {
+		console.log(req.body);
+		User.findById(req.body.userId, function(err, user) {
+			user.pongConf.id(req.body.confId).score.push(req.body.score);
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al guardar."})
+			});			
+
+			res.send(true);
+		});
+	});
+
 	app.post('/tetrisConfiguration/:id', isLoggedIn, function(req, res) {
 		console.log(req.params.id);
 		console.log(req.body);

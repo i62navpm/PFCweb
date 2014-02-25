@@ -12,6 +12,8 @@ function initMenu(stg){
     });
     
     this.mainMenuGroup();
+    this.winMsgGroup();
+    this.looseMsgGroup();
     this.pauseMenuGroup();
     this.fullScreenGroup();
     this.restartGroup();
@@ -23,6 +25,8 @@ function initMenu(stg){
     this.menuLayer.add(this.pause);
     this.menuLayer.add(this.backBox);
     this.menuLayer.add(this.mainMenu);
+    this.menuLayer.add(this.winMsg);
+    this.menuLayer.add(this.looseMsg);
     this.mainMenu.on('mousedown touchstart',$.proxy(this, "clickMenu"));
     stage.add(this.menuLayer);
 
@@ -77,7 +81,7 @@ initMenu.prototype.mainMenuGroup = function(){
     });
     
     this.text = new Kinetic.Text({
-        text: 'Pong HTML5\n\n\nPulse aqu� para empezar a jugar',
+        text: 'Pong HTML5\n\n\nPulse para empezar a jugar',
         fontSize: 18,
         fontFamily: 'Calibri',
         fill: 'white',
@@ -108,6 +112,94 @@ initMenu.prototype.mainMenuGroup = function(){
     });
     this.mainMenu.on('mouseout', function () {
     	document.body.style.cursor = 'default';
+    });
+};
+
+initMenu.prototype.winMsgGroup = function(){
+    this.winMsg = new Kinetic.Group({
+        x: stage.getWidth()/2,
+        y: stage.getHeight()/2,
+        offsetX: 150,
+        offsetY: 75,
+        visible: false
+    });
+    
+    var text = new Kinetic.Text({
+        text: '¡¡Has ganado!!\n\n\nPulse para volver a jugar',
+        fontSize: 18,
+        fontFamily: 'Calibri',
+        fill: 'white',
+        padding: 20,
+        width: 300,
+        height: 150,
+        align: 'center'
+    });
+    
+    var box = new Kinetic.Rect({
+        width: 300,
+        height: 150,
+        opacity: 0.8,
+        fill: 'green',
+        stroke: 'black',
+        strokeWidth: 10,
+        shadowColor: 'black',
+        shadowBlur: 10,
+        shadowOffset: [10, 10],
+        shadowOpacity: 0.2,
+        cornerRadius: 10
+    });
+    this.winMsg.add(box);
+    this.winMsg.add(text);
+    
+    this.winMsg.on('mouseover', function () {
+        document.body.style.cursor = 'pointer';
+    });
+    this.winMsg.on('mouseout', function () {
+        document.body.style.cursor = 'default';
+    });
+};
+
+initMenu.prototype.looseMsgGroup = function(){
+    this.looseMsg = new Kinetic.Group({
+        x: stage.getWidth()/2,
+        y: stage.getHeight()/2,
+        offsetX: 150,
+        offsetY: 75,
+        visible: false
+    });
+    
+    var text = new Kinetic.Text({
+        text: '¡¡Has perdido!!\n\n\nPulse para volver a jugar',
+        fontSize: 18,
+        fontFamily: 'Calibri',
+        fill: 'white',
+        padding: 20,
+        width: 300,
+        height: 150,
+        align: 'center'
+    });
+    
+    var box = new Kinetic.Rect({
+        width: 300,
+        height: 150,
+        opacity: 0.8,
+        fill: 'red',
+        stroke: 'black',
+        strokeWidth: 10,
+        shadowColor: 'black',
+        shadowBlur: 10,
+        shadowOffset: [10, 10],
+        shadowOpacity: 0.2,
+        cornerRadius: 10
+    });
+    this.looseMsg.add(box);
+    this.looseMsg.add(text);
+    
+    this.looseMsg.on('mouseover', function () {
+        document.body.style.cursor = 'pointer';
+    });
+    this.looseMsg.on('mouseout', function () {
+        document.body.style.cursor = 'default';
     });
 };
 

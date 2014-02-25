@@ -5,11 +5,11 @@ var TwitterStrategy  = require('passport-twitter').Strategy;
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
-var User       = require('../app/models/user');
+var User       = require('./models/user');
 // var User = new Models.User();
 
 // load the auth variables
-var configAuth = require('./auth'); // use this one for testing
+var configAuth = require('../config/auth'); // use this one for testing
 
 module.exports = function(passport) {
 
