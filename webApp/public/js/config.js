@@ -1,6 +1,6 @@
 'use strict';
 
-var webApp = angular.module('webApp', ['ngRoute','webApp.controllers','ui.bootstrap','colorpicker.module']);
+var webApp = angular.module('webApp', ['ngRoute','highcharts-ng','webApp.controllers','ui.bootstrap','colorpicker.module']);
 
     // configure our routes
     webApp.config(function($routeProvider) {

@@ -228,6 +228,19 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.post('/tetrisScore', isLoggedIn, function(req, res) {
+		console.log(req.body);
+		User.findById(req.body.userId, function(err, user) {
+			user.tetrisConf.id(req.body.confId).score.push(req.body.score);
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al guardar."})
+			});			
+
+			res.send(true);
+		});
+	});
+	
 	app.post('/dragMeConfiguration/:id', isLoggedIn, function(req, res) {
 		console.log(req.params.id);
 		console.log(req.body);
@@ -282,6 +295,19 @@ module.exports = function(app, passport) {
 			console.log(String(calib));
 			console.log(conf);
 			res.render('dragMe.html',{ userId: id,configuration: conf, calibration: calib});
+		});
+	});
+	
+	app.post('/dragMeScore', isLoggedIn, function(req, res) {
+		console.log(req.body);
+		User.findById(req.body.userId, function(err, user) {
+			user.dragMeConf.id(req.body.confId).score.push(req.body.score);
+			user.save(function (err) {
+				if (err)
+			   		res.send({message: "Error al guardar."})
+			});			
+
+			res.send(true);
 		});
 	});
 	

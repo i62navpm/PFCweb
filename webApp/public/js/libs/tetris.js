@@ -36,7 +36,7 @@ $(document).ready(function(){
 		var background = new Background();
 		var foreground = new Foreground();
 		var menu = new initMenu(stage);
-		menu.text.setText("Tetris HTML5\n\n\nPulse aquí para empezar a jugar");
+		menu.text.setText("Tetris HTML5\n\n\nPulse para empezar a jugar");
 		new Game(background, foreground,menu);
 
 //		stage.on('dbltap dblclick', function() {
@@ -107,7 +107,10 @@ $(document).ready(function(){
 	        strokeWidth: 10,
 		    width : (stage.getHeight()/configuration.board.rowNumber)*configuration.board.colNumber,
 		    height : stage.getHeight()-10,
-		    offset: {x:-5, y: -5}
+		    offset: {x:-5, y: -5},
+		    shadowBlur: 10,
+	        shadowOffset: [5, 0],
+	        shadowOpacity: 0.5
 		});
 
 		this.backgroundLayer = new Kinetic.Layer();
@@ -153,7 +156,11 @@ $(document).ready(function(){
 	        strokeWidth: 5,
 		    width : blockWidth*4,
 		    height : blockWidth*4,
-		    offset: {x:-5, y: -5}
+		    fill: configuration.board.backgroundColor,
+		    offset: {x:-5, y: -5},
+		    shadowBlur: 10,
+	        shadowOffset: [0, 5],
+	        shadowOpacity: 0.5
 		});
 		
 		this.nextPieceLayer = stage.find('#foreground')[0].getLayer();
@@ -168,7 +175,7 @@ $(document).ready(function(){
 					height: blockWidth,
 					stroke: '#BDBDBD',
 			        strokeWidth: 1,
-			        offset: {x:-5, y: -5}
+			        offset: {x:-5, y: -5},
 		        });
 		        this.matrix[i][j] = square;
 		        this.nextPieceLayer.add(this.matrix[i][j]);
@@ -425,6 +432,9 @@ $(document).ready(function(){
 			fontFamily: 'Calibri',
 			fontStyle: 'bold',
 			fill: configuration.board.textColor,
+			shadowBlur: 10,
+	        shadowOffset: [0, 5],
+	        shadowOpacity: 0.5
 		});
         
         this.scoreLayer = stage.find('#foreground')[0].getLayer();
@@ -450,6 +460,7 @@ $(document).ready(function(){
 		stage.draw();
 		this.gMenu.mainMenu.on('mouseup touchend',$.proxy(this, "startGame"));
 		this.gMenu.pause.on('mousedown touchstart',$.proxy(this, "clickPause"));
+		this.gMenu.looseMsg.on('mousedown touchstart',$.proxy(this, "clickLooseMsg"));
 		this.gMenu.full.on('mousedown touchstart',$.proxy(this, "toggleFullScreen"));
 		this.gMenu.restart.on('mousedown touchstart',$.proxy(this, "restartGame"));
 		this.gForeground.foregroundLayer.on('touchmove',$.proxy(this, "movePieceTouch"));
@@ -457,6 +468,19 @@ $(document).ready(function(){
 		this.gForeground.foregroundLayer.on('touchend',$.proxy(this, "onTouchEnd"));
 	};
 	
+	Game.prototype.clickLooseMsg = function(){
+		for (var i=0; i<this.gForeground.rows;i++)
+			for (var j=0;j<this.gForeground.cols;j++)
+				this.gForeground.matrix[i][j].setFill(null);
+		this.gravity = configuration.pieces.pieceSpeed;
+		this.gPiece.skyline = this.gForeground.rows-1;
+		this.updateScore();
+		this.gMenu.looseMsg.hide();
+		this.gMenu.pause.show();
+		this.gMenu.menuLayer.draw();
+		this.startGame();
+	};
+
 	Game.prototype.startGame = function(){
 		this.gMenu.box.setOpacity(0.8);
         this.gMenu.mainMenu.setScale(1);
@@ -524,8 +548,20 @@ $(document).ready(function(){
 			}
 		else{
 			var isFinish = this.gPiece.affirmPiece();
-			if (isFinish == true)
-				this.stopAnimation();
+			if (isFinish == true){
+				this.gMenu.pause.hide();
+				this.gMenu.looseMsg.show();
+	        	this.stopAnimation();
+	        	var data =  {userId : userID,
+	        			confId : configuration._id,
+	        			score  : {lines: this.gTexts.points,
+		    					level: this.gTexts.level}};
+		    	$.post( "/tetrisScore", data );
+		    	this.gTexts.level = 0;
+	        	this.gTexts.points = 0;
+	        	stage.draw();
+	    	
+			}
 			else if(isFinish == "getPoint")
 				this.getPoint();
 			this.gPiece.getPiece();
@@ -585,7 +621,22 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.restartGame = function(){
-		location.reload();
+		//location.reload();
+		this.gMenu.clickPause();
+		this.pauseState = false;
+		this.gMenu.mainMenu.show();
+		this.gMenu.menuLayer.draw();
+
+		this.gTexts.level = 0;
+        this.gTexts.points = 0;
+
+        for (var i=0; i<this.gForeground.rows;i++)
+			for (var j=0;j<this.gForeground.cols;j++)
+				this.gForeground.matrix[i][j].setFill(null);
+		this.gravity = configuration.pieces.pieceSpeed;
+		this.gPiece.skyline = this.gForeground.rows-1;
+		this.updateScore();
+		stage.draw();
 	};
 	
 	Game.prototype.movePieceTouch = function(event){

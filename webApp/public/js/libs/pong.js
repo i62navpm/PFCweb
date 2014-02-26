@@ -122,13 +122,13 @@ $(document).ready(function(){
 	        shadowOffset: [10, 10],
 	        shadowOpacity: 0.2,
         
-		    draggable: true,
-		    dragBoundFunc: function(pos) {
-		    	return {
-		    		x: this.getAbsolutePosition().x,
-		    		y: pos.y
-		    	};
-		    },
+		    // draggable: true,
+		    // dragBoundFunc: function(pos) {
+		    // 	return {
+		    // 		x: this.getAbsolutePosition().x,
+		    // 		y: pos.y
+		    // 	};
+		    // },
 		    id: "player"
 		
 	    });
@@ -516,7 +516,8 @@ $(document).ready(function(){
 	    	
 	    	$.post( "/pongScore", data );
 
-	        
+	        this.gBall.speed = configuration.pieces.ballSpeed;
+	        this.gOpponent.speed = configuration.pieces.rightSpeed;
 	        this.gTexts.level = 0;
 	        this.gTexts.points = 0;
 	    	this.gTexts.pScore = 0;
@@ -541,28 +542,37 @@ $(document).ready(function(){
 	
 	Game.prototype.toggleFullScreen = function(){
 		var elem=$("#container")[0];
-		if (isMobile()){
-			$("#container").width('100%');
-            $("#container").height('100%');
-			$("#container").width($(window).width());
-            $("#container").height( $(window).height());
+		// if (isMobile()){
+		// 	$("#container").width('100%');
+  //           $("#container").height('100%');
+		// 	$("#container").width($(window).width());
+  //           $("#container").height( $(window).height());
             
-			$("#container").css("top",-$("#container").position().top+'px');
-			this.resizeWindow();
+		// 	$("#container").css("top",-$("#container").position().top+'px');
+		// 	this.resizeWindow();
+		// }
+		// else{
+		// 	if (!screenfull.isFullscreen){
+		// 		this.oldWidth = $("#container").width();
+		// 		this.oldHeight = $("#container").height();
+		// 		$("#container").width('100%');
+	 //            $("#container").height('100%');
+		// 	}
+		// 	else{
+		// 		$("#container").width(this.oldWidth);
+		// 	    $("#container").height(this.oldHeight);
+		// 	}
+		// 	screenfull.toggle(elem);
+		// }
+		if (!screenfull.isFullscreen){
+			this.oldWidth = $("#container").width();
+			this.oldHeight = $("#container").height();
 		}
 		else{
-			if (!screenfull.isFullscreen){
-				this.oldWidth = $("#container").width();
-				this.oldHeight = $("#container").height();
-				$("#container").width('100%');
-	            $("#container").height('100%');
-			}
-			else{
-				$("#container").width(this.oldWidth);
-			    $("#container").height(this.oldHeight);
-			}
-			screenfull.toggle(elem);
+			$("#container").width(this.oldWidth);
+		    $("#container").height(this.oldHeight);
 		}
+		screenfull.toggle(elem);
 	};
 	
 	Game.prototype.restartGame = function(){

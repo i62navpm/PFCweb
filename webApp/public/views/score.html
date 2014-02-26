@@ -1,3 +1,4 @@
+
 <div class="row">
 <div class="col-md-12">
 	<div class="panel panel-primary">
@@ -18,14 +19,23 @@
 
 					<div class="col-md-6">
 						<label class="control-label" for="destino">Configuración: </label>
-						<select class="form-control" ng-model="idGame" id="destino">
+						<select class="form-control" ng-model="idGame"  ng-change="changeConf()" id="destino">
 						  	<option value={{conf._id}} ng-model="selectConfGame" ng-repeat="conf in actualScoreGame">{{conf.name}}</option>
 						</select>
 						{{idGame}}
 					</div>
 				</div>
+				
+				<div class="row" ng-show="idGame">
+                    <highchart id="chart1" config="chartConfig" class="span12" ></highchart>
+                </div>
+				<div class="row" ng-show="idGame && selectScoreGame =='Pong'">
+                    <highchart id="chart2" config="chartConfig2" class="span12"></highchart>
+                </div>
 
-				<div class="row" style="padding:15px">
+
+
+				<div class="row" style="padding:15px; height: 300px; overflow:auto">
 					<table class="table table-bordered table-hover table-striped">
 							<thead>
 								<tr class="info">
@@ -33,16 +43,10 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-								<td>Hoy</td>
-								<td>100</td>
-								<td>Difícil</td>
+								<tr ng-repeat="conf in actualConf">
+								<td ng-repeat="val in conf">{{val}}</td>
 								</tr>
-								<tr>
-								<td>Hoy</td>
-								<td>100</td>
-								<td>Difícil</td>
-								</tr>
+
 							</tbody>
 					</table>
 				</div>
