@@ -82,6 +82,7 @@ webApp.controller('scoreController', function ($scope, $http, $log, $location) {
 
 	$scope.changeGame = function(){
 		$scope.chartConfig.series = [];
+		$scope.chartConfig2.series = [];
 		$scope.actualConf = null;
 		if($scope.selectScoreGame == 'Pong'){
 			$scope.actualScoreGame = $scope.user.pongConf;
@@ -101,6 +102,7 @@ webApp.controller('scoreController', function ($scope, $http, $log, $location) {
 	$scope.changeConf = function(){
 		$log.log($scope.idGame);
 		$scope.actualConf = [];
+		$scope.chartConfig2.series = [];
 		for(var i in $scope.actualScoreGame){
 			if($scope.actualScoreGame[i]._id == $scope.idGame){
 				

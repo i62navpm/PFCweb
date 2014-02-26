@@ -26,16 +26,16 @@
 					</div>
 				</div>
 				
-				<div class="row" ng-show="idGame">
+				<div class="row" ng-show="idGame" style="width:140; overflow:auto">
                     <highchart id="chart1" config="chartConfig" class="span12" ></highchart>
                 </div>
-				<div class="row" ng-show="idGame && selectScoreGame =='Pong'">
+				<div class="row" ng-show="idGame && selectScoreGame =='Pong'" style="width:140; overflow:auto">
                     <highchart id="chart2" config="chartConfig2" class="span12"></highchart>
                 </div>
 
 
 
-				<div class="row" style="padding:15px; height: 300px; overflow:auto">
+				<div class="row" style="padding:15px; height: 300px; overflow:auto" ng-show="idGame">
 					<table class="table table-bordered table-hover table-striped">
 							<thead>
 								<tr class="info">

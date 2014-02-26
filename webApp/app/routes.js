@@ -12,8 +12,10 @@ module.exports = function(app, passport) {
 	// PROFILE SECTION =========================
 
 	app.get('/profile', isLoggedIn, function(req, res) {
+		console.log(req.user);
 		res.render('jugador.html', {
-			userID : req.user.id
+			userID : req.user.id,
+			user: JSON.stringify(req.user)
 		});
 	});
 

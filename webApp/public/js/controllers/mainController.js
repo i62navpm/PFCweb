@@ -17,7 +17,7 @@ webApp.controller('mainController', function ($scope, $http, $log, $location) {
 		      $scope.user.actualDragMe = null;
 		      $scope.user.actualEyeLeft = $scope.user.calibration.eyeLeft;
 		      $scope.user.actualEyeRight = $scope.user.calibration.eyeRight;
-		      
+				$log.log("ya");		      
 		    }).
 		    error(function(data, status, headers, config) {
 		      $log.error("Error al conecctar");
