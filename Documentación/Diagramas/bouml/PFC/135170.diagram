@@ -1,32 +1,109 @@
 format 76
 
-classinstance 128002 class_ref 134786 // FrontEnd
-  name ""   xyz 109 59 2000 life_line_z 2000
-classinstance 128130 class_ref 134658 // Usuario
-  name ""   xyz 8 59 2000 life_line_z 2000
-note 128258 "Sistema"
-  xyzwh 160 9.5 2005 59 35
-classinstance 128386 class_ref 134914 // BackEnd
-  name ""   xyz 215 59 2000 life_line_z 2000
-durationcanvas 128514 classinstance_ref 128130 // :Usuario
-  xyzwh 24 129.5 2010 11 25
+classinstance 133506 class_ref 134786 // FrontEnd
+  name ""   xyz 125.5 72 2000 life_line_z 2000
+note 133634 "Sistema"
+  xyzwh 176.5 11 2005 59 35
+classinstance 133762 class_ref 163330 // RedSocial
+  name ""   xyz 348.5 72 2000 life_line_z 2000
+classinstance 133890 class_ref 128002 // Paciente
+  name ""   xyz 22.5 72 2000 life_line_z 2000
+classinstance 134018 class_ref 134914 // BackEnd
+  name ""   xyz 231.5 72 2000 life_line_z 2000
+durationcanvas 134146 classinstance_ref 133890 // :Paciente
+  xyzwh 40 133 2010 11 99
+  overlappingdurationcanvas 134274
+    xyzwh 46 202 2020 11 25
+  end
 end
-durationcanvas 128770 classinstance_ref 128386 // :BackEnd
-  xyzwh 238 143.5 2010 11 25
+durationcanvas 134402 classinstance_ref 133890 // :Paciente
+  xyzwh 40 263 2010 11 146
+  overlappingdurationcanvas 134530
+    xyzwh 46 378 2020 11 25
+  end
 end
-durationcanvas 129026 classinstance_ref 128002 // :FrontEnd
-  xyzwh 132 130.5 2010 11 25
+durationcanvas 134786 classinstance_ref 133762 // :RedSocial
+  xyzwh 374 305 2010 11 52
 end
-msg 129154 asynchronous
-  from durationcanvas_ref 129026
-  to durationcanvas_ref 128770
-  yz 143.5 2015 explicitmsg "Evento"
+durationcanvas 135042 classinstance_ref 134018 // :BackEnd
+  xyzwh 254 160 2010 11 36
+end
+durationcanvas 135170 classinstance_ref 134018 // :BackEnd
+  xyzwh 254 283 2010 11 34
+end
+durationcanvas 135298 classinstance_ref 133506 // :FrontEnd
+  xyzwh 148 263 2010 11 142
+  overlappingdurationcanvas 135426
+    xyzwh 154 360 2020 11 32
+  end
+end
+durationcanvas 135554 classinstance_ref 134018 // :BackEnd
+  xyzwh 254 342 2010 11 34
+end
+durationcanvas 135682 classinstance_ref 133506 // :FrontEnd
+  xyzwh 148 134 2010 11 38
+end
+durationcanvas 135810 classinstance_ref 133506 // :FrontEnd
+  xyzwh 148 185 2010 11 31
+end
+msg 135938 synchronous
+  from durationcanvas_ref 134402
+  to durationcanvas_ref 135298
+  yz 263 2015 explicitmsg "Petición red social"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 174 128.5
-msg 129410 asynchronous
-  from durationcanvas_ref 128514
-  to durationcanvas_ref 129026
-  yz 130.5 2015 explicitmsg "Evento"
+  label_xy 55.5 249
+msg 136066 synchronous
+  from durationcanvas_ref 135810
+  to durationcanvas_ref 134274
+  yz 202 2025 explicitmsg "Respuesta"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 71 115.5
+  label_xy 78.5 188
+msg 136322 synchronous
+  from durationcanvas_ref 134146
+  to durationcanvas_ref 135682
+  yz 134 2015 explicitmsg "Datos"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 87.5 120
+msg 136450 synchronous
+  from durationcanvas_ref 135042
+  to durationcanvas_ref 135810
+  yz 185 2015 explicitmsg "Respuesta"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 178.5 171
+msg 136578 synchronous
+  from durationcanvas_ref 135298
+  to durationcanvas_ref 135170
+  yz 283 2020 explicitmsg "Petición"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 188.5 269
+msg 136706 synchronous
+  from durationcanvas_ref 135682
+  to durationcanvas_ref 135042
+  yz 161 2015 explicitmsg "Datos"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 190.5 147
+msg 136834 synchronous
+  from durationcanvas_ref 134786
+  to durationcanvas_ref 135554
+  yz 342 2015 explicitmsg "Respuesta"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 293.5 331
+msg 137090 synchronous
+  from durationcanvas_ref 135170
+  to durationcanvas_ref 134786
+  yz 305 2025 explicitmsg "Petición"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 301.5 291
+msg 137218 synchronous
+  from durationcanvas_ref 135426
+  to durationcanvas_ref 134530
+  yz 381 2025 explicitmsg "Respuesta"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 79.5 367
+msg 137346 synchronous
+  from durationcanvas_ref 135554
+  to durationcanvas_ref 135426
+  yz 360 2025 explicitmsg "Respuesta"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 183.5 346
 end

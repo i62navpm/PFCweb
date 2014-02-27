@@ -1,32 +1,131 @@
 format 76
 
 note 128002 "Sistema"
-  xyzwh 235.5 9 2005 59 35
+  xyzwh 253.5 9 2005 59 35
 classinstance 128130 class_ref 134786 // FrontEnd
   name ""   xyz 160.5 67 2000 life_line_z 2000
-classinstance 128258 class_ref 134658 // Usuario
-  name ""   xyz 22.5 67 2000 life_line_z 2000
+classinstance 128258 class_ref 128002 // Paciente
+  name ""   xyz 20.5 67 2000 life_line_z 2000
 classinstance 128386 class_ref 134914 // BackEnd
-  name ""   xyz 311.5 67 2000 life_line_z 2000
-durationcanvas 128514 classinstance_ref 128386 // :BackEnd
-  xyzwh 334 143 2010 11 27
+  name ""   xyz 349.5 67 2000 life_line_z 2000
+durationcanvas 130050 classinstance_ref 128258 // :Paciente
+  xyzwh 38 121 2010 11 40
 end
-durationcanvas 128642 classinstance_ref 128130 // :FrontEnd
-  xyzwh 183 130 2010 11 34
+durationcanvas 130178 classinstance_ref 128130 // :FrontEnd
+  xyzwh 183 121 2010 11 69
+  overlappingdurationcanvas 130690
+    xyzwh 189 159 2020 11 25
+  end
 end
-durationcanvas 128898 classinstance_ref 128258 // :Usuario
-  xyzwh 38 128 2010 11 25
+durationcanvas 130434 classinstance_ref 128386 // :BackEnd
+  xyzwh 372 140 2010 11 30
 end
-msg 129794 asynchronous
-  from durationcanvas_ref 128898
-  to durationcanvas_ref 128642
-  yz 130 2015 explicitmsg "Hoja de configuración"
+durationcanvas 130946 classinstance_ref 128258 // :Paciente
+  xyzwh 38 206 2010 11 40
+end
+durationcanvas 131074 classinstance_ref 128130 // :FrontEnd
+  xyzwh 183 206 2010 11 32
+end
+durationcanvas 131330 classinstance_ref 128386 // :BackEnd
+  xyzwh 372 227 2010 11 30
+end
+durationcanvas 131586 classinstance_ref 128130 // :FrontEnd
+  xyzwh 183 246 2010 11 25
+end
+durationcanvas 131842 classinstance_ref 128258 // :Paciente
+  xyzwh 38 299 2010 11 40
+end
+durationcanvas 131970 classinstance_ref 128130 // :FrontEnd
+  xyzwh 183 299 2010 11 31
+end
+durationcanvas 132226 classinstance_ref 128386 // :BackEnd
+  xyzwh 372 319 2010 11 31
+end
+durationcanvas 132482 classinstance_ref 128130 // :FrontEnd
+  xyzwh 183 339 2010 11 25
+end
+durationcanvas 132738 classinstance_ref 128258 // :Paciente
+  xyzwh 38 388 2010 11 40
+end
+durationcanvas 132866 classinstance_ref 128130 // :FrontEnd
+  xyzwh 183 388 2010 11 30
+end
+durationcanvas 133122 classinstance_ref 128386 // :BackEnd
+  xyzwh 372 407 2010 11 31
+end
+durationcanvas 133378 classinstance_ref 128130 // :FrontEnd
+  xyzwh 183 427 2010 11 25
+end
+msg 130306 synchronous
+  from durationcanvas_ref 130050
+  to durationcanvas_ref 130178
+  yz 121 2015 explicitmsg "Nuevo usuario"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 63 118
-msg 129922 asynchronous
-  from durationcanvas_ref 128642
-  to durationcanvas_ref 128514
-  yz 144 2015 explicitmsg "Hoja de configuración"
+  label_xy 81 107
+msg 130562 synchronous
+  from durationcanvas_ref 130178
+  to durationcanvas_ref 130434
+  yz 140 2015 explicitmsg "Nuevo Usuario"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 208 129
+  label_xy 245 126
+msg 130818 synchronous
+  from durationcanvas_ref 130434
+  to durationcanvas_ref 130690
+  yz 159 2025 explicitmsg "Configuraciones predeterminadas"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 205 147
+msg 131202 synchronous
+  from durationcanvas_ref 130946
+  to durationcanvas_ref 131074
+  yz 206 2015 explicitmsg "Nueva Configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 66 192
+msg 131458 synchronous
+  from durationcanvas_ref 131074
+  to durationcanvas_ref 131330
+  yz 227 2015 explicitmsg "Nueva configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 230 213
+msg 131714 synchronous
+  from durationcanvas_ref 131330
+  to durationcanvas_ref 131586
+  yz 246 2020 explicitmsg "Todas las configuraciones"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 216 234
+msg 132098 synchronous
+  from durationcanvas_ref 131842
+  to durationcanvas_ref 131970
+  yz 299 2015 explicitmsg "Eliminar configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 64 285
+msg 132354 synchronous
+  from durationcanvas_ref 131970
+  to durationcanvas_ref 132226
+  yz 319 2015 explicitmsg "Eliminar configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 231 305
+msg 132610 synchronous
+  from durationcanvas_ref 132226
+  to durationcanvas_ref 132482
+  yz 339 2020 explicitmsg "Todas las configuraciones"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 219 328
+msg 132994 synchronous
+  from durationcanvas_ref 132738
+  to durationcanvas_ref 132866
+  yz 388 2015 explicitmsg "Modificar configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 60 374
+msg 133250 synchronous
+  from durationcanvas_ref 132866
+  to durationcanvas_ref 133122
+  yz 407 2015 explicitmsg "Modificar configuración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 227 393
+msg 133506 synchronous
+  from durationcanvas_ref 133122
+  to durationcanvas_ref 133378
+  yz 427 2015 explicitmsg "Todas las configuraciones"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 219 417
 end

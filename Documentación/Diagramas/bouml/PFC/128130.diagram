@@ -4,23 +4,19 @@ classcanvas 128002 class_ref 128002 // Paciente
   class_drawing_mode default show_context_mode default show_stereotype_properties default
   xyz 6 107 2000
 end
-classcanvas 128130 class_ref 128130 // Especialista
-  class_drawing_mode default show_context_mode default show_stereotype_properties default
-  xyz 396 107 2000
-end
 subject 128386 ""
   xyzwh 109.5 10.5 0 215 328
 textcanvas 128514 "Caso de uso 1:
 Gestión de usuarios"
-  xyzwh 218.5 20.5 2000 102 29
+  xyzwh 218 20 2000 102 29
 usecasecanvas 128642 usecase_ref 128514 // Gestión del registro del usuario
   xyzwh 182 61 3005 64 32 label_xy 139 96
 end
 usecasecanvas 128770 usecase_ref 128642 // Gestión del perfil del usuario
   xyzwh 182 193 3005 64 32 label_xy 146 225
 end
-usecasecanvas 128898 usecase_ref 128770 // Control de usuarios
-  xyzwh 182 122 3005 64 32 label_xy 167 154
+usecasecanvas 128898 usecase_ref 128770 // Gestión de acceso de usuario
+  xyzwh 182 122 3005 64 32 label_xy 141 154
 end
 usecasecanvas 129794 usecase_ref 129794 // Consultar usuario
   xyzwh 182 278 3005 64 32 label_xy 172 310
@@ -29,15 +25,9 @@ line 129026 ----
   from ref 128002 z 3006 to ref 128642
 line 129154 ----
   from ref 128002 z 3006 to ref 128770
-line 129282 ----
-  from ref 128130 z 3006 to ref 128898
-line 129410 ----
-  from ref 128130 z 3006 to ref 128770
-line 129538 ----
-  from ref 128130 z 3006 to ref 128642
 line 129666 ----
   from ref 128002 z 3006 to ref 128898
 simplerelationcanvas 129922 simplerelation_ref 128898
-  from ref 128770 z 3006 stereotype "<<extend>>" xyz 214 251.5 3000 to ref 129794
+  from ref 128770 z 3006 stereotype "<<extend>>" xyz 214 251 3000 to ref 129794
 end
 end

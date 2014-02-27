@@ -2,14 +2,10 @@ format 76
 
 textcanvas 128002 "Caso de uso 2:
 Gestión de juegos"
-  xyzwh 402 44.5 2000 93 30
+  xyzwh 402 44 2000 93 30
 classcanvas 128130 class_ref 128002 // Paciente
   class_drawing_mode default show_context_mode default show_stereotype_properties default
   xyz 15 151.5 2000
-end
-classcanvas 128258 class_ref 128130 // Especialista
-  class_drawing_mode default show_context_mode default show_stereotype_properties default
-  xyz 562 152.5 2000
 end
 subject 128514 ""
   xyzwh 118.5 30 0 382 458
@@ -30,35 +26,31 @@ usecasecanvas 131842 usecase_ref 129922 // Seleccionar juego
 end
 line 130178 ----
   from ref 128130 z 3006 to ref 129666
-line 130306 ----
-  from ref 128258 z 3006 to ref 129666
 line 130434 ----
   from ref 128130 z 3006 to ref 129922
-line 130562 ----
-  from ref 128258 z 3006 to ref 129794
 simplerelationcanvas 130946 simplerelation_ref 128002
   from ref 129666 z 3006 to point 435 149
-  line 133378 z 3006 stereotype "<<include>>" xyz 374.5 163 3000 to ref 130818
+  line 133378 z 3006 stereotype "<<include>>" xyz 374 163 3000 to ref 130818
 end
 simplerelationcanvas 131074 simplerelation_ref 128130
   from ref 129922 z 3006 to point 410 193
-  line 133762 z 3006 stereotype "<<include>>" xyz 365.5 260 3000 to ref 130818
+  line 133762 z 3006 stereotype "<<include>>" xyz 365 260 3000 to ref 130818
 end
 simplerelationcanvas 131330 simplerelation_ref 128258
   from ref 129794 z 3006 to point 394 298
-  line 133890 z 3006 stereotype "<<include>>" xyz 350.5 342.5 3000 to ref 130818
+  line 133890 z 3006 stereotype "<<include>>" xyz 350 342 3000 to ref 130818
 end
 simplerelationcanvas 131970 simplerelation_ref 129026
   from ref 129666 z 3006 to point 173 149
-  line 132610 z 3006 stereotype "<<extend>>" xyz 181.5 160.5 3000 to ref 131842
+  line 132610 z 3006 stereotype "<<extend>>" xyz 181 160 3000 to ref 131842
 end
 simplerelationcanvas 132098 simplerelation_ref 129154
   from ref 129922 z 3006 to point 196 193
-  line 132738 z 3006 stereotype "<<extend>>" xyz 195.5 263.5 3000 to ref 131842
+  line 132738 z 3006 stereotype "<<extend>>" xyz 195 263 3000 to ref 131842
 end
 simplerelationcanvas 132226 simplerelation_ref 129282
   from ref 129794 z 3006 to point 204 298
-  line 132866 z 3006 stereotype "<<extend>>" xyz 196.5 350.5 3000 to ref 131842
+  line 132866 z 3006 stereotype "<<extend>>" xyz 196 350 3000 to ref 131842
 end
 line 133250 ----
   from ref 128130 z 3006 to ref 129794

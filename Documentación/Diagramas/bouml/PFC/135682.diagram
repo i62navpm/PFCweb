@@ -4,47 +4,74 @@ classinstance 128002 class_ref 134786 // FrontEnd
   name ""   xyz 164.5 55.5 2000 life_line_z 2000
 classinstance 128130 class_ref 134914 // BackEnd
   name ""   xyz 315.5 57 2000 life_line_z 2000
-classinstance 128258 class_ref 128130 // Especialista
-  name ""   xyz 16.5 53.5 2000 life_line_z 2000
+classinstance 128258 class_ref 128002 // Paciente
+  name ""   xyz 24.5 53.5 2000 life_line_z 2000
 note 128386 "Sistema"
   xyzwh 240.5 9 2005 59 35
 durationcanvas 128514 classinstance_ref 128130 // :BackEnd
-  xyzwh 338 124.5 2010 11 38
+  xyzwh 338 124 2010 11 38
 end
 durationcanvas 128642 classinstance_ref 128002 // :FrontEnd
-  xyzwh 187 111.5 2010 11 78
+  xyzwh 187 111 2010 11 156
   overlappingdurationcanvas 128770
-    xyzwh 193 151.5 2020 11 32
+    xyzwh 193 151 2020 11 32
+  end
+  overlappingdurationcanvas 129666
+    xyzwh 193 192 2020 11 28
+  end
+  overlappingdurationcanvas 130178
+    xyzwh 193 228 2020 11 33
   end
 end
-durationcanvas 128898 classinstance_ref 128258 // :Especialista
-  xyzwh 42 109.5 2010 11 94
-  overlappingdurationcanvas 129026
-    xyzwh 48 172.5 2020 11 25
+durationcanvas 128898 classinstance_ref 128258 // :Paciente
+  xyzwh 42 109 2010 11 172
+  overlappingdurationcanvas 130434
+    xyzwh 48 250 2020 11 25
   end
+end
+durationcanvas 129922 classinstance_ref 128130 // :BackEnd
+  xyzwh 338 209 2010 11 30
 end
 msg 129154 synchronous
   from durationcanvas_ref 128642
   to durationcanvas_ref 128514
-  yz 125.5 2015 explicitmsg "Petición de resultados"
+  yz 125 2015 explicitmsg "Petición de configuraciones"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 212 110.5
+  label_xy 212 110
 msg 129282 synchronous
   from durationcanvas_ref 128898
   to durationcanvas_ref 128642
-  yz 111.5 2015 explicitmsg "Seleccionar paciente"
+  yz 111 2015 explicitmsg "Seleccionar juego"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 67 99.5
+  label_xy 77 99
 msg 129410 synchronous
   from durationcanvas_ref 128514
   to durationcanvas_ref 128770
-  yz 151.5 2025 explicitmsg "Puntuación del paciente"
+  yz 151 2025 explicitmsg "Configuraciones de juego"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 216 137.5
-msg 129538 synchronous
-  from durationcanvas_ref 128770
-  to durationcanvas_ref 129026
-  yz 172.5 2030 explicitmsg "Histórico de puntuación"
+  label_xy 211 139
+msg 129794 synchronous
+  from durationcanvas_ref 128898
+  to durationcanvas_ref 129666
+  yz 192 2025 explicitmsg "Seleccionar configuración"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 68 162.5
+  label_xy 57 179
+msg 130050 synchronous
+  from durationcanvas_ref 129666
+  to durationcanvas_ref 129922
+  yz 209 2025 explicitmsg "Petición de resultados"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 218 195
+msg 130306 synchronous
+  from durationcanvas_ref 129922
+  to durationcanvas_ref 130178
+  yz 228 2025 explicitmsg "Resultados"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 244 217
+msg 130562 synchronous
+  from durationcanvas_ref 130178
+  to durationcanvas_ref 130434
+  yz 250 2030 explicitmsg "Puntuación"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 100 236
 end

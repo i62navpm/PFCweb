@@ -1,6 +1,6 @@
 format 76
 "PFC"
-  revision 6
+  revision 7
   modified_by 2 "Manolo"
 
 
@@ -120,7 +120,7 @@ format 76
       show_infonote default drawing_language default show_stereotype_properties default
     end
 
-    usecase 128258 "Gestión de pantallas"
+    usecase 128258 "Gestión de calibración"
       //use case diagram settings
       package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
       //sequence diagram settings
@@ -211,7 +211,7 @@ format 76
       end
     end
 
-    usecase 128770 "Control de usuarios"
+    usecase 128770 "Gestión de acceso de usuario"
       //use case diagram settings
       package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
       //sequence diagram settings
@@ -1712,6 +1712,17 @@ format 76
     classdiagram 149762 "Diagrama de clases individuales"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition yes show_members_visibility yes show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
+    end
+
+    class 163330 "RedSocial"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
     end
   end
 

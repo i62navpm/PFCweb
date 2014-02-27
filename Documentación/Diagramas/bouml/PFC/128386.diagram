@@ -1,15 +1,15 @@
 format 76
 
 textcanvas 128130 "Caso de uso 3:
-Gestión de pantallas"
-  xyzwh 213.5 27 2000 107 29
+Gestión de calibración"
+  xyzwh 211 27 2000 107 29
 subject 128386 ""
   xyzwh 114 18 0 208 198
 classcanvas 128642 class_ref 128002 // Paciente
   class_drawing_mode default show_context_mode default show_stereotype_properties default
   xyz 14.5 56.5 2000
 end
-usecasecanvas 129538 usecase_ref 128258 // Gestión de pantallas
+usecasecanvas 129538 usecase_ref 128258 // Gestión de calibración
   xyzwh 185 73 3005 64 32 label_xy 168 105
 end
 usecasecanvas 129794 usecase_ref 129666 // Registro de usuario

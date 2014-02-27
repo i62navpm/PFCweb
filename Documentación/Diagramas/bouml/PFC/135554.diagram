@@ -9,42 +9,105 @@ classinstance 128258 class_ref 134914 // BackEnd
 classinstance 128386 class_ref 128002 // Paciente
   name ""   xyz 22.5 55 2000 life_line_z 2000
 durationcanvas 128514 classinstance_ref 128130 // :FrontEnd
-  xyzwh 185 113.5 2010 11 78
-  overlappingdurationcanvas 129154
-    xyzwh 191 153 2020 11 32
+  xyzwh 185 112 2010 11 67
+  overlappingdurationcanvas 129922
+    xyzwh 191 148 2020 11 25
   end
 end
 durationcanvas 128642 classinstance_ref 128386 // :Paciente
-  xyzwh 40 111.5 2010 11 94
-  overlappingdurationcanvas 129410
-    xyzwh 46 174 2020 11 25
+  xyzwh 40 114 2010 11 307
+  overlappingdurationcanvas 131970
+    xyzwh 46 390 2020 11 25
   end
 end
-durationcanvas 128770 classinstance_ref 128258 // :BackEnd
-  xyzwh 336 126.5 2010 11 38
+durationcanvas 129666 classinstance_ref 128258 // :BackEnd
+  xyzwh 336 127 2010 11 32
+end
+durationcanvas 130178 classinstance_ref 128130 // :FrontEnd
+  xyzwh 185 198 2010 11 75
+  overlappingdurationcanvas 130690
+    xyzwh 191 241 2020 11 26
+  end
+end
+durationcanvas 130434 classinstance_ref 128258 // :BackEnd
+  xyzwh 336 215 2010 11 38
+end
+durationcanvas 130946 classinstance_ref 128130 // :FrontEnd
+  xyzwh 185 286 2010 11 25
+end
+durationcanvas 131202 classinstance_ref 128130 // :FrontEnd
+  xyzwh 185 327 2010 11 67
+  overlappingdurationcanvas 131714
+    xyzwh 191 363 2020 11 25
+  end
+end
+durationcanvas 131458 classinstance_ref 128258 // :BackEnd
+  xyzwh 336 347 2010 11 27
 end
 msg 128898 synchronous
   from durationcanvas_ref 128642
   to durationcanvas_ref 128514
-  yz 113.5 2015 explicitmsg "Seleccionar juego"
+  yz 115 2015 explicitmsg "Seleccionar juego"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 65 101.5
-msg 129026 synchronous
+  label_xy 65 103
+msg 129794 synchronous
   from durationcanvas_ref 128514
-  to durationcanvas_ref 128770
-  yz 127.5 2015 explicitmsg "Petición de configuración"
+  to durationcanvas_ref 129666
+  yz 127 2015 explicitmsg "Juego seleccionado"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 210 112.5
-msg 129282 synchronous
-  from durationcanvas_ref 128770
-  to durationcanvas_ref 129154
-  yz 153 2025 explicitmsg "Configuración de juego"
+  label_xy 218 113
+msg 130050 synchronous
+  from durationcanvas_ref 129666
+  to durationcanvas_ref 129922
+  yz 148 2025 explicitmsg "Configuraciones"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 214 139
-msg 129538 synchronous
-  from durationcanvas_ref 129154
-  to durationcanvas_ref 129410
-  yz 174 2030 explicitmsg "Juego configurado"
+  label_xy 230 134
+msg 130306 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 130178
+  yz 200 2015 explicitmsg "Realizar calibración"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 79 160
+  label_xy 71 186
+msg 130562 synchronous
+  from durationcanvas_ref 130178
+  to durationcanvas_ref 130434
+  yz 216 2015 explicitmsg "Calibración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 240 202
+msg 130818 synchronous
+  from durationcanvas_ref 130434
+  to durationcanvas_ref 130690
+  yz 241 2025 explicitmsg "Respuesta"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 243 227
+msg 131074 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 130946
+  yz 287 2015 explicitmsg "Selección de calibración"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 60 273
+msg 131330 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 131202
+  yz 327 2015 explicitmsg "Jugar al juego"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 85 313
+msg 131586 synchronous
+  from durationcanvas_ref 131202
+  to durationcanvas_ref 131458
+  yz 347 2015 explicitmsg "Jugar"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 253 333
+msg 131842 synchronous
+  from durationcanvas_ref 131458
+  to durationcanvas_ref 131714
+  yz 363 2025 explicitmsg "Juego configurado"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 220 353
+msg 132098 synchronous
+  from durationcanvas_ref 131202
+  to durationcanvas_ref 131970
+  yz 390 2025 explicitmsg "Juego"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 107 376
 end

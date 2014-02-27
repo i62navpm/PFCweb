@@ -1,68 +1,71 @@
 format 76
 
 classinstance 128002 class_ref 134914 // BackEnd
-  name ""   xyz 350.5 62 2000 life_line_z 2000
+  name ""   xyz 324.5 58 2000 life_line_z 2000
 classinstance 128130 class_ref 134786 // FrontEnd
-  name ""   xyz 199.5 60 2000 life_line_z 2000
+  name ""   xyz 173.5 58 2000 life_line_z 2000
 classinstance 128258 class_ref 128002 // Paciente
-  name ""   xyz 30.5 61 2000 life_line_z 2000
+  name ""   xyz 30.5 58 2000 life_line_z 2000
 note 128386 "Sistema"
-  xyzwh 275.5 12 2005 59 35
-durationcanvas 129666 classinstance_ref 128130 // :FrontEnd
-  xyzwh 222 110 2010 11 70
-  overlappingdurationcanvas 130306
-    xyzwh 228 143 2020 11 25
+  xyzwh 249.5 12 2005 59 35
+durationcanvas 131330 classinstance_ref 128258 // :Paciente
+  xyzwh 48 108 2010 11 40
+end
+durationcanvas 131458 classinstance_ref 128130 // :FrontEnd
+  xyzwh 196 108 2010 11 68
+  overlappingdurationcanvas 131970
+    xyzwh 202 145 2020 11 25
   end
 end
-durationcanvas 129794 classinstance_ref 128258 // :Paciente
-  xyzwh 48 109 2010 11 105
-  overlappingdurationcanvas 130562
-    xyzwh 54 168 2020 11 40
+durationcanvas 131714 classinstance_ref 128002 // :BackEnd
+  xyzwh 347 126 2010 11 30
+end
+durationcanvas 132226 classinstance_ref 128258 // :Paciente
+  xyzwh 48 208 2010 11 27
+end
+durationcanvas 132354 classinstance_ref 128130 // :FrontEnd
+  xyzwh 196 208 2010 11 69
+  overlappingdurationcanvas 132866
+    xyzwh 202 246 2020 11 25
   end
 end
-durationcanvas 130050 classinstance_ref 128002 // :BackEnd
-  xyzwh 373 117 2010 11 38
+durationcanvas 132610 classinstance_ref 128002 // :BackEnd
+  xyzwh 347 227 2010 11 30
 end
-durationcanvas 130818 classinstance_ref 128130 // :FrontEnd
-  xyzwh 222 189 2010 11 27
-end
-durationcanvas 131074 classinstance_ref 128002 // :BackEnd
-  xyzwh 373 205 2010 11 25
-end
-msg 129922 asynchronous
-  from durationcanvas_ref 129666
-  to durationcanvas_ref 129794
-  yz 110 2015 explicitmsg "Ingreso satisfactorio"
+msg 131586 synchronous
+  from durationcanvas_ref 131330
+  to durationcanvas_ref 131458
+  yz 108 2015 explicitmsg "Nuevo usuario"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 77 96
-msg 130178 synchronous
-  from durationcanvas_ref 129666
-  to durationcanvas_ref 130050
-  yz 117 2020 explicitmsg "Datos de pantalla"
+  label_xy 92 94
+msg 131842 synchronous
+  from durationcanvas_ref 131458
+  to durationcanvas_ref 131714
+  yz 126 2020 explicitmsg "Nuevo usuario"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 262 103
-msg 130434 synchronous
-  from durationcanvas_ref 130050
-  to durationcanvas_ref 130306
-  yz 144 2025 explicitmsg "Resultado de identificación"
+  label_xy 242 112
+msg 132098 synchronous
+  from durationcanvas_ref 131714
+  to durationcanvas_ref 131970
+  yz 145 2025 explicitmsg "Calibración predeterminada"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 242 130
-msg 130690 asynchronous
-  from durationcanvas_ref 129666
-  to durationcanvas_ref 130562
-  yz 169 2025 explicitmsg "Identificación de pantalla"
+  label_xy 215 135
+msg 132482 synchronous
+  from durationcanvas_ref 132226
+  to durationcanvas_ref 132354
+  yz 208 2015 explicitmsg "Ajuste de calibración"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 70 155
-msg 130946 asynchronous
-  from durationcanvas_ref 130562
-  to durationcanvas_ref 130818
-  yz 196 2030 explicitmsg "Calibrado de pantalla con gafas"
+  label_xy 77 194
+msg 132738 synchronous
+  from durationcanvas_ref 132354
+  to durationcanvas_ref 132610
+  yz 227 2015 explicitmsg "Datos de calibración"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 67 185
-msg 131202 asynchronous
-  from durationcanvas_ref 130818
-  to durationcanvas_ref 131074
-  yz 205 2035 explicitmsg "Almacenar calibración"
+  label_xy 228 213
+msg 132994 synchronous
+  from durationcanvas_ref 132610
+  to durationcanvas_ref 132866
+  yz 246 2025 explicitmsg "Calibración modificada"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 250 191
+  label_xy 226 232
 end
