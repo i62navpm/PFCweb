@@ -3,7 +3,7 @@ diagrams
   classdiagram_ref 162946 // Diagrama de clases de DragMe
     778 556 100 4 0 0
   classdiagram_ref 149762 // Diagrama de clases individuales
-    618 444 100 4 0 0
+    778 556 100 4 0 0
   usecasediagram_ref 128002 // Caso de Uso 0: Sistema
     618 444 100 4 0 0
   usecasediagram_ref 128130 // Caso de Uso 1: Gestión de usuarios
@@ -18,7 +18,7 @@ diagrams
     618 444 100 4 0 0
   sequencediagram_ref 135298 // Secuencia de CU-1.3
     618 444 100 4 0 0
-  active  sequencediagram_ref 135426 // Secuencia de CU-2.1
+  sequencediagram_ref 135426 // Secuencia de CU-2.1
     778 556 100 4 72 0
   sequencediagram_ref 135554 // Secuencia de CU-2.2
     618 444 100 4 0 0
@@ -28,12 +28,15 @@ diagrams
     618 444 100 4 0 0
   sequencediagram_ref 135938 // Secuencia de CU-4.1
     618 444 100 4 0 0
+  classdiagram_ref 156290 // Diagrama de clases de Tetris
+    618 444 100 4 0 0
+  active  classdiagram_ref 143234 // Diagrama de clases de Pong
+    778 556 100 4 273 0
 end
 show_stereotypes
-selected sequencediagram_ref 135426 // Secuencia de CU-2.1
+selected classdiagram_ref 143234 // Diagrama de clases de Pong
 open
   usecaseview_ref 128002 // Casos de uso
-  class_ref 156674 // DragMeGame
-  class_ref 156418 // Player
+  classview_ref 134530 // Clases de Tetris
 end
 end
