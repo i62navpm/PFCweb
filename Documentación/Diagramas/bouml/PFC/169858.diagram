@@ -1,0 +1,63 @@
+format 76
+
+activitynodecanvas 128002 activitynode_ref 136834 // initial_node
+  xyz 113.4 7.4 2000
+end
+activityactioncanvas 128130 activityaction_ref 136066 // activity action Seleccionar red social
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 72.4 50.8 2000 101 61
+end
+textcanvas 128386 "[errorCallback=false]"
+  xyzwh 127.7 275.2 2000 107 15
+textcanvas 129154 "[errorCallback=true]"
+  xyzwh 11.6 258.5 2000 99 16
+activityactioncanvas 130306 activityaction_ref 136194 // activity action Vincular/Desvincular
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 62.1 152 2000 121 41
+end
+activityactioncanvas 130818 activityaction_ref 136322 // activity action Guardar
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 92.4 307.5 2000 61 41
+end
+activitynodecanvas 130946 activitynode_ref 137090 // activity_final
+  xyz 110.4 392.2 2000
+end
+activitynodecanvas 131586 activitynode_ref 137218 // decision
+  xyz 110.2 233.9 2000
+end
+flowcanvas 131074 flow_ref 141058 // <flow>
+  
+  from ref 128002 z 2001 to ref 128130
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131202 flow_ref 141186 // <flow>
+  
+  from ref 128130 z 2001 to ref 130306
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131714 flow_ref 141570 // <flow>
+  
+  from ref 130306 z 2001 to ref 131586
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131842 flow_ref 141698 // <flow>
+  
+  from ref 131586 z 2001 to ref 130818
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131970 flow_ref 141826 // <flow>
+  
+  from ref 131586 z 2001 to point 24.8 249
+  line 132226 z 2001 to point 24.8 78.8
+  line 132098 z 2001 to ref 128130
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132354 flow_ref 141954 // <flow>
+  
+  from ref 130818 z 2001 to ref 130946
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+end

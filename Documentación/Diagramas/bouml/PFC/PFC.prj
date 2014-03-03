@@ -1,6 +1,6 @@
 format 76
 "PFC"
-  revision 9
+  revision 10
   modified_by 2 "Manolo"
 
 
@@ -617,6 +617,10 @@ format 76
 	flow 129794 "<flow>"
 	  on activitynode_ref 128386 // decision
 	end
+
+	flow 145794 "<flow>"
+	  on activityaction_ref 128642 // activity action Recopilar puntuación
+	end
       end
 
       activitynode 128386 decision ""
@@ -642,9 +646,522 @@ format 76
 	flow 129154 "<flow>"
 	  on activitynode_ref 128514 // activity_final
 	end
+
+	flow 145922 "<flow>"
+	  on activitynode_ref 138754 // activity_final
+	end
       end
 
       activitynode 128514 activity_final ""
+      end
+
+      activitydiagram 169474 "Registro de usuario"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activitynode 135042 initial_node ""
+	flow 136450 "<flow>"
+	  on activitynode_ref 135810 // fork
+	end
+
+	flow 137730 "<flow>"
+	  on activityaction_ref 135554 // activity action Presentar formulario
+	end
+      end
+
+      activityaction 135170 "Introducir datos de registro"
+	opaque_action
+	flow 136834 "<flow>"
+	  on activitynode_ref 135298 // merge
+	end
+
+	flow 137346 "<flow>"
+	  on activitynode_ref 135938 // decision
+	end
+
+	flow 137602 "<flow>"
+	  on activityaction_ref 135298 // activity action Registro a través de red social
+	end
+      end
+
+      activityaction 135298 "Registro a través de red social"
+	opaque_action
+	flow 136962 "<flow>"
+	  on activitynode_ref 135170 // merge
+	end
+
+	flow 138242 "<flow>"
+	  on activitynode_ref 135554 // join
+	end
+
+	flow 138370 "<flow>"
+	  on activitynode_ref 136066 // decision
+	end
+      end
+
+      activitynode 135170 merge ""
+	flow 137218 "<flow>"
+	  on activitynode_ref 135554 // join
+	end
+      end
+
+      activitynode 135298 merge ""
+	flow 137090 "<flow>"
+	  on activitynode_ref 135554 // join
+	end
+      end
+
+      activitynode 135426 join ""
+      end
+
+      activitynode 135554 join ""
+      end
+
+      activitynode 135682 fork ""
+      end
+
+      activitynode 135810 fork ""
+	flow 136578 "<flow>"
+	  on activityaction_ref 135170 // activity action Introducir datos de registro
+	end
+
+	flow 136706 "<flow>"
+	  on activityaction_ref 135298 // activity action Registro a través de red social
+	end
+      end
+
+      activityaction 135426 "Entrar al sistema"
+	opaque_action
+	flow 139266 "<flow>"
+	  on activitynode_ref 136450 // activity_final
+	end
+      end
+
+      activitynode 135938 decision ""
+	flow 137474 "<flow>"
+	  on activitynode_ref 135554 // join
+	end
+
+	flow 138754 "<flow>"
+	  on activityaction_ref 135554 // activity action Presentar formulario
+	end
+
+	flow 139010 "<flow>"
+	  on activitynode_ref 136322 // join
+	end
+
+	flow 139778 "<flow>"
+	  on activitynode_ref 136706 // join
+	end
+
+	flow 140162 "<flow>"
+	  on activitynode_ref 136706 // join
+	end
+
+	flow 140674 "<flow>"
+	  on activityaction_ref 135426 // activity action Entrar al sistema
+	end
+      end
+
+      activitynode 136066 decision ""
+	flow 138498 "<flow>"
+	  on activitynode_ref 135554 // join
+	end
+
+	flow 138626 "<flow>"
+	  on activityaction_ref 135554 // activity action Presentar formulario
+	end
+
+	flow 139138 "<flow>"
+	  on activitynode_ref 136322 // join
+	end
+
+	flow 139906 "<flow>"
+	  on activitynode_ref 136706 // join
+	end
+
+	flow 140290 "<flow>"
+	  on activitynode_ref 136706 // join
+	end
+      end
+
+      activityaction 135554 "Presentar formulario"
+	opaque_action
+	flow 137858 "<flow>"
+	  on activitynode_ref 136194 // fork
+	end
+
+	flow 139394 "<flow>"
+	  on activitynode_ref 136578 // fork
+	end
+
+	flow 140930 "<flow>"
+	  on activityaction_ref 135938 // activity action Modificar datos en el formulario
+	end
+      end
+
+      activitynode 136194 fork ""
+	flow 137986 "<flow>"
+	  on activityaction_ref 135170 // activity action Introducir datos de registro
+	end
+
+	flow 138114 "<flow>"
+	  on activityaction_ref 135298 // activity action Registro a través de red social
+	end
+      end
+
+      activitynode 136322 join ""
+	flow 138882 "<flow>"
+	  on activityaction_ref 135426 // activity action Entrar al sistema
+	end
+      end
+
+      activitynode 136450 activity_final ""
+      end
+
+      activitydiagram 169602 "Acceso de usuario"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activityaction 135682 "Introducir datos de acceso"
+	opaque_action
+	flow 140418 "<flow>"
+	  on activitynode_ref 135938 // decision
+	end
+      end
+
+      activityaction 135810 "Acceso a través de red social"
+	opaque_action
+	flow 140546 "<flow>"
+	  on activitynode_ref 136066 // decision
+	end
+      end
+
+      activitynode 136578 fork ""
+	flow 139522 "<flow>"
+	  on activityaction_ref 135682 // activity action Introducir datos de acceso
+	end
+
+	flow 139650 "<flow>"
+	  on activityaction_ref 135810 // activity action Acceso a través de red social
+	end
+      end
+
+      activitynode 136706 join ""
+	flow 140034 "<flow>"
+	  on activityaction_ref 135426 // activity action Entrar al sistema
+	end
+      end
+
+      activitydiagram 169730 "Editar perfil"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activityaction 135938 "Modificar datos en el formulario"
+	opaque_action
+	flow 140802 "<flow>"
+	  on activitynode_ref 135938 // decision
+	end
+      end
+
+      activitydiagram 169858 "Vinculación redes sociales"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activitynode 136834 initial_node ""
+	flow 141058 "<flow>"
+	  on activityaction_ref 136066 // activity action Seleccionar red social
+	end
+      end
+
+      activityaction 136066 "Seleccionar red social"
+	opaque_action
+	flow 141186 "<flow>"
+	  on activityaction_ref 136194 // activity action Vincular/Desvincular
+	end
+      end
+
+      activityaction 136194 "Vincular/Desvincular"
+	opaque_action
+	flow 141314 "<flow>"
+	  on activitynode_ref 136962 // merge
+	end
+
+	flow 141570 "<flow>"
+	  on activitynode_ref 137218 // decision
+	end
+      end
+
+      activitynode 136962 merge ""
+	flow 141442 "<flow>"
+	  on activityaction_ref 136322 // activity action Guardar
+	end
+      end
+
+      activityaction 136322 "Guardar"
+	opaque_action
+	flow 141954 "<flow>"
+	  on activitynode_ref 137090 // activity_final
+	end
+
+	flow 142338 "<flow>"
+	  on activitynode_ref 137474 // activity_final
+	end
+
+	flow 142850 "<flow>"
+	  on activitynode_ref 137730 // activity_final
+	end
+      end
+
+      activitynode 137090 activity_final ""
+      end
+
+      activitynode 137218 decision ""
+	flow 141698 "<flow>"
+	  on activityaction_ref 136322 // activity action Guardar
+	end
+
+	flow 141826 "<flow>"
+	  on activityaction_ref 136066 // activity action Seleccionar red social
+	end
+      end
+
+      activitydiagram 169986 "Calibración"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activityaction 136450 "Seleccionar colores"
+	opaque_action
+	flow 142210 "<flow>"
+	  on activityaction_ref 136322 // activity action Guardar
+	end
+      end
+
+      activitynode 137346 initial_node ""
+	flow 142082 "<flow>"
+	  on activityaction_ref 136450 // activity action Seleccionar colores
+	end
+      end
+
+      activitynode 137474 activity_final ""
+      end
+
+      activityaction 136578 "Insertar nombre de configuración"
+	opaque_action
+	flow 142594 "<flow>"
+	  on activityaction_ref 136706 // activity action Ajustar parámetros
+	end
+
+	flow 144258 "<flow>"
+	  on activitynode_ref 138242 // join
+	end
+      end
+
+      activityaction 136706 "Ajustar parámetros"
+	opaque_action
+	flow 142722 "<flow>"
+	  on activityaction_ref 136322 // activity action Guardar
+	end
+
+	flow 144514 "<flow>"
+	  on activitynode_ref 138370 // join
+	end
+
+	flow 145154 "<flow>"
+	  on activitynode_ref 138498 // join
+	end
+      end
+
+      activitynode 137602 initial_node ""
+	flow 142466 "<flow>"
+	  on activityaction_ref 136578 // activity action Insertar nombre de configuración
+	end
+
+	flow 142978 "<flow>"
+	  on activityaction_ref 136834 // activity action Seleccionar juego
+	end
+      end
+
+      activitynode 137730 activity_final ""
+      end
+
+      activityaction 136834 "Seleccionar juego"
+	opaque_action
+	flow 143106 "<flow>"
+	  on activityaction_ref 136578 // activity action Insertar nombre de configuración
+	end
+
+	flow 143234 "<flow>"
+	  on activityaction_ref 136962 // activity action Seleccionar configuración
+	end
+
+	flow 143490 "<flow>"
+	  on activitynode_ref 137858 // fork
+	end
+
+	flow 145538 "<flow>"
+	  on activityaction_ref 136962 // activity action Seleccionar configuración
+	end
+      end
+
+      activitydiagram 170242 "Gestión de configuración de juego"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activityaction 136962 "Seleccionar configuración"
+	opaque_action
+	flow 143362 "<flow>"
+	  on activityaction_ref 136706 // activity action Ajustar parámetros
+	end
+
+	flow 143874 "<flow>"
+	  on activitynode_ref 138114 // fork
+	end
+
+	flow 145666 "<flow>"
+	  on activityaction_ref 128514 // activity action Jugar
+	end
+
+	flow 146050 "<flow>"
+	  on activityaction_ref 137346 // activity action Obtener puntuación
+	end
+      end
+
+      activitynode 137858 fork ""
+	flow 143618 "<flow>"
+	  on activityaction_ref 136578 // activity action Insertar nombre de configuración
+	end
+
+	flow 143746 "<flow>"
+	  on activityaction_ref 136962 // activity action Seleccionar configuración
+	end
+      end
+
+      activitynode 137986 join ""
+      end
+
+      activitynode 138114 fork ""
+	flow 144002 "<flow>"
+	  on activityaction_ref 137090 // activity action Eliminar configuración
+	end
+
+	flow 144130 "<flow>"
+	  on activitynode_ref 138242 // join
+	end
+      end
+
+      activitynode 138242 join ""
+	flow 144386 "<flow>"
+	  on activityaction_ref 136706 // activity action Ajustar parámetros
+	end
+      end
+
+      activityaction 137090 "Eliminar configuración"
+	opaque_action
+	flow 144642 "<flow>"
+	  on activitynode_ref 138370 // join
+	end
+
+	flow 145026 "<flow>"
+	  on activitynode_ref 138498 // join
+	end
+      end
+
+      activitynode 138370 join ""
+	flow 144770 "<flow>"
+	  on activityaction_ref 136322 // activity action Guardar
+	end
+      end
+
+      activitynode 138498 join ""
+	flow 144898 "<flow>"
+	  on activityaction_ref 136322 // activity action Guardar
+	end
+      end
+
+      activitydiagram 170370 "Jugar al juego"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activityaction 137218 "Realizar calibración"
+	opaque_action
+	flow 145410 "<flow>"
+	  on activityaction_ref 136834 // activity action Seleccionar juego
+	end
+      end
+
+      activitynode 138626 initial_node ""
+	flow 145282 "<flow>"
+	  on activityaction_ref 137218 // activity action Realizar calibración
+	end
+
+	flow 146178 "<flow>"
+	  on activityaction_ref 136834 // activity action Seleccionar juego
+	end
+      end
+
+      activitynode 138754 activity_final ""
+      end
+
+      activitydiagram 170498 "Examinar puntuación"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activityaction 137346 "Obtener puntuación"
+	opaque_action
+	flow 146306 "<flow>"
+	  on activitynode_ref 138754 // activity_final
+	end
+
+	flow 146434 "<flow>"
+	  on activitynode_ref 138882 // fork
+	end
+      end
+
+      activitynode 138882 fork ""
+	flow 146562 "<flow>"
+	  on activityaction_ref 137474 // activity action Completar tabla
+	end
+
+	flow 146690 "<flow>"
+	  on activityaction_ref 137602 // activity action Completar gráficas
+	end
+      end
+
+      activityaction 137474 "Completar tabla"
+	opaque_action
+	flow 146946 "<flow>"
+	  on activitynode_ref 139010 // join
+	end
+      end
+
+      activityaction 137602 "Completar gráficas"
+	opaque_action
+	flow 146818 "<flow>"
+	  on activitynode_ref 139010 // join
+	end
+      end
+
+      activitynode 139010 join ""
+	flow 147074 "<flow>"
+	  on activitynode_ref 138754 // activity_final
+	end
       end
     end
 

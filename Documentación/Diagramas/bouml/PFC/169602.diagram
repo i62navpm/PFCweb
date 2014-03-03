@@ -1,0 +1,115 @@
+format 76
+
+activitynodecanvas 128258 activitynode_ref 136450 // activity_final
+  xyz 176 456 2000
+end
+textcanvas 128514 "[authorization=false]"
+  xyzwh 320 282 2000 99 17
+textcanvas 128642 "[valid=true]"
+  xyzwh 120 282 2000 53 14
+activitynodecanvas 128770 activitynode_ref 136066 // decision
+  xyz 288 260 2000
+end
+activitynodecanvas 128898 activitynode_ref 135042 // initial_node
+  xyz 179 3 2000
+end
+textcanvas 129026 "[valid=false]"
+  xyzwh 17 282 2000 64 15
+activitynodecanvas 129154 activitynode_ref 135938 // decision
+  xyz 84 260 2000
+end
+activityactioncanvas 129410 activityaction_ref 135426 // activity action Entrar al sistema
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 138 364 2000 101 61
+end
+activityactioncanvas 129538 activityaction_ref 135554 // activity action Presentar formulario
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 138 42 2000 101 61
+end
+textcanvas 129666 "[authorization=true]"
+  xyzwh 196 282 2000 99 17
+activityactioncanvas 132226 activityaction_ref 135682 // activity action Introducir datos de acceso
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 46 155 2000 100 60
+end
+activityactioncanvas 132354 activityaction_ref 135810 // activity action Acceso a través de red social
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 250 155 2000 100 60
+end
+activitynodecanvas 132482 activitynode_ref 136578 // fork
+  horizontal  xyzwh 112 123 2005 153 15
+end
+activitynodecanvas 132994 activitynode_ref 136706 // join
+  horizontal  xyzwh 112 336 2005 153 15
+end
+flowcanvas 130434 flow_ref 138626 // <flow>
+  
+  from ref 128770 z 2001 to point 374 275
+  line 130562 z 2001 to point 374 69
+  line 130690 z 2001 to ref 129538
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131458 flow_ref 138754 // <flow>
+  
+  from ref 129154 z 2001 to point 17 276
+  line 131586 z 2001 to point 17 69
+  line 131714 z 2001 to ref 129538
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131842 flow_ref 139266 // <flow>
+  
+  from ref 129410 z 2001 to ref 128258
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131970 flow_ref 137730 // <flow>
+  
+  from ref 128898 z 2001 to ref 129538
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132610 flow_ref 139394 // <flow>
+  
+  from ref 129538 z 2006 to ref 132482
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132738 flow_ref 139522 // <flow>
+  
+  from ref 132482 z 2006 to ref 132226
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132866 flow_ref 139650 // <flow>
+  
+  from ref 132482 z 2006 to ref 132354
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133378 flow_ref 140034 // <flow>
+  
+  from ref 132994 z 2006 to ref 129410
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134018 flow_ref 140162 // <flow>
+  
+  from ref 129154 z 2006 to point 185 276
+  line 134146 z 2006 to ref 132994
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134274 flow_ref 140290 // <flow>
+  
+  from ref 128770 z 2006 to point 185 276
+  line 134402 z 2006 to ref 132994
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134530 flow_ref 140418 // <flow>
+  
+  from ref 132226 z 2001 to ref 129154
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134658 flow_ref 140546 // <flow>
+  
+  from ref 132354 z 2001 to ref 128770
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+end

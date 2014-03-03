@@ -1,42 +1,24 @@
-window_sizes 1024 712 240 720 512 82
+window_sizes 1024 712 244 774 512 82
 diagrams
-  classdiagram_ref 162946 // Diagrama de clases de DragMe
-    778 556 100 4 0 0
-  classdiagram_ref 149762 // Diagrama de clases individuales
-    778 556 100 4 0 0
-  usecasediagram_ref 128002 // Caso de Uso 0: Sistema
+  activitydiagram_ref 169474 // Registro de usuario
     618 444 100 4 0 0
-  usecasediagram_ref 128130 // Caso de Uso 1: Gestión de usuarios
+  activitydiagram_ref 169602 // Acceso de usuario
     618 444 100 4 0 0
-  usecasediagram_ref 128258 // Caso de uso 2: Gestión de juegos
+  active  activitydiagram_ref 169730 // Editar perfil
+    774 556 100 4 0 0
+  activitydiagram_ref 169858 // Vinculación redes sociales
     618 444 100 4 0 0
-  usecasediagram_ref 128386 // Caso de uso 3: Gestión de pantallas
+  activitydiagram_ref 170242 // Gestión de configuración de juego
     618 444 100 4 0 0
-  sequencediagram_ref 135042 // Secuencia de CU-1.1
+  activitydiagram_ref 170370 // Jugar al juego
     618 444 100 4 0 0
-  sequencediagram_ref 135170 // Secuencia de CU-1.2
+  activitydiagram_ref 170498 // Examinar puntuación
     618 444 100 4 0 0
-  sequencediagram_ref 135298 // Secuencia de CU-1.3
-    618 444 100 4 0 0
-  sequencediagram_ref 135426 // Secuencia de CU-2.1
-    778 556 100 4 72 0
-  sequencediagram_ref 135554 // Secuencia de CU-2.2
-    618 444 100 4 0 0
-  sequencediagram_ref 135682 // Secuencia de CU-2.3
-    618 444 100 4 0 0
-  sequencediagram_ref 135810 // Secuencia de CU-3
-    618 444 100 4 0 0
-  sequencediagram_ref 135938 // Secuencia de CU-4.1
-    618 444 100 4 0 0
-  classdiagram_ref 156290 // Diagrama de clases de Tetris
-    618 444 100 4 0 0
-  active  classdiagram_ref 143234 // Diagrama de clases de Pong
-    778 556 100 4 273 0
 end
 show_stereotypes
-selected classdiagram_ref 143234 // Diagrama de clases de Pong
+selected activitydiagram_ref 169730 // Editar perfil
 open
-  usecaseview_ref 128002 // Casos de uso
+  activityaction_ref 128002 // activity action Solicitar hoja de configuración
   classview_ref 134530 // Clases de Tetris
 end
 end
