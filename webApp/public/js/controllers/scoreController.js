@@ -4,9 +4,10 @@ var webApp = angular.module('webApp.controllers');
 webApp.controller('scoreController', function ($scope, $http, $log, $location) {
 	$scope.selectScoreGame = 'Pong';
 	$scope.actualScoreGame = $scope.user.pongConf;
+	$scope.idGame = '1';
 
 	$scope.title = ['Fecha', 'Puntos', 'Nivel', 'Marcador Oponente', 'Marcador Jugador']
-
+	
 	$scope.chartConfig = {
         options: {
             chart: {
@@ -84,6 +85,8 @@ webApp.controller('scoreController', function ($scope, $http, $log, $location) {
 		$scope.chartConfig.series = [];
 		$scope.chartConfig2.series = [];
 		$scope.actualConf = null;
+		$scope.idGame = '1';
+		
 		if($scope.selectScoreGame == 'Pong'){
 			$scope.actualScoreGame = $scope.user.pongConf;
 			$scope.title = ['Fecha', 'Puntos', 'Nivel', 'Marcador Oponente', 'Marcador Jugador'];
