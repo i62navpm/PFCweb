@@ -44,7 +44,8 @@ $(document).ready(function(){
 	}
 	
 	function Background(){
-		this.background = new Kinetic.Group({
+		this.backGroup = new Kinetic.Group();
+		this.background = new Kinetic.Rect({
 		    fill: configuration.board.backgroundColor,
 		    x : 0,
 		    y : 0,
@@ -72,8 +73,8 @@ $(document).ready(function(){
 	        shadowOpacity: 0.5
 		});
 
-		this.background.add(this.upLine);
-		this.background.add(this.downLine);
+		this.backGroup.add(this.upLine);
+		this.backGroup.add(this.downLine);
 
 		this.middleLine = new Kinetic.Line({
             points: [stage.getWidth()/2, 0, stage.getWidth()/2, stage.getHeight()],
@@ -88,6 +89,7 @@ $(document).ready(function(){
 		
 		this.backgroundLayer = new Kinetic.Layer();
 		this.backgroundLayer.add(this.background);
+		this.backgroundLayer.add(this.backGroup);
 		this.backgroundLayer.add(this.middleLine);
 		stage.add(this.backgroundLayer);
 	}
@@ -122,13 +124,13 @@ $(document).ready(function(){
 	        shadowOffset: [10, 10],
 	        shadowOpacity: 0.2,
         
-		    // draggable: true,
-		    // dragBoundFunc: function(pos) {
-		    // 	return {
-		    // 		x: this.getAbsolutePosition().x,
-		    // 		y: pos.y
-		    // 	};
-		    // },
+		    draggable: true,
+		    dragBoundFunc: function(pos) {
+		    	return {
+		    		x: this.getAbsolutePosition().x,
+		    		y: pos.y
+		    	};
+		    },
 		    id: "player"
 		
 	    });
@@ -146,20 +148,23 @@ $(document).ready(function(){
 		
 		this.speed = configuration.pieces.leftSpeed;
 		
-		this.playerLayer = stage.find('#ball')[0].getLayer();
+		this.playerLayer = new Kinetic.Layer();
 		this.playerLayer.add(this.player);
 		this.playerLayer.add(this.point);
+		stage.add(this.playerLayer);
 	};
 
 	Player.prototype.moveDown = function() {
         if (this.player.getY()+this.player.getHeight() < stage.getHeight()){
         	this.player.setY(this.player.getY()+this.speed);
+        	this.playerLayer.draw();
         }
 	};
 	
 	Player.prototype.moveUp = function() {
 	    if (this.player.getY() > 0){
 	        this.player.setY(this.player.getY()-this.speed);
+	        this.playerLayer.draw();
 	    }
 	};
 	
@@ -625,9 +630,11 @@ $(document).ready(function(){
 	
 	Game.prototype.movePlayerTouch = function(event){
 		//event.returnValue = false;
+		
 		if(event.preventDefault) event.preventDefault();
 		var touchPos = stage.getTouchPosition();
 		this.gPlayer.player.setY(touchPos.y);
+		this.gPlayer.playerLayer.draw();
 	};
 	
 	Game.prototype.resizeWindow= function(){

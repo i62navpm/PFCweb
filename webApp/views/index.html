@@ -413,12 +413,15 @@
 $(document).ready(function() {
         
   $('.scroll-top').click(function(){
-    $('html').animate({scrollTop:0},1000);
+    $('html,body').animate({scrollTop:0},1000);
   })
   $('.scroll-down').click(function(){
-    $('html').animate({scrollTop:$(window).scrollTop()+$(window).height()},1000);
+    $('html,body').animate({
+        scrollTop:$(window).scrollTop()+$(window).height()
+    },1000)
   })
-  $('body').scrollspy({ target: '#navbar' })
+  
+  
   });
         
 </script>

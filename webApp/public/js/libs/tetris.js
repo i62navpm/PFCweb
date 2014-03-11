@@ -465,7 +465,6 @@ $(document).ready(function(){
 		this.gMenu.restart.on('mousedown touchstart',$.proxy(this, "restartGame"));
 		this.gForeground.foregroundLayer.on('touchmove',$.proxy(this, "movePieceTouch"));
 		this.gForeground.foregroundLayer.on('tap',$.proxy(this, "rotatePieceTouch"));
-		this.gForeground.foregroundLayer.on('touchend',$.proxy(this, "onTouchEnd"));
 	};
 	
 	Game.prototype.clickLooseMsg = function(){
@@ -640,28 +639,24 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.movePieceTouch = function(event){
-		this.move=true;
+
 		event.returnValue = false;
 		if(event.preventDefault) event.preventDefault();
 		var touchPos = stage.getTouchPosition();
-		if (this.gPiece.curX > parseInt(Math.floor(touchPos.x/this.gForeground.blockWidth)))
+		if (this.gPiece.curX > touchPos.x/this.gForeground.blockWidth)
 			this.gPiece.moveLeft();
-		else if(this.gPiece.curX < parseInt(Math.floor(touchPos.x/this.gForeground.blockWidth)))
+		else if(this.gPiece.curX < touchPos.x/this.gForeground.blockWidth)
 			this.gPiece.moveRight();
 	};
 	
 	Game.prototype.rotatePieceTouch = function(event){
-		this.move=false;
+
 		event.returnValue = false;
 		if(event.preventDefault) event.preventDefault();
+		this.gPiece.rotate();
 	};
 	
-	Game.prototype.onTouchEnd = function(event){
-		event.returnValue = false;
-		if(event.preventDefault) event.preventDefault();
-		if(!this.move)
-			this.gPiece.rotate();
-	};
+
 	
 	Game.prototype.enableKeyboard= function(){
 		this.KeyboardController({

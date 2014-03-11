@@ -98,7 +98,7 @@ $(document).ready(function(){
 	
 	function Opponents(background){
 		this.nOpponents = 4;
-		this.opponentLayer = stage.find('#player')[0].getLayer();
+		this.opponentLayer = new Kinetic.Layer({id: 'opponents'});
 		this.opponents = new Array();
 		for (var i=0;i<this.nOpponents; i++){
 			var op = new Opponent(background);
@@ -195,7 +195,7 @@ $(document).ready(function(){
 	        shadowOpacity: 0.5
 		});
         
-        this.scoreLayer = stage.find('#player')[0].getLayer();
+        this.scoreLayer = stage.find('#opponents')[0].getLayer();
         this.scoreLayer.add(this.textScore);
 	}
 	
