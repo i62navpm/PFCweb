@@ -27,11 +27,21 @@ $(document).ready(function(){
 	var stage = null;
 	
 	function initStage(){
-		stage = new Kinetic.Stage({
-		    container : "container",
-		    width: screen.width,
-		    height: screen.height-100,
-		});
+		if (!isMobile()){
+			stage = new Kinetic.Stage({
+			    container : "container",
+			    width: screen.width,
+			    height: screen.height-90,
+			});
+		}
+		else{
+			stage = new Kinetic.Stage({
+			    container : "container",
+			    width: screen.width,
+			    height: screen.width,
+			});
+		}
+
 		
 		var background = new Background();
 		var ball = new Ball();
@@ -572,6 +582,8 @@ $(document).ready(function(){
 		if (!screenfull.isFullscreen){
 			this.oldWidth = $("#container").width();
 			this.oldHeight = $("#container").height();
+			$("#container").width('100%');
+	        $("#container").height('100%');
 		}
 		else{
 			$("#container").width(this.oldWidth);

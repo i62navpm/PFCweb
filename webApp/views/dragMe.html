@@ -21,8 +21,23 @@
   <script type="text/javascript" src="../../public/js/libs/detectmobilebrowser.js"></script>
   <script type="text/javascript" src="../../public/js/libs/screenfull.min.js"></script>
   <script type="text/javascript" src="../../public/js/libs/initMenu.js"></script>
+  <style type="text/css">
+  body {
+      overflow:hidden;
+  }
+  </style>
+  <script type="text/javascript">
+  if(window.addEventListener){
+      window.addEventListener('DOMMouseScroll',wheel,false);
+  }
 
+  function wheel(event)
+  {
+      event.preventDefault();
 
+  }
+  window.onmousewheel=document.onmousewheel=wheel;
+  </script>
 </head>
 <script type="text/javascript">
   var configuration = null;
@@ -44,9 +59,6 @@ $( document ).ready(function() {
   configuration.difficult.incPieceSpeed = parseInt(configuration.difficult.incPieceSpeed);
   configuration.difficult.timePieceSpeed = parseInt(configuration.difficult.timePieceSpeed);
 
-  console.log(configuration);
-  console.log(calibration);
-  console.log(userID);
 });
 </script>
 <script type="text/javascript" src="../../public/js/libs/dragMe.js"></script>
