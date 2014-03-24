@@ -150,7 +150,7 @@ $(document).ready(function(){
 		var aux = {x: null, y:null};
 		do{
 		for (var i in aux){
-			aux[i] = Math.floor((Math.random()*background.squareIn.getHeight())+1);
+			aux[i] = Math.floor((Math.random()*background.squareIn.getWidth()));
 		};
 		}while(this.isCollision(background, aux,size));
 	   	return aux;

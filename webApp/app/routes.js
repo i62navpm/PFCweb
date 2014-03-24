@@ -6,13 +6,13 @@ module.exports = function(app, passport) {
 
 	// show the home page (will also have our login links)
 	app.get('/', function(req, res) {
-		res.render('index.html/');
+		res.render('index.html');
 	});
 
 	// PROFILE SECTION =========================
 
 	app.get('/profile', isLoggedIn, function(req, res) {
-		console.log(req.user);
+		//console.log(req.user);
 		res.render('jugador.html', {
 			userID : req.user.id,
 			user: JSON.stringify(req.user)
@@ -33,8 +33,8 @@ module.exports = function(app, passport) {
 	});
 
 	app.put('/profile/:id', isLoggedIn, function(req, res) {
-		console.log(req.params.id);
-		console.log(req.body)
+		//console.log(req.params.id);
+		//console.log(req.body)
 		User.findById(req.params.id, function(err, user) {
 			if (req.body.password){
 				//Se adjunta contraseña
@@ -45,7 +45,7 @@ module.exports = function(app, passport) {
 
 					if (user.validPassword(password)){
 						//validado
-						//console.log("La contraseña sí coincide.")
+						////console.log("La contraseña sí coincide.")
 						var keys = (Object.keys(req.body));
 						for(var i in keys){
 							if (keys[i] != 'oldPassword')
@@ -62,13 +62,13 @@ module.exports = function(app, passport) {
 						res.send(true);
 					}
 					else{
-						//console.log("La contraseña NO coincide.")
+						////console.log("La contraseña NO coincide.")
 						res.send({message: "La contraseña no coincide con la anterior."})
 					}
 				}
 				else{
 					//Si no existe contraseña se crea
-					//console.log("no tiene");
+					////console.log("no tiene");
 					var keys = (Object.keys(req.body));
 						for(var i in keys){
 							if (keys[i] != 'oldPassword')
@@ -103,8 +103,8 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/pongConfiguration/:id', isLoggedIn, function(req, res) {
-		console.log(req.params.id);
-		console.log(req.body);
+		//console.log(req.params.id);
+		//console.log(req.body);
 		User.findById(req.params.id, function(err, user) {
 			user.pongConf.push(req.body);
 			user.save(function (err) {
@@ -152,16 +152,16 @@ module.exports = function(app, passport) {
 			var id = req.params.id
 			var calib = JSON.stringify(user.calibration);
 			var conf = JSON.stringify(user.pongConf.id(req.params.id2));
-			console.log("configuraciones");
-			console.log(String(calib));
-			console.log(conf);
+			//console.log("configuraciones");
+			//console.log(String(calib));
+			//console.log(conf);
 			res.render('pong.html',{ userId: id,configuration: conf, calibration: calib});
 			
 		});
 	});
 
 	app.post('/pongScore', isLoggedIn, function(req, res) {
-		console.log(req.body);
+		//console.log(req.body);
 		User.findById(req.body.userId, function(err, user) {
 			user.pongConf.id(req.body.confId).score.push(req.body.score);
 			user.save(function (err) {
@@ -174,8 +174,8 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/tetrisConfiguration/:id', isLoggedIn, function(req, res) {
-		console.log(req.params.id);
-		console.log(req.body);
+		//console.log(req.params.id);
+		//console.log(req.body);
 		User.findById(req.params.id, function(err, user) {
 			user.tetrisConf.push(req.body);
 			user.save(function (err) {
@@ -223,15 +223,15 @@ module.exports = function(app, passport) {
 			var id = req.params.id
 			var calib = JSON.stringify(user.calibration);
 			var conf = JSON.stringify(user.tetrisConf.id(req.params.id2));
-			console.log("configuracionesTetris");
-			console.log(String(calib));
-			console.log(conf);
+			//console.log("configuracionesTetris");
+			//console.log(String(calib));
+			//console.log(conf);
 			res.render('tetris.html',{ userId: id,configuration: conf, calibration: calib});
 		});
 	});
 
 	app.post('/tetrisScore', isLoggedIn, function(req, res) {
-		console.log(req.body);
+		//console.log(req.body);
 		User.findById(req.body.userId, function(err, user) {
 			user.tetrisConf.id(req.body.confId).score.push(req.body.score);
 			user.save(function (err) {
@@ -244,8 +244,8 @@ module.exports = function(app, passport) {
 	});
 	
 	app.post('/dragMeConfiguration/:id', isLoggedIn, function(req, res) {
-		console.log(req.params.id);
-		console.log(req.body);
+		//console.log(req.params.id);
+		//console.log(req.body);
 		User.findById(req.params.id, function(err, user) {
 			user.dragMeConf.push(req.body);
 			user.save(function (err) {
@@ -293,15 +293,15 @@ module.exports = function(app, passport) {
 			var id = req.params.id
 			var calib = JSON.stringify(user.calibration);
 			var conf = JSON.stringify(user.dragMeConf.id(req.params.id2));
-			console.log("configuracionesDragMe");
-			console.log(String(calib));
-			console.log(conf);
+			//console.log("configuracionesDragMe");
+			//console.log(String(calib));
+			//console.log(conf);
 			res.render('dragMe.html',{ userId: id,configuration: conf, calibration: calib});
 		});
 	});
 	
 	app.post('/dragMeScore', isLoggedIn, function(req, res) {
-		console.log(req.body);
+		//console.log(req.body);
 		User.findById(req.body.userId, function(err, user) {
 			user.dragMeConf.id(req.body.confId).score.push(req.body.score);
 			user.save(function (err) {
@@ -314,11 +314,11 @@ module.exports = function(app, passport) {
 	});
 	
 	app.put('/calibration/:id', isLoggedIn, function(req, res) {
-		console.log(req.params.id);
-		console.log(req.body)
+		//console.log(req.params.id);
+		//console.log(req.body)
 		User.findById(req.params.id, function(err, user) {
-			console.log("OJOIZ"+req.body.eyeLeft);
-			console.log("OJODE"+req.body.eyeRight);
+			//console.log("OJOIZ"+req.body.eyeLeft);
+			//console.log("OJODE"+req.body.eyeRight);
 
 			user.calibration.eyeLeft = req.body.eyeLeft;
 			user.calibration.eyeRight = req.body.eyeRight;

@@ -29,7 +29,7 @@ webApp.controller('pongConfigController', function ($scope, $http, $log, $locati
 		success(function(data, status, headers, config) {
 		  if (data.message){
 		  	$scope.errorMsg =data.message;
-		  	$log.log(data.message);
+		  	//$log.log(data.message);
 		  }
 		  else{
 		  	$scope.init();

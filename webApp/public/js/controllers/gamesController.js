@@ -25,7 +25,7 @@ $scope.changeOptionPong = function () {
       }
       break;
   	};
-  $log.log($scope.user.actualPong);
+  //$log.log($scope.user.actualPong);
 };
 
 $scope.deleteConfPong = function(){  
@@ -34,7 +34,7 @@ $scope.deleteConfPong = function(){
     success(function(data, status, headers, config) {
       if (data.message){
         $scope.errorMsg =data.message;
-        $log.log(data.message);
+        //$log.log(data.message);
       }
       else{
         $scope.init();
@@ -78,7 +78,7 @@ $scope.changeOptionTetris = function () {
       }
       break;
     };
-  $log.log($scope.user.actualTetris);
+  //$log.log($scope.user.actualTetris);
 };
 
 $scope.deleteConfTetris = function(){  
@@ -87,7 +87,7 @@ $scope.deleteConfTetris = function(){
     success(function(data, status, headers, config) {
       if (data.message){
         $scope.errorMsg =data.message;
-        $log.log(data.message);
+        //$log.log(data.message);
       }
       else{
         $scope.init();
@@ -126,7 +126,7 @@ $scope.changeOptionDragMe = function () {
       }
       break;
     };
-  $log.log($scope.user.actualDragMe);
+  //$log.log($scope.user.actualDragMe);
 };
 
 $scope.deleteConfDragMe = function(){  
@@ -135,7 +135,7 @@ $scope.deleteConfDragMe = function(){
     success(function(data, status, headers, config) {
       if (data.message){
         $scope.errorMsg =data.message;
-        $log.log(data.message);
+        //$log.log(data.message);
       }
       else{
         $scope.init();

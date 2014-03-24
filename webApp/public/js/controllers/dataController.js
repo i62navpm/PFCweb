@@ -24,7 +24,7 @@ webApp.controller('dataController', function ($scope, $http, $log, $location) {
 		success(function(data, status, headers, config) {
 		  if (data.message){
 		  	$scope.errorMsg =data.message;
-		  	$log.log(data.message);
+		  	//$log.log(data.message);
 		  }
 		  else{
 		  	$scope.init();

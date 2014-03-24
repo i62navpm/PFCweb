@@ -20,12 +20,12 @@ webApp.controller('tetrisModifyConfController', function ($scope, $http, $log, $
 			data.difficult.points = $scope.user.actualTetris.difficult.points;
 			data.difficult.incPieceSpeed = $scope.user.actualTetris.difficult.incPieceSpeed;
 
-		$log.log(data);
+		//$log.log(data);
 		$http.put('/tetrisConfiguration/'+$scope.userID, data).
 		success(function(data, status, headers, config) {
 		  if (data.message){
 		  	$scope.errorMsg =data.message;
-		  	$log.log(data.message);
+		  	//$log.log(data.message);
 		  }
 		  else{
 		  	$scope.init();

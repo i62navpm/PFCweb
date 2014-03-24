@@ -7,7 +7,7 @@ webApp.controller('mainController', function ($scope, $http, $log, $location) {
 		$location.path('/').replace();
 	
 	$scope.init = function () {
-		$log.log("inicio");
+		//$log.log("inicio");
 		
 		$http({method: 'GET', url: '/profile/'+$scope.userID}).
 	    	success(function(data, status, headers, config) {
@@ -17,7 +17,7 @@ webApp.controller('mainController', function ($scope, $http, $log, $location) {
 		      $scope.user.actualDragMe = null;
 		      $scope.user.actualEyeLeft = $scope.user.calibration.eyeLeft;
 		      $scope.user.actualEyeRight = $scope.user.calibration.eyeRight;
-				$log.log("ya");		      
+				//$log.log("ya");		      
 		    }).
 		    error(function(data, status, headers, config) {
 		      $log.error("Error al conecctar");
@@ -35,7 +35,7 @@ webApp.controller('mainController', function ($scope, $http, $log, $location) {
 		success(function(data, status, headers, config) {
 		  if (data.message){
 		  	$scope.errorMsg =data.message;
-		  	$log.log(data.message);
+		  	//$log.log(data.message);
 		  }
 		  else{
 		  	$scope.init();

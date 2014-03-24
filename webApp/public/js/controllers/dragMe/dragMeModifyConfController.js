@@ -19,12 +19,12 @@ webApp.controller('dragMeModifyConfController', function ($scope, $http, $log, $
 			data.difficult.timePieceSpeed = $scope.user.actualDragMe.difficult.timePieceSpeed;
 			data.difficult.incPieceSpeed = $scope.user.actualDragMe.difficult.incPieceSpeed;
 
-		$log.log(data);
+		//$log.log(data);
 		$http.put('/dragMeConfiguration/'+$scope.userID, data).
 		success(function(data, status, headers, config) {
 		  if (data.message){
 		  	$scope.errorMsg =data.message;
-		  	$log.log(data.message);
+		  	//$log.log(data.message);
 		  }
 		  else{
 		  	$scope.init();

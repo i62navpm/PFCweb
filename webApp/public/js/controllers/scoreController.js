@@ -103,7 +103,7 @@ webApp.controller('scoreController', function ($scope, $http, $log, $location) {
 	};
 
 	$scope.changeConf = function(){
-		$log.log($scope.idGame);
+		//$log.log($scope.idGame);
 		$scope.actualConf = [];
 		$scope.chartConfig2.series = [];
 		for(var i in $scope.actualScoreGame){
@@ -166,7 +166,7 @@ webApp.controller('scoreController', function ($scope, $http, $log, $location) {
 						
 						$scope.actualConf[j]['1'] = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()+"-"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 						$scope.actualConf[j]['2'] = aux[j]['times'];
-						$log.log(sec);
+						//$log.log(sec);
 						vectorTimes.push(parseFloat(sec));
 						
 					};
@@ -176,8 +176,8 @@ webApp.controller('scoreController', function ($scope, $http, $log, $location) {
 				break;
 			};
 		};
-		$log.log($scope.actualConf);
-		$log.log($scope.actualScoreGame[i].score);
+		//$log.log($scope.actualConf);
+		//$log.log($scope.actualScoreGame[i].score);
 	};
 
 });

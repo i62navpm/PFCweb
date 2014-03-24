@@ -28,7 +28,7 @@ webApp.controller('socialController', function ($scope, $http, $log, $location) 
 		      $scope.user = data;
 		    }).
 		    error(function(data, status, headers, config) {
-		      $log.error("Error al conecctar");
+		      $log.error("Error al conectar");
 		    });
 		}
 			
@@ -40,7 +40,7 @@ webApp.controller('socialController', function ($scope, $http, $log, $location) 
 		      $scope.user = data;
 		    }).
 		    error(function(data, status, headers, config) {
-		      $log.error("Error al conecctar");
+		      $log.error("Error al conectar");
 		    });
 	}
 
@@ -51,7 +51,7 @@ webApp.controller('socialController', function ($scope, $http, $log, $location) 
 		      $scope.user = data;
 		    }).
 		    error(function(data, status, headers, config) {
-		      $log.error("Error al conecctar");
+		      $log.error("Error al conectar");
 		    });
 		}
 			
@@ -63,7 +63,7 @@ webApp.controller('socialController', function ($scope, $http, $log, $location) 
 		      $scope.user = data;
 		    }).
 		    error(function(data, status, headers, config) {
-		      $log.error("Error al conecctar");
+		      $log.error("Error al conectar");
 		    });
 	}
 
@@ -74,7 +74,7 @@ webApp.controller('socialController', function ($scope, $http, $log, $location) 
 		      $scope.user = data;
 		    }).
 		    error(function(data, status, headers, config) {
-		      $log.error("Error al conecctar");
+		      $log.error("Error al conectar");
 		    });
 		}
 			
@@ -86,7 +86,7 @@ webApp.controller('socialController', function ($scope, $http, $log, $location) 
 		      $scope.user = data;
 		    }).
 		    error(function(data, status, headers, config) {
-		      $log.error("Error al conecctar");
+		      $log.error("Error al conectar");
 		    });
 	}
 

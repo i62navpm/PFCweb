@@ -19,14 +19,14 @@ webApp.controller('tetrisConfigController', function ($scope, $http, $log, $loca
 			data.difficult.points = $scope.pointsTetris;
 			data.difficult.incPieceSpeed = $scope.incPieceSpeedTetris;
 
-		$log.log("EEEOOO");
-		$log.log(data);
+		//$log.log("EEEOOO");
+		//$log.log(data);
 
 		$http.post('/tetrisConfiguration/'+$scope.userID, data).
 		success(function(data, status, headers, config) {
 		  if (data.message){
 		  	$scope.errorMsg =data.message;
-		  	$log.log(data.message);
+		  	//$log.log(data.message);
 		  }
 		  else{
 		  	$scope.init();

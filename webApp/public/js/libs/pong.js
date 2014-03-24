@@ -666,6 +666,7 @@ $(document).ready(function(){
 		
         this.gBackground.background.setWidth(newW);
         this.gBackground.downLine.setPoints([0,newH, newW, newH]);
+        this.gBackground.upLine.setPoints([0, 0, stage.getWidth(), 0 ]);
         this.gBackground.middleLine.setPoints([newW/2, 0, newW/2, newH]);
 		this.gOpponent.opponent.setX(stage.getWidth()-80);
 

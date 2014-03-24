@@ -26,12 +26,12 @@ webApp.controller('pongModifyConfController', function ($scope, $http, $log, $lo
 			data.difficult.incBallSpeed = $scope.user.actualPong.difficult.incBallSpeed;
 			data.difficult.incOpSpeed = $scope.user.actualPong.difficult.incOpSpeed;
 
-		$log.log(data);
+		//$log.log(data);
 		$http.put('/pongConfiguration/'+$scope.userID, data).
 		success(function(data, status, headers, config) {
 		  if (data.message){
 		  	$scope.errorMsg =data.message;
-		  	$log.log(data.message);
+		  	//$log.log(data.message);
 		  }
 		  else{
 		  	$scope.init();
