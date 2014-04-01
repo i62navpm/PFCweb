@@ -150,7 +150,10 @@ $(document).ready(function(){
 		var aux = {x: null, y:null};
 		do{
 		for (var i in aux){
-			aux[i] = Math.floor((Math.random()*background.squareIn.getHeight()));
+			if (isMobile())
+				aux[i] = Math.floor((Math.random()*background.squareIn.getWidth()));
+			else
+				aux[i] = Math.floor((Math.random()*background.squareIn.getHeight()));
 		};
 		}while(this.isCollision(background, aux,size));
 	   	return aux;

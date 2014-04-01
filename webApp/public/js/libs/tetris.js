@@ -596,10 +596,11 @@ $(document).ready(function(){
 	};
 	
 	Game.prototype.levelUp = function(){
-		if(this.gravity - this.dictDifficult[this.difficult].speedFactor <= 0)
+		if(this.gravity - this.dictDifficult[this.difficult] <= 0)
 			this.gravity = 1;
-		else
-			this.gravity -= this.dictDifficult[this.difficult].speedFactor;
+		else{
+			this.gravity -= this.dictDifficult[this.difficult];
+		}
 	};
 	
 	Game.prototype.toggleFullScreen = function(){
