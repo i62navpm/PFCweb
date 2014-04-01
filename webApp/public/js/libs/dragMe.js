@@ -150,7 +150,7 @@ $(document).ready(function(){
 		var aux = {x: null, y:null};
 		do{
 		for (var i in aux){
-			aux[i] = Math.floor((Math.random()*background.squareIn.getWidth()));
+			aux[i] = Math.floor((Math.random()*background.squareIn.getHeight()));
 		};
 		}while(this.isCollision(background, aux,size));
 	   	return aux;
@@ -370,7 +370,7 @@ $(document).ready(function(){
     	this.stopAnimation();
     	this.gPlayer.square.setDraggable(false);
     	this.gPlayer.square.setX(this.gBackground.squareOut.getWidth()/2-configuration.pieces.playerSize/2);
-    	this.gPlayer.square.setY(this.gBackground.squareOut.getWidth()/2-configuration.pieces.playerSize/2);
+    	this.gPlayer.square.setY(this.gBackground.squareOut.getHeight()/2-configuration.pieces.playerSize/2);
 		for (i in this.gOpponents.opponents){
     		this.gOpponents.opponents[i].speed = configuration.pieces.opponentSpeed;
     		var aux = this.gOpponents.opponents[i].getRandomPos(this.gBackground,{x:this.gOpponents.opponents[i].opponent.getX(), y:this.gOpponents.opponents[i].opponent.getY()});
@@ -443,7 +443,7 @@ $(document).ready(function(){
 		stage.draw();
 		this.gPlayer.square.setDraggable(false);
     	this.gPlayer.square.setX(this.gBackground.squareOut.getWidth()/2-configuration.pieces.playerSize/2);
-    	this.gPlayer.square.setY(this.gBackground.squareOut.getWidth()/2-configuration.pieces.playerSize/2);
+    	this.gPlayer.square.setY(this.gBackground.squareOut.getHeight()/2-configuration.pieces.playerSize/2);
 		for (i in this.gOpponents.opponents){
     		this.gOpponents.opponents[i].speed = configuration.pieces.opponentSpeed;
     		var aux = this.gOpponents.opponents[i].getRandomPos(this.gBackground,{x:this.gOpponents.opponents[i].opponent.getX(), y:this.gOpponents.opponents[i].opponent.getY()});
